@@ -5,7 +5,7 @@ define("DB_SERVER", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "");
 define("DB_NAME", "korepetitoriai");
-define("TBL_USERS", "users");
+define("TBL_USERS", "vartotojas");
 define("TBL_ARTICLES", "articles");
 define("TBL_CATEGORIES", "categories");
 define("TBL_COMMENTS", "comments");

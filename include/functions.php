@@ -13,31 +13,51 @@ function inisession($arg) {   //valom sesijos kintamuosius
 		$_SESSION['pass_login']="";
 		$_SESSION['mail_login']="";
 		$_SESSION['name_error']="";
-      	$_SESSION['pass_error']="";
-		$_SESSION['mail_error']=""; 
+                $_SESSION['surname_error']="";
+                $_SESSION['pass_error']="";
+		$_SESSION['mail_error']="";
+                $_SESSION['type_error']="";
+                $_SESSION['phone_error']="";
+                $_SESSION['name_input']="";
+                $_SESSION['surname_input']="";
+                $_SESSION['phone_input']="";
+                $_SESSION['mail_input']="";
+                $_SESSION['userType_input']="";
         }
 
-function checkname ($username){   // Vartotojo vardo sintakse
-	   if (!$username || strlen($username = trim($username)) == 0) 
+function checkName ($name){   // Vartotojo vardo sintakse
+	   if (!$name || strlen($name = trim($name)) == 0) 
 			{$_SESSION['name_error']=
-				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas vartotojo vardas</font>";
+				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas vardas</font>";
 			 "";
 			 return false;}
-            else if (!preg_match("/^([0-9a-zA-Z])*$/", $username))  /* Check if username is not alphanumeric */ 
+            else if (!preg_match("/^([a-zA-Z])*$/", $name))  /* Check if username is not alphabetic */ 
 			{$_SESSION['name_error']=
-				"<font size=\"2\" color=\"#ff0000\">* Vartotojo vardas gali būti sudarytas<br>
-				&nbsp;&nbsp;tik iš raidžių ir skaičių</font>";
+				"<font size=\"2\" color=\"#ff0000\">* Galimos tik raidės</font>";
 		     return false;}
 	        else return true;
-   }
+}
+
+function checkSurname ($surname){   // Vartotojo vardo sintakse
+	   if (!$surname || strlen($surname = trim($surname)) == 0) 
+			{$_SESSION['surname_error']=
+				 "<font size=\"2\" color=\"#ff0000\">* Neįvesta pavardė</font>";
+			 "";
+			 return false;}
+            else if (!preg_match("/^([a-zA-Z])*$/", $surname))  /* Check if username is not alphabetic */ 
+			{$_SESSION['surname_error']=
+				"<font size=\"2\" color=\"#ff0000\">* Galimos tik raidės</font>";
+		     return false;}
+	        else return true;
+}
              
- function checkpass($pwd,$dbpwd) {     //  slaptazodzio tikrinimas (tik demo: min 4 raides ir/ar skaiciai) ir ar sutampa su DB esanciu
+ function checkPass($pwd,$dbpwd) {     //  slaptazodzio tikrinimas (tik demo: min 4 raides ir/ar skaiciai) ir ar sutampa su DB esanciu
 	   if (!$pwd || strlen($pwd = trim($pwd)) == 0) 
 			{$_SESSION['pass_error']=
 			  "<font size=\"2\" color=\"#ff0000\">* Neįvestas slaptažodis</font>";
 			 return false;}
             elseif (!preg_match("/^([0-9a-zA-Z])*$/", $pwd))  /* Check if $pass is not alphanumeric */ 
-			{$_SESSION['pass_error']="* Čia slaptažodis gali būti sudarytas<br>&nbsp;&nbsp;tik iš raidžių ir skaičių";
+			{$_SESSION['pass_error']="<font size=\"2\" color=\"#ff0000\">* Slaptažodis sudaromas tik iš skaičių arba raidžių</font>";
 		     return false;}
             elseif (strlen($pwd)<4)  // per trumpas
 			         {$_SESSION['pass_error']=
@@ -49,25 +69,23 @@ function checkname ($username){   // Vartotojo vardo sintakse
                 return false;}
             else return true;
    }
-
- function checkdb($username) {  // iesko DB pagal varda, grazina {vardas,slaptazodis,lygis,id} ir nustato name_error
-		 $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-		 $sql = "SELECT * FROM " . TBL_USERS. " WHERE username = '$username'";
-		 $result = mysqli_query($db, $sql);
-	     $uname = $upass = $ulevel = $uid = $umail = null;
-		 if (!$result || (mysqli_num_rows($result) != 1))   // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
-	  	 {  // neradom vartotojo DB
-		    $_SESSION['name_error']=
-			 "<font size=\"2\" color=\"#ff0000\">* Tokio vartotojo nėra</font>";
-         }
-      else {  //vardas yra DB
-           $row = mysqli_fetch_assoc($result); 
-           $uname= $row["username"]; $upass= $row["password"]; 
-           $ulevel=$row["userlevel"]; $uid= $row["userid"]; $umail = $row["email"];}
-     return array($uname,$upass,$ulevel,$uid,$umail);
+ 
+ function checkEmailDB($userMail){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userMail'";
+    $result = mysqli_query($db, $sql);
+    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+                {  // neradom vartotojo DB
+		   return true;
+                }
+                else {
+                    $_SESSION['mail_error']=
+				"<font size=\"2\" color=\"#ff0000\">* Toks el. paštas sistemoje jau egzistuoja!</font>";
+                    return false;
+                }
  }
 
-function checkmail($mail) {   // e-mail sintax error checking  
+function checkMail($mail) {   // e-mail sintax error checking  
 	   if (!$mail || strlen($mail = trim($mail)) == 0) 
 			{$_SESSION['mail_error']=
 				"<font size=\"2\" color=\"#ff0000\">* Neįvestas e-pašto adresas</font>";
@@ -79,22 +97,32 @@ function checkmail($mail) {   // e-mail sintax error checking
 	        else return true;
    }
    
-function shorterText($text, $chars_limit)
-{
-    // Check if length is larger than the character limit
-    if (strlen($text) > $chars_limit)
-    {
-        // If so, cut the string at the character limit
-        $new_text = substr($text, 0, $chars_limit);
-        // Trim off white space
-        $new_text = trim($new_text);
-        // Add at end of text ...
-        return $new_text . "...";
+   function checkPhone ($phone){   // Vartotojo vardo sintakse
+	   if (!$phone || strlen($phone = trim($phone)) == 0) 
+			{$_SESSION['phone_error']=
+				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas telefono numeris</font>";
+			 "";
+			 return false;}
+            else if (!preg_match("/^([0-9])*$/", $phone))  /* Check if username is not alphabetic */ 
+			{$_SESSION['phone_error']=
+				"<font size=\"2\" color=\"#ff0000\">* Vartotojo telefono numeris turi būti sudarytas<br>
+				&nbsp;&nbsp;tik iš skaičių</font>";
+		     return false;}
+            elseif (strlen($phone)!=11)  // per trumpas arba per ilgas
+			         {$_SESSION['phone_error']=
+						  "<font size=\"2\" color=\"#ff0000\">* Telefonas turi būti iš 11 skaitmenų</font>";
+		              return false;}
+	        else return true;
+}
+
+function checkType($userType){
+    if($userType > 0){
+        return true;
     }
-    // If not just return the text as is
-    else
-    {
-    return $text;
+    else{
+        $_SESSION['type_error']="<font size=\"2\" color=\"#ff0000\">* Nepasirinktas vartotojo tipas</font>";
+			 "";
+        return false;
     }
 }
  ?>
