@@ -70,7 +70,7 @@ function checkSurname ($surname){   // Vartotojo vardo sintakse
             else return true;
    }
  
- function checkEmailDB($userMail){
+function checkEmailDB($userMail){
     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
     $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userMail'";
     $result = mysqli_query($db, $sql);
@@ -82,6 +82,24 @@ function checkSurname ($surname){   // Vartotojo vardo sintakse
                     $_SESSION['mail_error']=
 				"<font size=\"2\" color=\"#ff0000\">* Toks el. paštas sistemoje jau egzistuoja!</font>";
                     return false;
+                }
+ }
+ 
+function verifyLogin($userMail, $pass){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userMail' AND `slaptazodis` = '$pass'";
+    $result = mysqli_query($db, $sql);
+    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+                {
+                        $_SESSION['message']=
+				"<font size=\"2\" color=\"#ff0000\">Klaidingi duomenys!</font>";
+                    return false;
+                }
+                else {
+                    $row = mysqli_fetch_array($result);
+                    $_SESSION['urole'] = $row['statusas'];
+                    $_SESSION['ulevel'] = setUserLevel($_SESSION['urole']);
+                    return true;
                 }
  }
 
@@ -124,6 +142,16 @@ function checkType($userType){
 			 "";
         return false;
     }
+}
+
+function setUserLevel($userType){
+    if($userType == "Mokinys"){
+        $level = "1";
+    }
+    if($userType == "Mokytojas"){
+        $level = "5";
+    }
+    return $level;
 }
  ?>
  

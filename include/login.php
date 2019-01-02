@@ -24,12 +24,12 @@ include("include/nustatymai.php");
             <div class="login-form">
                 <div class="main-div">
                     <div class="panel">
-                        <p>Įveskite vartotojo vardą ir slaptažodį</p>
+                        <p>Įveskite vartotojo el. paštą ir slaptažodį</p>
                     </div>
                     <form action="proclogin.php" method="POST"> 
                         <div class="form-group">
-                            <input type="text" name="user" class="form-control" id="inputUsername" placeholder="Vartotojo vardas"/>
-                            <?php echo $_SESSION['name_error'];?>
+                            <input type="text" name="mail" class="form-control" id="inputEmail" value="<?php echo $_SESSION['mail_input']?>" placeholder="El. paštas"/>
+                            <?php echo $_SESSION['mail_error'];?>
                         </div>
                         <div class="form-group">
                             <input type="password" name="pass" class="form-control" id="inputPassword" placeholder="Slaptažodis"/>

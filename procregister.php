@@ -33,7 +33,6 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "register"))
   $_SESSION['type_error']="";
   $_SESSION['phone_error']="";
   $userEmail=strtolower($_POST['email']);$_SESSION['mail_login']=$userEmail; 
-  $_SESSION['name_login']=$userEmail;
   $pass=$_POST['pass'];$_SESSION['pass_login']=$pass;
   $name = $_POST['name'];
   $surname = $_POST['surname'];

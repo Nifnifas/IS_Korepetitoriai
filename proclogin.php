@@ -28,28 +28,45 @@ session_start();
   include("include/nustatymai.php");
   include("include/functions.php");
   $_SESSION['prev'] = "proclogin";
-  $_SESSION['name_error']="";
+  $_SESSION['mail_error']="";
   $_SESSION['pass_error']="";
- 
-  $user=strtolower($_POST['user']);   // i mazasias raides
-  $_SESSION['name_login']=$user;
 
-// pasiruosiam klaidoms is anksto
-  if (isset($_POST['problem'])) {  // nori pagalbos
-	 $_SESSION['message']="Turi būti įvestas galiojantis vartotojo vardas";}  
-  else {$_SESSION['message']="Pabandykite dar kartą";}
+ 
+  $userEmail=strtolower($_POST['mail']);   // i mazasias raides      
+  $pass=$_POST['pass']; $_SESSION['pass_login']=$pass;
+  
+  $_SESSION['mail_login']=$userEmail;
+  $_SESSION['mail_input']=$userEmail;
+  
+  checkMail($userEmail);
+  checkPass($pass,substr(hash('sha256',$pass),5,32));
+  
+  if(checkMail($userEmail) && checkPass($pass,substr(hash('sha256',$pass),5,32))){
+      $pass=substr(hash('sha256',$pass),5,32); 
+      if(verifyLogin($userEmail, $pass))
+      {
+          //prijungiam
+			  $time=time();  // irasom kada sekmingai prisijunge paskutini karta
+			  $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+			  $sql = "UPDATE ". TBL_USERS." SET prisijungimo_laikas=NOW() WHERE  el_pastas='$userEmail'";
+				         if (!mysqli_query($db, $sql)) {
+                   echo " DB klaida įrašant timestamp: " . $sql . "<br>" . mysqli_error($db);
+		               exit;}
+              $_SESSION['user']=$userEmail;
+			  $_SESSION['prev']="proclogin";
+              $_SESSION['message']="";
+      }
+  }
+  
             
-        if (checkname($user)) //vardo sintakse
+       /* if (checkname($user)) //vardo sintakse
         { list($dbuname,$dbpass,$dblevel,$dbuid,$dbemail)=checkdb($user);  //patikrinam ir jei randam, nuskaitom DB       
          if ($dbuname)  {  //yra vartotojas DB
            
 		   $_SESSION['ulevel']=$dblevel; 
 		   $_SESSION['userid']=$dbuid;
-           $_SESSION['umail']=$dbemail; 
+                   $_SESSION['umail']=$dbemail; 
            // $_SESSION['user'] - nustatysim veliau, jei slaptazodis  geras
-		   if (isset($_POST['problem'])){  // vartotojas praso priminti slaptazodi
-                              header("Location:forgotpass.php");exit;
-                        }
 		  	$pass=$_POST['pass'];$_SESSION['pass_login']=$pass;
           	if (checkpass($pass,$dbpass))
 	       	{ // vardas ir slaptazodis geras 
@@ -79,7 +96,7 @@ session_start();
               $_SESSION['message']="";
              }}
            }
-    }}
+    }}*/
 
   //           session_regenerate_id(true);
             header("Location:index.php");exit;
