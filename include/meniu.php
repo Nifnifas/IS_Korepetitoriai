@@ -23,50 +23,47 @@ $userlevel = $_SESSION['ulevel'];
             <a class="nav-link" href="index.php">Pagrindinis<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="articlesList.php?naujausi">Naujausi straipsniai</a>
+              <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Paieška</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="articlesList.php?naujausi">Naujausi CV</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Kategorijos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="articlesList.php?sportas">Sportas</a>
-              <a class="dropdown-item" href="articlesList.php?mokslas">Mokslas</a>
-              <a class="dropdown-item" href="articlesList.php?politika">Politika</a>
-              <a class="dropdown-item" href="articlesList.php?kriminalai">Kriminalai</a>
-              <a class="dropdown-item" href="articlesList.php?verslas">Verslas</a>
-              <a class="dropdown-item" href="articlesList.php?gyvenimas">Gyvenimas</a>
-              <a class="dropdown-item" href="articlesList.php?menas">Menas</a>
-              <a class="dropdown-item" href="articlesList.php?maistas">Maistas</a>
+              <a class="dropdown-item" href="articlesList.php?sportas">Anglų k.</a>
+              <a class="dropdown-item" href="articlesList.php?mokslas">Lietuvių k.</a>
+              <a class="dropdown-item" href="articlesList.php?politika">Matematika</a>
+              <a class="dropdown-item" href="articlesList.php?kriminalai">Fizika</a>
+              <a class="dropdown-item" href="articlesList.php?verslas">Chemija</a>
+              <a class="dropdown-item" href="articlesList.php?gyvenimas">IT</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="articlesList.php?skaitomiausi">Skaitomiausi</a>
+              <a class="dropdown-item" href="articlesList.php?skaitomiausi">Populiariausi</a>
             </div>
           </li>
 
-          <?php if ($userlevel == $user_roles[ADMIN_LEVEL] ) { 
-              ?>
-            <li class="nav-item">
-                <a class="nav-link" href="newArticlesList.php">Nepatvirtinti straipsniai</a>
-            </li>
+          <?php if ($userlevel == $user_roles[ADMIN_LEVEL] ) { ?>
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Vartotojų valdymas</a>
             </li>
           <?php } ?>
         </ul>
 
-        <?php if ($_SESSION['user'] != "guest"){
-              ?> 
+        <?php if ($_SESSION['user'] != "guest") { ?> 
         <form class="form-inline my-2 my-lg-0">
             <div class="btn-group">
               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
               <div class="dropdown-menu">
                 <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
                 <div class="dropdown-divider"></div>
-                <?php if($userlevel != 5){
-                 ?>   
-                
-                <a class="dropdown-item" href="newarticle.php">Įkelti straipsnį</a>
-                <a class="dropdown-item" href="myArticles.php">Mano straipsniai</a>
+                <?php if($userlevel > 0) { ?>   
+                <a class="dropdown-item" href="newarticle.php">Pažymėtų CV sąrašas</a>
+                <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
+                <a class="dropdown-item" href="myArticles.php">Mano CV</a>
+                <a class="dropdown-item" href="newarticle.php">Sukurti klasę</a>
+                <a class="dropdown-item" href="myArticles.php">Mano klasės</a>
                 <?php } ?>
                 <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
                 <div class="dropdown-divider"></div>
@@ -80,16 +77,24 @@ $userlevel = $_SESSION['ulevel'];
             <div class="btn-group">
               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
               <div class="dropdown-menu">
-                <p class="dropdown-item" align="center">Jūs esate: <b>Svečias</b></p>
+                <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php">Atsijungti</a>
               </div>
             </div>
         </form>
         <?php } ?>
-
       </div>
     </nav>
+        
+        <div class="collapse" id="collapseExample">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
+                <div class="col-6">
+                <input class="form-control mr-sm-2" type="search" placeholder="Paieška" aria-label="Search">
+                </div>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ieškoti</button>
+            </nav>
+        </div>
     </body>
 </html>
 

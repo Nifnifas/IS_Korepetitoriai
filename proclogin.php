@@ -52,6 +52,7 @@ session_start();
 				         if (!mysqli_query($db, $sql)) {
                    echo " DB klaida įrašant timestamp: " . $sql . "<br>" . mysqli_error($db);
 		               exit;}
+              getUserID($userEmail);
               $_SESSION['user']=$userEmail;
 			  $_SESSION['prev']="proclogin";
               $_SESSION['message']="";

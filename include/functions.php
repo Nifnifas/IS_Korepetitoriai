@@ -23,7 +23,18 @@ function inisession($arg) {   //valom sesijos kintamuosius
                 $_SESSION['phone_input']="";
                 $_SESSION['mail_input']="";
                 $_SESSION['userType_input']="";
+                $_SESSION['antraste_input']="";
+                $_SESSION['dalykas_input']="";
+                $_SESSION['tekstas_input']="";
+                $_SESSION['kaina_input']="";
+                $_SESSION['internetu_input']="";
+                $_SESSION['letters_error']="";
+                $_SESSION['dalykas_error']="";
+                $_SESSION['tekstas_error']="";
+                $_SESSION['kaina_error']="";
+                $_SESSION['internetu_error']="";
         }
+
 
 function checkName ($name){   // Vartotojo vardo sintakse
 	   if (!$name || strlen($name = trim($name)) == 0) 
@@ -153,5 +164,62 @@ function setUserLevel($userType){
     }
     return $level;
 }
+
+function getUserID($userEmail){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userEmail'";
+    $result = mysqli_query($db, $sql);
+    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+                {
+                    return false;
+                }
+                else {
+                    $row = mysqli_fetch_array($result);
+                    $_SESSION['userid'] = $row['vartotojo_id'];
+                    return true;
+                }
+}
+
+function checkForInput ($text, $error_name){
+	   if (!$text || strlen($text = trim($text)) == 0) 
+			{$_SESSION[$error_name]=
+				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas laukelis</font>";
+			 "";
+			 return false;}
+                     elseif (strlen($text)<5)  // per trumpas arba per ilgas
+			         {$_SESSION[$error_name]=
+						  "<font size=\"2\" color=\"#ff0000\">* Turi būti panaudoti daugiau nei 5 simboliai</font>";
+		              return false;}
+	        else return true;
+}
+
+function checkForDropSelection($selected, $error_name){
+    if($selected > 0){
+        return true;
+    }
+    else{
+        $_SESSION[$error_name]="<font size=\"2\" color=\"#ff0000\">* Nepasirinktas laukelis</font>";
+			 "";
+        return false;
+    }
+}
+
+function checkForPrice ($text, $error_name){
+	   if (!$text || strlen($text = trim($text)) == 0) 
+			{$_SESSION[$error_name]=
+				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas laukelis</font>";
+			 "";
+			 return false;}
+                     elseif (strlen($text)>2)  // per trumpas arba per ilgas
+			         {$_SESSION[$error_name]=
+						  "<font size=\"2\" color=\"#ff0000\">* Maksimalus skaitmenų kiekis - 2</font>";
+		              return false;}
+                              else if (!preg_match("/^([0-9])*$/", $text))
+			{$_SESSION[$error_name]=
+				"<font size=\"2\" color=\"#ff0000\">* Neleistinas formatas. Leistini tik sveikieji skaičiai</font>";
+		     return false;}
+	        else return true;
+}
+
  ?>
  

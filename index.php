@@ -35,7 +35,7 @@ and open the template in the editor.
                         <div style="text-align: center;color:green">
                             <br><br>
                             <h1>Pradinis sistemos puslapis.</h1>
-                            <h1>Projektą parengė Lukas Krupenkinas, IFF-6/5</h1>
+                            <h1>Projektą finansuoja noras gaut pytaki</h1>
                         </div><br>
         <?php
             }                
