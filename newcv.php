@@ -17,6 +17,25 @@ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   {header("Location
         $_SESSION['prev'] = "newcv.php";
 include("include/meniu.php");
 include("include/functions.php");
+
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $db->set_charset("utf8");
+    $sql = "SELECT * FROM " . TBL_CVS . " WHERE `fk_vartotojo_id` = '$userid'";
+    $result = mysqli_query($db, $sql);
+    if (mysqli_num_rows($result) == 1)
+                {
+                    $row = mysqli_fetch_array($result);
+                    $_SESSION['antraste_input']=$row['antraste'];
+                    $_SESSION['dalykas_input']=$row['dalykas'];
+                    $_SESSION['tekstas_input']=$row['tekstas'];
+                    $_SESSION['kaina_input']=$row['kaina'];
+                    $_SESSION['internetu_input']=$row['internetu'];
+                    $_SESSION['cv_busena'] = "redagavimas";
+                }
+                else
+                {
+                    $_SESSION['cv_busena'] = "sukurimas";
+                }
 ?>
   <br><br><table class="center" style="border-width: 2px;"><tr><td>                              
                                 <div class="container">
@@ -48,7 +67,7 @@ include("include/functions.php");
                                                                 $row = mysqli_fetch_array($res);
                                                                 $i = 1;
                                                                 foreach(explode("','",substr($row['Type'],6,-2)) as $option) { ?>
-                                                                   <option value="<?php echo $i ?>" <?php if($_SESSION['dalykas_input']==$i){echo "selected";}?>><?php echo $option ?></option>
+                                                                   <option value="<?php echo $i ?>" <?php if($_SESSION['dalykas_input']==$i || $_SESSION['dalykas_input'] == $option){echo "selected";}?>><?php echo $option ?></option>
                                                                     <?php
                                                                     $i++;
                                                                 } ?>
@@ -77,11 +96,11 @@ include("include/functions.php");
                                                     </div>
                                                      <div class="form-group">
                                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                        <label class="btn btn-secondary h-25 d-inline-block <?php if($_SESSION['internetu_input']==1){echo "active";}?>" style="width: 120px;">
-                                                          <input type="radio" name="internetu" value="1" id="option1" autocomplete="off" <?php if($_SESSION['internetu_input']==1){echo "checked";}?>>Taip
+                                                        <label class="btn btn-secondary h-25 d-inline-block <?php if($_SESSION['internetu_input']==1 || $_SESSION['internetu_input'] == "taip"){echo "active";}?>" style="width: 120px;">
+                                                          <input type="radio" name="internetu" value="1" id="option1" autocomplete="off" <?php if($_SESSION['internetu_input']==1 || $_SESSION['internetu_input'] == "taip"){echo "checked";}?>>Taip
                                                         </label>
-                                                        <label class="btn btn-secondary h-25 d-inline-block <?php if($_SESSION['internetu_input']==2){echo "active";}?>" style="width: 120px;">
-                                                          <input type="radio" name="internetu" value="2" id="option2" autocomplete="off" <?php if($_SESSION['internetu_input']==2){echo "checked";}?>>Ne
+                                                        <label class="btn btn-secondary h-25 d-inline-block <?php if($_SESSION['internetu_input']==2 || $_SESSION['internetu_input'] == "ne"){echo "active";}?>" style="width: 120px;">
+                                                          <input type="radio" name="internetu" value="2" id="option2" autocomplete="off" <?php if($_SESSION['internetu_input']==2 || $_SESSION['internetu_input'] == "ne"){echo "checked";}?>>Ne
                                                         </label>
                                                         <div class="input-group-append">
                                                           <span class="input-group-text">Mokysiu internetu</span>

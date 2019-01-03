@@ -45,41 +45,62 @@ session_start();
   checkForDropSelection($internetu, "internetu_error");
 if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") &&  checkForPrice($kaina, "kaina_error")
         && checkForDropSelection($internetu, "internetu_error")){
-    // Create connection
-    $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+    if($_SESSION['cv_busena'] == "sukurimas"){
+            // Create connection
+            $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            // Check connection
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            $sql = "INSERT INTO " . TBL_CVS . " (
+                    antraste, 
+                    tekstas, 
+                    kaina,
+                    dalykas,
+                    data,
+                    internetu,
+                    fk_vartotojo_id
+                )
+                VALUES (
+                    '$antraste',
+                        '$tekstas',
+                            '$kaina',
+                                '$dalykas',
+                                    '$time',
+                                        '$internetu',
+                                            '$fk_user_id'
+
+                    )";
+
+            if (mysqli_query($conn, $sql)) {
+                echo "<br><br><br><h3>Jūsų CV sėkmingai sukurtas!</h3>";
+                header( "refresh:2;url=index.php");
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+
+            mysqli_close($conn);
     }
+    if($_SESSION['cv_busena'] == "redagavimas"){
+              // Create connection
+            $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            // Check connection
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            
+            $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu'";
 
-    $sql = "INSERT INTO " . TBL_CVS . " (
-            antraste, 
-            tekstas, 
-            kaina,
-            dalykas,
-            data,
-            internetu,
-            fk_vartotojo_id
-        )
-        VALUES (
-            '$antraste',
-                '$tekstas',
-                    '$kaina',
-                        '$dalykas',
-                            '$time',
-                                '$internetu',
-                                    '$fk_user_id'
+            if (mysqli_query($conn, $sql)) {
+                echo "<br><br><br><h3>Jūsų CV sėkmingai atnaujintas!</h3>";
+                header( "refresh:2;url=index.php");
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
 
-            )";
-
-    if (mysqli_query($conn, $sql)) {
-        echo "<br><br><br><h3>Jūsų CV sėkimgai sukurtas!</h3>";
-        header( "refresh:2;url=index.php");
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            mysqli_close($conn);
     }
-
-    mysqli_close($conn);
 }
 else{
         // griztam taisyti
