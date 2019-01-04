@@ -90,7 +90,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
                 die("Connection failed: " . mysqli_connect_error());
             }
             
-            $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu'";
+            $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu' WHERE fk_vartotojo_id='$fk_user_id'";
 
             if (mysqli_query($conn, $sql)) {
                 echo "<br><br><br><h3>Jūsų CV sėkmingai atnaujintas!</h3>";

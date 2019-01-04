@@ -26,7 +26,7 @@ $userlevel = $_SESSION['ulevel'];
               <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Paieška</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="articlesList.php?naujausi">Naujausi CV</a>
+            <a class="nav-link" href="cvlist.php?naujausi">Naujausi CV</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

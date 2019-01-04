@@ -8,7 +8,7 @@ define("DB_NAME", "korepetitoriai");
 define("TBL_USERS", "vartotojas");
 define("TBL_CVS", "cv");
 define("TBL_CATEGORIES", "categories");
-define("TBL_COMMENTS", "comments");
+define("TBL_COMMENTS", "komentaras");
 define("TBL_STATUS", "status");
 
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
