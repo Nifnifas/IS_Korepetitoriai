@@ -7,7 +7,7 @@ define("DB_PASS", "");
 define("DB_NAME", "korepetitoriai");
 define("TBL_USERS", "vartotojas");
 define("TBL_CVS", "cv");
-define("TBL_CATEGORIES", "categories");
+define("TBL_PAZYMETI", "pazymeti_cv");
 define("TBL_COMMENTS", "komentaras");
 define("TBL_STATUS", "status");
 

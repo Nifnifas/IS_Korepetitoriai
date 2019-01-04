@@ -42,8 +42,26 @@
                 <center>
                 <h2>$row[antraste]</h2>
                 <h6>
-                    <small class=\"text-muted\"> Patalpinta: $row[data]</small>
-                </h6>
+                    <small class=\"text-muted\"> Patalpinta: $row[data]</small>";
+     
+    $ql = "SELECT * FROM " . TBL_PAZYMETI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_cv_id` = '$_SESSION[art]'";
+    $q_result = mysqli_query($db, $ql);
+    if (mysqli_num_rows($q_result) == 1)
+                {
+                    $row2 = mysqli_fetch_array($q_result);
+                    $_SESSION['busena_input'] = "2";
+                }
+                else
+                {
+                    $_SESSION['busena_input'] = "1";
+                }
+?>
+                <form method="POST" action="procpazymeticv.php">
+                    <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
+                    <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
+                    <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php if($_SESSION['busena_input']==1){echo "Pažymėti";}else{echo "Ištrinti žymėjimą";}?>" /></center>
+                </form>
+              <?php echo "</h6>
                 </center>
                 <p class=\"lead\" align=\"left\">$row[tekstas]</p>
                 </div>";
@@ -51,8 +69,9 @@
                     . " WHERE `article_id` = '$_SESSION[art]'";
         mysqli_query($db, $uql);
         mysqli_close($db);*/
-
+        
     ?>
+                
         <br>	
          </td></tr>
                 </table><br><br>   

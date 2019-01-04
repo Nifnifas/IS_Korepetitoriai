@@ -59,9 +59,9 @@ $userlevel = $_SESSION['ulevel'];
                 <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
                 <div class="dropdown-divider"></div>
                 <?php if($userlevel > 0) { ?>   
-                <a class="dropdown-item" href="newarticle.php">Pažymėtų CV sąrašas</a>
+                <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
                 <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
-                <a class="dropdown-item" href="myArticles.php">Mano CV</a>
+                <a class="dropdown-item" href="read.php">Mano CV</a>
                 <a class="dropdown-item" href="newarticle.php">Sukurti klasę</a>
                 <a class="dropdown-item" href="myArticles.php">Mano klasės</a>
                 <?php } ?>

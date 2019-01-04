@@ -133,7 +133,7 @@
               <tbody> <?php
                         while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
                 echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                echo "<form action='read.php' method='POST'><input name='article_id' value='$row[article_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[title]</button></form></td></tr>";
+                echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td></tr>";
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
             
