@@ -52,7 +52,8 @@
         }
         if($value > 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-                $query = "SELECT article_id, category_name, title, text, username, time_stamp, statusas, views "
+            $db->set_charset("utf8");
+                $query = "SELECT cv_id, category_name, title, text, username, time_stamp, statusas, views "
                     . "FROM " . TBL_ARTICLES . ", " . TBL_USERS . ", " . TBL_CATEGORIES . " WHERE fk_user_id = userid AND category = category_id AND category_id = $value AND statusas = 2"
                         . " ORDER BY time_stamp DESC";
                 $result = mysqli_query($db, $query);
@@ -61,15 +62,17 @@
         }
         if($value == 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-                $query = "SELECT cv_id, antraste, tekstas, kaina, dalykas, data, internetu, fk_vartotojo_id "
-                    . "FROM " . TBL_CVS . " ORDER BY data DESC LIMIT 5";
+            $db->set_charset("utf8");
+            $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 5";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
                                 {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
         }
         if($_SERVER['QUERY_STRING'] == "skaitomiausi"){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-                $query = "SELECT article_id, category_name, title, text, username, time_stamp, statusas, views "
+            $db->set_charset("utf8");
+                $query = "SELECT cv_id, category_name, title, text, username, time_stamp, statusas, views "
                     . "FROM " . TBL_ARTICLES . ", " . TBL_USERS . ", " . TBL_CATEGORIES . " WHERE fk_user_id = userid AND category = category_id AND statusas = 2"
                         . " ORDER BY views DESC  LIMIT 5";
                 $result = mysqli_query($db, $query);
@@ -100,13 +103,13 @@
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
-                            /*echo "<form action='editArticle.php' method='POST'><input name='article_id' value='$row[article_id]' hidden><button class=\"btn btn-outline-warning\" type='submit' name='submit'>Redaguoti</button></form>"
-                                         ."</td><td>" . "<form action=\"procArticleDelete.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite ištrinti šį straipsnį?');\"><button class=\"btn btn-outline-danger\" type=\"submit\">Šalinti</button><input type=\"hidden\" name=\"article_id\" value=\"$row[article_id]\">";
+                            /*echo "<form action='editArticle.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class=\"btn btn-outline-warning\" type='submit' name='submit'>Redaguoti</button></form>"
+                                         ."</td><td>" . "<form action=\"procArticleDelete.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite ištrinti šį straipsnį?');\"><button class=\"btn btn-outline-danger\" type=\"submit\">Šalinti</button><input type=\"hidden\" name=\"cv_id\" value=\"$row[cv_id]\">";
                             echo "</form></td></tr>";*/
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
         }
-        else if ($user == "guest") { ?>
+        /*else if ($user == "guest") { ?>
             <table class="table">
               <thead class="thead-light">
                 <tr>
@@ -117,23 +120,31 @@
               <tbody> <?php
                         while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
                 echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                echo "<form action='readGuest.php' method='POST'><input name='article_id' value='$row[article_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[title]</button></form></td></tr>";
+                echo "<form action='readGuest.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[title]</button></form></td></tr>";
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
             
-        }
+        }*/
         else{ ?>
             <table class="table">
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center">Naujausi straipsniai</th>
+                  <th scope="col" style="text-align: center"><?php echo "$header CV";?></th>
+                  <th scope="col" style="text-align: center">Vartotojas</th>
+                  <th scope="col" style="text-align: center">Dalykas</th>
+                  <th scope="col" style="text-align: center">Kaina</th>
+                  <th scope="col" style="text-align: center">Paskelbimo data</th>
                 </tr>
               </thead>
               <tbody> <?php
                         while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
                 echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td></tr>";
+                echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
+                echo "<button class='btn btn-link' disabled><b>" . $row['vardas'] . " " . $row['pavarde'] . "</b></td><td style=\"text-align: center\">";
+                echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td>";
+                echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
+                echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
             

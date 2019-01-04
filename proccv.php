@@ -48,6 +48,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
     if($_SESSION['cv_busena'] == "sukurimas"){
             // Create connection
             $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            $conn->set_charset("utf8");
             // Check connection
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
@@ -85,6 +86,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
     if($_SESSION['cv_busena'] == "redagavimas"){
               // Create connection
             $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            $conn->set_charset("utf8");
             // Check connection
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());

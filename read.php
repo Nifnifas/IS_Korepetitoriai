@@ -20,17 +20,24 @@
                 $_SESSION['prev'] = "read.php"; 
                 if(isset($_POST['cv_id'])){
                     $_SESSION['art'] = $_POST['cv_id'];
-                }
-                else{
-                    $_SESSION['art'];
-                }
-
-                $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde "
+                    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                    $db->set_charset("utf8");
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "Klaida skaitant lentelę"; exit;}
+                }
+                else{
+                    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                    $db->set_charset("utf8");
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde "
+                            . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
+                        $result = mysqli_query($db, $query);
+                        if (!$result || (mysqli_num_rows($result) < 1))  
+                                        {echo "Klaida skaitant lentelę"; exit;}
+                }
+                
             ?>
 
     <br><br><table class="center" style="border-width: 2px; border-color: white;"><tr><td>
@@ -43,10 +50,10 @@
                 <h2>$row[antraste]</h2>
                 <h6>
                     <small class=\"text-muted\"> Patalpinta: $row[data]</small>";
-     
-    $ql = "SELECT * FROM " . TBL_PAZYMETI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_cv_id` = '$_SESSION[art]'";
-    $q_result = mysqli_query($db, $ql);
-    if (mysqli_num_rows($q_result) == 1)
+            if($row['fk_vartotojo_id'] != $userid){
+                $ql = "SELECT * FROM " . TBL_PAZYMETI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_cv_id` = '$_SESSION[art]'";
+                $q_result = mysqli_query($db, $ql);
+                if (mysqli_num_rows($q_result) == 1)
                 {
                     $row2 = mysqli_fetch_array($q_result);
                     $_SESSION['busena_input'] = "2";
@@ -61,7 +68,9 @@
                     <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
                     <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php if($_SESSION['busena_input']==1){echo "Pažymėti";}else{echo "Ištrinti žymėjimą";}?>" /></center>
                 </form>
-              <?php echo "</h6>
+            
+                
+            <?php } echo "</h6>
                 </center>
                 <p class=\"lead\" align=\"left\">$row[tekstas]</p>
                 </div>";
