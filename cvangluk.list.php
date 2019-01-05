@@ -18,11 +18,11 @@
         include("include/meniu.php");
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
         $_SESSION['prev'] = "cvangluk.list.php";
-        
+            $header = "Anglų k.";
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = 'anglu k.'";
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header'";
             $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
             $r = mysqli_fetch_row($result);
             $numrows = $r[0];
@@ -47,7 +47,7 @@
             $offset = ($pageid - 1) * $rowsperpage;
 
             $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = 'anglu k.' ORDER BY data DESC LIMIT $offset, $rowsperpage";
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
             
                 if (!$result2 || (mysqli_num_rows($result2) < 1))  
@@ -55,7 +55,6 @@
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php
-    $header = strtoupper($_SERVER['QUERY_STRING']);
         $cc = 1;
         if($userlevel == $user_roles[ADMIN_LEVEL]){ ?>
             <table class="table">
@@ -116,10 +115,15 @@
         }
         else{ ?>
             <table class="table">
+                <thead class="thead-light">
+                <tr>
+                  <th style="text-align: center" colspan="6"><?php echo $header ?></th>
+                </tr>
+              </thead>
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center"><?php echo "$header";?></th>
+                  <th scope="col" style="text-align: center">Antraštė</th>
                   <th scope="col" style="text-align: center">Vartotojas</th>
                   <th scope="col" style="text-align: center">Dalykas</th>
                   <th scope="col" style="text-align: center">Kaina</th>
@@ -135,7 +139,7 @@
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
-            echo "</tbody></table>"; // start a table tag in the HTML
+            echo "</tbody></table><center>"; // start a table tag in the HTML
             
             //kiek rodyti puslapiu
             $range = 3;
@@ -169,7 +173,7 @@
                //gaunam sekanti psl
                $nextpage = $pageid + 1;
                echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a> ";
+               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center>";
             }
         }
         mysqli_close($db);

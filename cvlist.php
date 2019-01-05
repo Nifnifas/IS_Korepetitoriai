@@ -128,7 +128,7 @@
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php
-    $header = strtoupper($_SERVER['QUERY_STRING']);
+    $header = "Naujausi CV";
         $cc = 1;
         if($userlevel == $user_roles[ADMIN_LEVEL]){ ?>
             <table class="table">
@@ -205,10 +205,15 @@
         }*/
         else{ ?>
             <table class="table">
+                <thead class="thead-light">
+                <tr>
+                  <th style="text-align: center" colspan="6"><?php echo $header ?></th>
+                </tr>
+              </thead>
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center"><?php echo "$header";?></th>
+                  <th scope="col" style="text-align: center">Antraštė</th>
                   <th scope="col" style="text-align: center">Vartotojas</th>
                   <th scope="col" style="text-align: center">Dalykas</th>
                   <th scope="col" style="text-align: center">Kaina</th>
@@ -224,7 +229,7 @@
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
-            echo "</tbody></table>"; // start a table tag in the HTML
+            echo "</tbody></table><center>"; // start a table tag in the HTML
             
             //kiek rodyti puslapiu
             $range = 3;
@@ -258,7 +263,7 @@
                //gaunam sekanti psl
                $nextpage = $currentpage + 1;
                echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>>></a> ";
+               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>>></a></center> ";
             }
         }
         mysqli_close($db);
