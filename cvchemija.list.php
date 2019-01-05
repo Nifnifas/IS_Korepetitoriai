@@ -28,7 +28,7 @@
             $numrows = $r[0];
 
             //eiluciu kiekis per puslapi
-            $rowsperpage = 1;
+            $rowsperpage = 5;
             //puslapiu kiekis
             $totalpages = ceil($numrows / $rowsperpage);
             //randam dabartini arba default

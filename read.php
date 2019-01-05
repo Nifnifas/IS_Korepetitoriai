@@ -22,7 +22,7 @@
                     $_SESSION['art'] = $_POST['cv_id'];
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id "
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id, views "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -31,7 +31,7 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id "
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id, views "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -44,7 +44,7 @@
     <?php
 
         $row = mysqli_fetch_array($result);   //Creates a loop to loop through results
-        //$viewsCount = $row['views']+1;
+        $viewsCount = $row['views']+1;
         echo "<div class=\"container\">
                 <center>
                 <h2>$row[antraste]</h2>
@@ -74,10 +74,10 @@
                 </center>
                 <p class=\"lead\" align=\"left\">$row[tekstas]</p>
                 </div>";
-        /*$uql = "UPDATE " . TBL_CVS . " SET `views`= '$viewsCount'"
-                    . " WHERE `article_id` = '$_SESSION[art]'";
+        $uql = "UPDATE " . TBL_CVS . " SET `views`= '$viewsCount'"
+                    . " WHERE `cv_id` = '$_SESSION[art]'";
         mysqli_query($db, $uql);
-        mysqli_close($db);*/
+        mysqli_close($db);
         
     ?>
                 

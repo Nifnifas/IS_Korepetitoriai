@@ -17,40 +17,14 @@
         include("include/functions.php");
         include("include/meniu.php");
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
-        $_SESSION['prev'] = "cvmatematika.list.php";
-            $header = "Matematika";
+        $_SESSION['prev'] = "cvpopuliariausi.list.php";
+            $header = "Populiariausi CV";
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
-            $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header'";
-            $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
-            $r = mysqli_fetch_row($result);
-            $numrows = $r[0];
-
-            //eiluciu kiekis per puslapi
-            $rowsperpage = 5;
-            //puslapiu kiekis
-            $totalpages = ceil($numrows / $rowsperpage);
-            //randam dabartini arba default
-            if (isset($_GET['pageid']) && is_numeric($_GET['pageid'])) {
-               $pageid = (int) $_GET['pageid'];
-            } else {
-               //default puslapio numeris
-               $pageid = 1;
-            }
-            if ($pageid > $totalpages) {
-               $pageid = $totalpages;
-            } 
-            if ($pageid < 1) {
-               $pageid = 1;
-            }
-            $offset = ($pageid - 1) * $rowsperpage;
-
-            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC LIMIT $offset, $rowsperpage";
-            $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
-            
-                if (!$result2 || (mysqli_num_rows($result2) < 1))  
+            $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY views DESC LIMIT 10";
+                $result = mysqli_query($db, $query);
+                if (!$result || (mysqli_num_rows($result) < 1))  
                                 {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
@@ -67,7 +41,7 @@
                 </tr>
               </thead>
               <tbody> <?php
-                        while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
+                        while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
@@ -78,40 +52,6 @@
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
             
-            //kiek rodyti puslapiu
-            $range = 3;
-            if ($pageid > 1) {
-               //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
-               //gaunam pries tai buvusio puslapi
-               $prevpage = $pageid - 1;
-               //grizti i pirma psl
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
-            }
-
-            //tam kad rodytu puslapius aplink dabartini page
-            for ($x = ($pageid - $range); $x < (($pageid + $range) + 1); $x++) {
-               //jei teisingas nr
-               if (($x > 0) && ($x <= $totalpages)) {
-                  //jei esam dabartiniame puslapy
-                  if ($x == $pageid) {
-                     //pazymi, bet nedaro link
-                     echo " [<b>$x</b>] ";
-                  //jei ne dabartinis psl
-                  } else {
-                     //darom linka
-                     echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
-                  }
-               }
-            }
-
-            //jei nepaskutinis psl, rodom linkus i prieki ir atgal        
-            if ($pageid != $totalpages) {
-               //gaunam sekanti psl
-               $nextpage = $pageid + 1;
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a> ";
-            }
         }
         else{ ?>
             <table class="table">
@@ -131,7 +71,7 @@
                 </tr>
               </thead>
               <tbody> <?php
-                        while($row = mysqli_fetch_assoc($result2)){   //Creates a loop to loop through results
+                        while($row = mysqli_fetch_assoc($result)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['vardas'] . " " . $row['pavarde'] . "</b></td><td style=\"text-align: center\">";
@@ -140,41 +80,6 @@
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
             echo "</tbody></table><center>"; // start a table tag in the HTML
-            
-            //kiek rodyti puslapiu
-            $range = 3;
-            if ($pageid > 1) {
-               //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
-               //gaunam pries tai buvusio puslapi
-               $prevpage = $pageid - 1;
-               //grizti i pirma psl
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
-            }
-
-            //tam kad rodytu puslapius aplink dabartini page
-            for ($x = ($pageid - $range); $x < (($pageid + $range) + 1); $x++) {
-               //jei teisingas nr
-               if (($x > 0) && ($x <= $totalpages)) {
-                  //jei esam dabartiniame puslapy
-                  if ($x == $pageid) {
-                     //pazymi, bet nedaro link
-                     echo " [<b>$x</b>] ";
-                  //jei ne dabartinis psl
-                  } else {
-                     //darom linka
-                     echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
-                  }
-               }
-            }
-
-            //jei nepaskutinis psl, rodom linkus i prieki ir atgal        
-            if ($pageid != $totalpages) {
-               //gaunam sekanti psl
-               $nextpage = $pageid + 1;
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center>";
-            }
         }
         mysqli_close($db);
 ?>

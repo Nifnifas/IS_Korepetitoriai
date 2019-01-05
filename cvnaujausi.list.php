@@ -17,71 +17,9 @@
         include("include/functions.php");
         include("include/meniu.php");
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
-        $_SESSION['prev'] = "cvlist.php"; 
-        $value = 0;
-        if($_SERVER['QUERY_STRING'] == "angluk"){
-            $header="Anglų k.";
-            $value = 6;
-        }
-        if($_SERVER['QUERY_STRING'] == "lietuviuk"){
-            $header="Lietuvių k.";
-            $value = 5;
-        }
-        if($_SERVER['QUERY_STRING'] == "it"){
-            $header="IT";
-            $value = 4;
-        }
-        if($_SERVER['QUERY_STRING'] == "chemija"){
-            $header="Chemija";
-            $value = 3;
-        }
-        if($_SERVER['QUERY_STRING'] == "fizika"){
-            $header="Fizika";
-            $value = 2;
-        }
-        if($_SERVER['QUERY_STRING'] == "matematika"){
-            $header="Matematika";
-            $value = 1;
-        }
-        //kategorijos
-        if($value > 0){
-            $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-            $db->set_charset("utf8");
-            $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = 'matematika'";
-            $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
-            $r = mysqli_fetch_row($result);
-            $numrows = $r[0];
-
-            //eiluciu kiekis per puslapi
-            $rowsperpage = 1;
-            //puslapiu kiekis
-            $totalpages = ceil($numrows / $rowsperpage);
-            //randam dabartini arba default
-            if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
-               $currentpage = (int) $_GET['currentpage'];
-            } else {
-               //default puslapio numeris
-               $currentpage = 1;
-            }
-            if ($currentpage > $totalpages) {
-               $currentpage = $totalpages;
-            } 
-            if ($currentpage < 1) {
-               $currentpage = 1;
-            }
-            $offset = ($currentpage - 1) * $rowsperpage;
-
-            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = 'matematika' ORDER BY data DESC LIMIT $offset, $rowsperpage";
-            $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
-            
-                if (!$result2 || (mysqli_num_rows($result2) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
-
-        }
+        $_SESSION['prev'] = "cvnaujausi.list.php"; 
+       
         //naujausi cv
-        if($value == 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
@@ -91,7 +29,7 @@
             $numrows = $r[0];
 
             //eiluciu kiekis per puslapi
-            $rowsperpage = 1;
+            $rowsperpage = 5;
             //puslapiu kiekis
             $totalpages = ceil($numrows / $rowsperpage);
             //randam dabartini arba default
@@ -114,17 +52,6 @@
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
             if (!$result2 || (mysqli_num_rows($result2) < 1))  
                             {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
-        }
-        //populiariausi
-        if($value == 0){
-            $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-            $db->set_charset("utf8");
-            $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 10";
-                $result = mysqli_query($db, $query);
-                if (!$result2 || (mysqli_num_rows($result2) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
-        }        
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php
@@ -187,22 +114,6 @@
                echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>>></a> ";
             }
         }
-        /*else if ($user == "guest") { ?>
-            <table class="table">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col" style="text-align: center">Naujausi straipsniai</th>
-                </tr>
-              </thead>
-              <tbody> <?php
-                        while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
-                echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                echo "<form action='readGuest.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[title]</button></form></td></tr>";
-                        }
-            echo "</tbody></table>"; // start a table tag in the HTML
-            
-        }*/
         else{ ?>
             <table class="table">
                 <thead class="thead-light">
@@ -235,7 +146,7 @@
             $range = 3;
             if ($currentpage > 1) {
                //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}??currentpage=1'><<</a> ";
+               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=1'><<</a> ";
                //gaunam pries tai buvusio puslapi
                $prevpage = $currentpage - 1;
                //grizti i pirma psl
