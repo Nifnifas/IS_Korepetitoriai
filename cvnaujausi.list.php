@@ -18,12 +18,13 @@
         include("include/meniu.php");
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
         $_SESSION['prev'] = "cvnaujausi.list.php"; 
-       
+        $tipas = getUserLookupType($userlevel);
+        
         //naujausi cv
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id)";
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas'";
             $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
             $r = mysqli_fetch_row($result);
             $numrows = $r[0];
@@ -48,7 +49,7 @@
             $offset = ($currentpage - 1) * $rowsperpage;
 
             $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT $offset, $rowsperpage";
+                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
             if (!$result2 || (mysqli_num_rows($result2) < 1))  
                             {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}

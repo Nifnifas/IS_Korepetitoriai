@@ -237,5 +237,15 @@ function checkForPrice ($text, $error_name){
 	        else return true;
 }
 
+function getUserLookupType($userlevel){
+    if($userlevel == 1){
+        $tipas = "Mokytojas";
+    }
+    if($userlevel == 5){ 
+        $tipas = "Mokinys";
+    }
+    return $tipas;
+}
+
  ?>
  
