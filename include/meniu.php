@@ -33,14 +33,14 @@ $userlevel = $_SESSION['ulevel'];
               Kategorijos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="articlesList.php?sportas">Anglų k.</a>
-              <a class="dropdown-item" href="articlesList.php?mokslas">Lietuvių k.</a>
-              <a class="dropdown-item" href="articlesList.php?politika">Matematika</a>
-              <a class="dropdown-item" href="articlesList.php?kriminalai">Fizika</a>
-              <a class="dropdown-item" href="articlesList.php?verslas">Chemija</a>
-              <a class="dropdown-item" href="articlesList.php?gyvenimas">IT</a>
+              <a class="dropdown-item" href="cvlist.php?angluk">Anglų k.</a>
+              <a class="dropdown-item" href="cvlist.php?lietuviuk">Lietuvių k.</a>
+              <a class="dropdown-item" href="cvlist.php?matematika">Matematika</a>
+              <a class="dropdown-item" href="cvlist.php?fizika">Fizika</a>
+              <a class="dropdown-item" href="cvlist.php?chemija">Chemija</a>
+              <a class="dropdown-item" href="cvlist.php?it">IT</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="articlesList.php?skaitomiausi">Populiariausi</a>
+              <a class="dropdown-item" href="cvlist.php?populiariausi">Populiariausi</a>
             </div>
           </li>
 

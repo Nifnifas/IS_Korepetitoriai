@@ -26,58 +26,60 @@
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
         $_SESSION['prev'] = "cvlist.php"; 
         $value = 0;
-        if($_SERVER['QUERY_STRING'] == "kriminalai"){
-            $value = 8;
-        }
-        if($_SERVER['QUERY_STRING'] == "politika"){
-            $value = 7;
-        }
-        if($_SERVER['QUERY_STRING'] == "maistas"){
+        if($_SERVER['QUERY_STRING'] == "angluk"){
+            $header="Anglų k.";
             $value = 6;
         }
-        if($_SERVER['QUERY_STRING'] == "menas"){
+        if($_SERVER['QUERY_STRING'] == "lietuviuk"){
+            $header="Lietuvių k.";
             $value = 5;
         }
-        if($_SERVER['QUERY_STRING'] == "gyvenimas"){
+        if($_SERVER['QUERY_STRING'] == "it"){
+            $header="IT";
             $value = 4;
         }
-        if($_SERVER['QUERY_STRING'] == "verslas"){
+        if($_SERVER['QUERY_STRING'] == "chemija"){
+            $header="Chemija";
             $value = 3;
         }
-        if($_SERVER['QUERY_STRING'] == "mokslas"){
+        if($_SERVER['QUERY_STRING'] == "fizika"){
+            $header="Fizika";
             $value = 2;
         }
-        if($_SERVER['QUERY_STRING'] == "sportas"){
+        if($_SERVER['QUERY_STRING'] == "matematika"){
+            $header="Matematika";
             $value = 1;
         }
+        //kategorijos
         if($value > 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
-                $query = "SELECT cv_id, category_name, title, text, username, time_stamp, statusas, views "
-                    . "FROM " . TBL_ARTICLES . ", " . TBL_USERS . ", " . TBL_CATEGORIES . " WHERE fk_user_id = userid AND category = category_id AND category_id = $value AND statusas = 2"
-                        . " ORDER BY time_stamp DESC";
+            $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Straipsnių nėra!</td></tr></table><br>";exit;}
+                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+
         }
+        //naujausi cv
         if($value == 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 5";
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
                                 {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
         }
-        if($_SERVER['QUERY_STRING'] == "skaitomiausi"){
+        //populiariausi
+        if($value == 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
-                $query = "SELECT cv_id, category_name, title, text, username, time_stamp, statusas, views "
-                    . "FROM " . TBL_ARTICLES . ", " . TBL_USERS . ", " . TBL_CATEGORIES . " WHERE fk_user_id = userid AND category = category_id AND statusas = 2"
-                        . " ORDER BY views DESC  LIMIT 5";
+            $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 10";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Straipsnių nėra!</td></tr></table><br>";exit;}
+                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
         }
 
 
@@ -130,7 +132,7 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center"><?php echo "$header CV";?></th>
+                  <th scope="col" style="text-align: center"><?php echo "$header";?></th>
                   <th scope="col" style="text-align: center">Vartotojas</th>
                   <th scope="col" style="text-align: center">Dalykas</th>
                   <th scope="col" style="text-align: center">Kaina</th>
