@@ -114,6 +114,21 @@ function verifyLogin($userMail, $pass){
                     return true;
                 }
  }
+ 
+ function verifyPass($pass, $userid){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `vartotojo_id` = '$userid' AND `slaptazodis` = '$pass'";
+    $result = mysqli_query($db, $sql);
+    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+                {
+                        $_SESSION['pass_error']=
+				"<font size=\"2\" color=\"#ff0000\">Ne toks slaptažodis!</font>";
+                    return false;
+                }
+                else {
+                    return true;
+                }
+ }
 
 function checkMail($mail) {   // e-mail sintax error checking  
 	   if (!$mail || strlen($mail = trim($mail)) == 0) 

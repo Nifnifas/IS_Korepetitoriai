@@ -31,7 +31,7 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde "
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  

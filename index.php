@@ -14,7 +14,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <table class="center" ><tr><td>
+        <table class="center"><tr><td>
             <center><img src="include/topB.png"></center>
         </td></tr><tr><td> 
         <?php
