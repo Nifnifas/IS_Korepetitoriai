@@ -22,7 +22,7 @@
                     $_SESSION['art'] = $_POST['cv_id'];
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id, views "
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -31,8 +31,8 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, fk_vartotojo_id, views "
-                            . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
+                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views "
+                            . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "Klaida skaitant lentelę"; exit;}
@@ -45,11 +45,6 @@
 
         $row = mysqli_fetch_array($result);   //Creates a loop to loop through results
         $viewsCount = $row['views']+1;
-        echo "<div class=\"container\">
-                <center>
-                <h2>$row[antraste]</h2>
-                <h6>
-                    <small class=\"text-muted\"> Patalpinta: $row[data]</small>";
             if($row['fk_vartotojo_id'] != $userid){
                 $ql = "SELECT * FROM " . TBL_PAZYMETI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_cv_id` = '$_SESSION[art]'";
                 $q_result = mysqli_query($db, $ql);
@@ -62,29 +57,143 @@
                 {
                     $_SESSION['busena_input'] = "1";
                 }
-?>
-                <form method="POST" action="procpazymeticv.php">
-                    <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
-                    <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
-                    <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php if($_SESSION['busena_input']==1){echo "Pažymėti";}else{echo "Ištrinti žymėjimą";}?>" /></center>
-                </form>
-            
-                
-            <?php } echo "</h6>
-                </center>
-                <p class=\"lead\" align=\"left\">$row[tekstas]</p>
-                </div>";
+                $fk_klases_id = getClassID($row['fk_vartotojo_id'], "Dabartiniai");
+                $zl = "SELECT * FROM " . TBL_KLASES_NARIAI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_klases_id` = '$fk_klases_id'";
+                $z_result = mysqli_query($db, $zl);
+                if (mysqli_num_rows($z_result) == 1)
+                {
+                    $row3 = mysqli_fetch_array($z_result);
+                    $_SESSION['bsn_input'] = "2";
+                }
+                else
+                {
+                    $_SESSION['bsn_input'] = "1";
+                }
+            }
         $uql = "UPDATE " . TBL_CVS . " SET `views`= '$viewsCount'"
                     . " WHERE `cv_id` = '$_SESSION[art]'";
         mysqli_query($db, $uql);
         mysqli_close($db);
-        
-    ?>
-                
-        <br>	
+    ?>   	
          </td></tr>
-                </table><br><br>   
-        
+                </table>
+                
+<div class="container">
+
+      <div class="row">
+    <div class="col"></div>
+    <div class="col-10">
+          <div class="row">
+    <div class="col-md-4 img">
+        <img src="include/default-avatar.png"  alt="" class="rounded-circle">
+    </div>
+    <div class="col-md-6 details">
+          <div class="row">
+        <h3><?php echo "$row[vardas] $row[pavarde]"; ?></h3>
+        <?php if($userid != $row['fk_vartotojo_id']){ ?>
+        <form method="POST" action="procpazymeticv.php">
+                    <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
+                    <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
+                    <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php if($_SESSION['busena_input']==1){echo "Pažymėti";}else{echo "Ištrinti žymėjimą";}?>" /></center>
+        </form>
+        <?php } ?>
+          </div>
+      <p>
+          
+     	
+            <div class="container">
+		<div class="row">
+			<img src="include/star.png" alt=""/>
+				<div class="rating-block" id="rating">
+                                    <button type="button" class="btn btn-primary btn-sm btn-grey" onclick="toggle_visibility('rating');" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm btn-grey" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm btn-grey" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>   
+				</div>	
+		</div>	
+            </div>
+          
+          <img src="include/star.png" alt=""/>Įvertinimas: <b>4.6</b> / 5<br>
+          <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
+          <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
+          <img src="include/location.png" alt=""><?php echo "[miestas]"; ?><br>
+          <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>         
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <br>
+      <blockquote>
+        <h5><?php echo "$row[antraste]"; ?></h5>
+        <small><cite title="Source Title">Patalpinta: <?php echo"$row[data]"; ?></small><i class="icon-map-marker"></i></cite></small>
+      </blockquote>
+      <p>
+          <?php echo "$row[tekstas]"; ?> <br>
+      </p>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col">
+        <h5><?php echo "Kontaktai"; ?></h5>
+    </div>
+        <div class="col">
+      <p>
+          <img src="include/phone.png" alt=""> <?php echo "+$row[telefono_nr]"; ?>
+        </div>
+          <div class="col">
+              <img src="include/mail.png" alt=""> <?php $link = autolink($row['el_pastas']); echo "$link"; ?> <br>
+      </p>
+          </div>
+    </div>
+        <?php if($row['statusas'] == "Mokytojas"){ ?>
+        <div class="row">
+            <div class="col">
+                <h5><?php echo "Mokiniai"; ?></h5>
+                <p>
+                   beta
+                </p>
+            </div>
+        </div>
+        <?php } ?>
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                  </div>
+                  <div class="col-sm">
+                      <center>
+                          <?php if($userid != $row['fk_vartotojo_id'] && $userlevel == 1){ ?>
+                          
+                          <form method="POST" action="procnewclassmember.php">
+                              <input type="hidden" name="mokytojo_id" id="mokytojo_id" value="<?php echo"$row[fk_vartotojo_id]"; ?>"/>
+                              <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['bsn_input']==1){echo "1";}else{echo "2";}?>"/>
+                              <input type="submit" name="submit" id="submit" class="btn btn-primary" <?php if($_SESSION['bsn_input']==1){echo "value=\"Užsirašyti pas mokytoją\"";}else{echo "value=\"Jūs jau užsirašęs!\" disabled";}?> /></center>
+                          </form>
+                          <?php } ?>
+                      </center>
+                  </div>
+                  <div class="col-sm">
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+    <br>
 <div class="container">
    <form method="POST" id="comment_form">
     <div class="form-group">
@@ -163,6 +272,14 @@ $(document).ready(function(){
  });
 });
 </script>
-        
+<script>
+function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display === 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }      
+</script>
 </body>
 </html>
