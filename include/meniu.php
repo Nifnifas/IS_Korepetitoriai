@@ -48,10 +48,31 @@ $userlevel = $_SESSION['ulevel'];
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Vartotojų valdymas</a>
             </li>
-          <?php } ?>
         </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
+              <div class="dropdown-menu">
+                <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
+                <div class="dropdown-divider"></div>
+                <?php if($userlevel > 0) { ?>   
+                <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
+                <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
+                <a class="dropdown-item" href="read.php">Mano CV</a>
+                <a class="dropdown-item" href="mynewclassmembers.php">Norintys užsirašyti</a>
+                <a class="dropdown-item" href="myclass.php">Mano mokiniai</a>
+                <?php } ?>
+                <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="logout.php">Atsijungti</a>
+              </div>
+            </div>
+        </form>
+          <?php } ?>
+        
 
-        <?php if ($_SESSION['user'] != "guest") { ?> 
+        <?php if (($userlevel != $user_roles[ADMIN_LEVEL]) && ($_SESSION['user'] != "guest")) { ?> 
+      </ul>
         <form class="form-inline my-2 my-lg-0">
             <div class="btn-group">
               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
@@ -62,8 +83,6 @@ $userlevel = $_SESSION['ulevel'];
                 <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
                 <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
                 <a class="dropdown-item" href="read.php">Mano CV</a>
-                <a class="dropdown-item" href="newarticle.php">Sukurti klasę</a>
-                <a class="dropdown-item" href="myArticles.php">Mano klasės</a>
                 <?php } ?>
                 <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
                 <div class="dropdown-divider"></div>
@@ -73,6 +92,7 @@ $userlevel = $_SESSION['ulevel'];
         </form>
         <?php } if ($_SESSION['user'] == "guest"){
             ?>
+      </ul>
         <form class="form-inline my-2 my-lg-0">
             <div class="btn-group">
               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>

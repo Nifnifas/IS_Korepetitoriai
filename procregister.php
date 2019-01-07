@@ -64,6 +64,14 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "register"))
         $sql = "INSERT INTO " . TBL_USERS. " (vartotojo_id, vardas, pavarde, el_pastas, slaptazodis, telefono_nr, statusas, prisijungimo_laikas)
                VALUES ('$userid', '$name', '$surname','$userEmail', '$pass', '$phone', '$userType', '$time')";
         if (mysqli_query($db, $sql)){
+            if($userType == "1"){
+               $dabartiniai = "INSERT INTO " . TBL_CLASS. " (rusis, fk_vartotojo_id)
+                                VALUES ('1', '$userid')";
+                mysqli_query($db, $dabartiniai);
+                $buvusieji = "INSERT INTO " . TBL_CLASS. " (rusis, fk_vartotojo_id)
+                                VALUES ('2', '$userid')";
+                mysqli_query($db, $buvusieji);
+            }
             $_SESSION['message']="Registracija sėkminga! Dabar galite prisijungti.";
         }
         else {
