@@ -31,7 +31,7 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -73,10 +73,11 @@
         $uql = "UPDATE " . TBL_CVS . " SET `views`= '$viewsCount'"
                     . " WHERE `cv_id` = '$_SESSION[art]'";
         mysqli_query($db, $uql);
-        mysqli_close($db);
+        
     ?>   	
          </td></tr>
                 </table>
+    
    
 <div class="container">
 
@@ -99,32 +100,95 @@
         <?php } ?>
           </div>
       <p>
+            
+          <?php
+          if($row['fk_vartotojo_id'] != $userid){
+                $ivertinimai = "SELECT * FROM " . TBL_IVERTINIMAS . " WHERE `fk_vartotojo_id` = '$userid' AND `skirtas_id` = '$row[fk_vartotojo_id]'";
+                $rez_ivert = mysqli_query($db, $ivertinimai);
+                if (mysqli_num_rows($rez_ivert) == 0){ ?>
           
-     	
             <div class="container">
 		<div class="row">
-			<img src="include/star.png" alt=""/>
 				<div class="rating-block" id="rating">
-                                    <button type="button" class="btn btn-primary btn-sm btn-grey" onclick="toggle_visibility('rating');" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-sm btn-grey" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-sm btn-grey" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>   
+                                    <form id="form" method="POST">
+                                        <input type="text" id="skiriama" name="skiriama" value="<?php echo "$row[fk_vartotojo_id]"; ?>" hidden/>
+                                        <button id="ivertinti1" value="1" class="btn btn-warning" aria-label="Left Align">1</button>
+                                        <button id="ivertinti2" value="2" class="btn btn-warning" aria-label="Left Align">2</button>
+                                        <button id="ivertinti3" value="3" class="btn btn-warning" aria-label="Left Align">3</button>
+                                        <button id="ivertinti4" value="4" class="btn btn-warning" aria-label="Left Align">4</button>
+                                        <button id="ivertinti5" value="5" class="btn btn-warning" aria-label="Left Align">5</button>
+                                    </form>
 				</div>	
 		</div>	
             </div>
+      
+          <?php } } 
+          mysqli_close($db);
+          ?>
+
+<script>
+$(document).ready(function(){
+$("#ivertinti1").click(function(){
+var reiksme = $("#ivertinti1").val();
+var skiriama = $("#skiriama").val();
+$.post("ivertinti.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+reiksme:reiksme,
+skiriama: skiriama
+},
+function(response,status){ // Required Callback Function
+alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
+$("#form")[0].reset();
+});
+});
+$("#ivertinti2").click(function(){
+var reiksme = $("#ivertinti2").val();
+var skiriama = $("#skiriama").val();
+$.post("ivertinti.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+reiksme:reiksme,
+var skiriama = $("#skiriama").val();
+$.post("ivertinti.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+reiksme:reiksme,
+skiriama: skiriama
+},
+function(response,status){ // Required Callback Function
+alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
+$("#form")[0].reset();
+});
+});
+$("#ivertinti4").click(function(){
+var reiksme = $("#ivertinti4").val();
+var skiriama = $("#skiriama").val();
+$.post("ivertinti.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+reiksme:reiksme,
+skiriama: skiriama
+},
+function(response,status){ // Required Callback Function
+alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
+$("#form")[0].reset();
+});
+});
+$("#ivertinti5").click(function(){
+var reiksme = $("#ivertinti5").val();
+var skiriama = $("#skiriama").val();
+$.post("ivertinti.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+reiksme:reiksme,
+skiriama: skiriama
+},
+function(response,status){ // Required Callback Function
+alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
+$("#form")[0].reset();
+});
+});
+});
+</script>
+      
           
-          <img src="include/star.png" alt=""/>Įvertinimas: <b>4.6</b> / 5<br>
+          <img src="include/star.png" alt=""/>Įvertinimas: <b><?php echo "$row[ivertinimas]"; ?></b> / 5<br>
           <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
           <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
@@ -273,15 +337,6 @@ $(document).ready(function(){
   $('#comment_content').focus();
  });
 });
-</script>
-<script>
-function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display === 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-    }      
 </script>
 </body>
 </html>
