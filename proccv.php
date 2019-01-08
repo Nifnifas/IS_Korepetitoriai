@@ -83,6 +83,29 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
                     )";
 
             if (mysqli_query($conn, $sql)) {
+                if(isset($_FILES['upload']))
+	{
+		// file name, type, size, temporary name
+		$file_name = $_FILES['upload']['name'];
+		$file_type = $_FILES['upload']['type'];
+		$file_tmp_name = $_FILES['upload']['tmp_name'];
+		$file_size = $_FILES['upload']['size'];
+ 
+		// target directory
+		$target_dir = "uploads/";
+	
+		// uploding file
+		if(move_uploaded_file($file_tmp_name,$target_dir.$file_name))
+		{
+			$ql = "UPDATE " . TBL_USERS . " SET profilio_nuotrauka='$target_dir$file_name' WHERE vartotojo_id='$fk_user_id'";
+			mysqli_query($conn, $ql);
+                        echo "<h3></h3>";
+		}
+		else
+		{
+			echo "<br><h3>Pasirinkta nuotrauka negali būti įkelta!</h3>";
+		}
+	}
                 echo "<br><br><br><h3>Jūsų CV sėkmingai sukurtas!</h3>";
                 header( "refresh:2;url=index.php");
             } else {
@@ -103,6 +126,30 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
             $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu' WHERE fk_vartotojo_id='$fk_user_id'";
 
             if (mysqli_query($conn, $sql)) {
+                // check for uploaded file
+	if(isset($_FILES['upload']))
+	{
+		// file name, type, size, temporary name
+		$file_name = $_FILES['upload']['name'];
+		$file_type = $_FILES['upload']['type'];
+		$file_tmp_name = $_FILES['upload']['tmp_name'];
+		$file_size = $_FILES['upload']['size'];
+ 
+		// target directory
+		$target_dir = "uploads/";
+	
+		// uploding file
+		if(move_uploaded_file($file_tmp_name,$target_dir.$file_name))
+		{
+			$ql = "UPDATE " . TBL_USERS . " SET profilio_nuotrauka='$target_dir$file_name' WHERE vartotojo_id='$fk_user_id'";
+			mysqli_query($conn, $ql);
+                        echo "<h3></h3>";
+		}
+		else
+		{
+			echo "<br><h3>Pasirinkta nuotrauka negali būti įkelta!</h3>";
+		}
+	}
                 echo "<br><br><br><h3>Jūsų CV sėkmingai atnaujintas!</h3>";
                 header( "refresh:2;url=index.php");
             } else {

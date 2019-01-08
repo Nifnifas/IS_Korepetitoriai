@@ -23,7 +23,7 @@ $userlevel = $_SESSION['ulevel'];
             <a class="nav-link" href="index.php">Pagrindinis<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Paieška</a>
+              <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Vartotojo paieška</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cvnaujausi.list.php">Naujausi CV</a>
@@ -111,7 +111,7 @@ $userlevel = $_SESSION['ulevel'];
             <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
                 <div class="col-6">
                     <form action="search.php" method="POST">
-                <input class="form-control mr-sm-2" type="search" placeholder="Paieška" name="paieska" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ieškoti vartotojo (vardas ir/arba pavardė)" name="paieska" aria-label="Search">
                 </div>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ieškoti</button>
                 </form>

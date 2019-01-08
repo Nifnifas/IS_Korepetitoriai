@@ -244,6 +244,9 @@ function getUserLookupType($userlevel){
     if($userlevel == 5){ 
         $tipas = "Mokinys";
     }
+    if($userlevel == 0){ 
+        $tipas = "Svecias";
+    }
     return $tipas;
 }
 

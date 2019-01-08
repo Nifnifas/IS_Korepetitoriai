@@ -31,11 +31,7 @@ include("include/functions.php");
                     $_SESSION['internetu_input']=$row['internetu'];
                     $_SESSION['cv_busena'] = "redagavimas";
     }
-    else{
-                    $_SESSION['cv_busena'] = "sukurimas";
-                    
-    }
-    if (mysqli_num_rows($result) == 1 && $userlevel == 1){
+    else if (mysqli_num_rows($result) == 1 && $userlevel == 1){
         $row = mysqli_fetch_array($result);
                     $_SESSION['antraste_input']=$row['antraste'];
                     $_SESSION['dalykas_input']=$row['dalykas'];
@@ -47,6 +43,7 @@ include("include/functions.php");
                 {
                     $_SESSION['cv_busena'] = "sukurimas";
                 }
+                
     if($userlevel == 5){
 ?>
   <br><br><table class="center" style="border-width: 2px;"><tr><td>                              
@@ -57,7 +54,11 @@ include("include/functions.php");
                                                 <div class="panel">
                                                     <p>Užpildykite visus laukus</p>
                                                 </div>
-                                                <form action="proccv.php" method="POST"> 
+                                                <form action="proccv.php" method="POST" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                    <label for="exampleFormControlFile1">Pasirinkite savo profilio nuotrauką</label>
+                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
+                                                    </div>
                                                     <div class="form-group">
                                                         <input type="text" name="antraste" class="form-control" value="<?php echo $_SESSION['antraste_input']?>" placeholder="Antraštė"/>
                                                         <?php echo $_SESSION['letters_error']; ?>
@@ -137,7 +138,11 @@ include("include/functions.php");
                                                 <div class="panel">
                                                     <p>Užpildykite visus laukus</p>
                                                 </div>
-                                                <form action="proccv.php" method="POST"> 
+                                                <form action="proccv.php" method="POST" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                    <label for="exampleFormControlFile1">Pasirinkite savo profilio nuotrauką</label>
+                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
+                                                    </div>
                                                     <div class="form-group">
                                                         <input type="text" name="antraste" class="form-control" value="<?php echo $_SESSION['antraste_input']?>" placeholder="Antraštė"/>
                                                         <?php echo $_SESSION['letters_error']; ?>
