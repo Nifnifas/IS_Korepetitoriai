@@ -21,6 +21,7 @@ session_start();
   $antraste = $_POST['antraste'];
   $dalykas = $_POST['dalykas'];
   $tekstas = $_POST['tekstas'];
+  $miestas = $_POST['miestas'];
   $internetu = $_POST['internetu'];
   date_default_timezone_set('Europe/Vilnius');
   $time = date("Y-m-d H:i:s");
@@ -29,11 +30,12 @@ session_start();
   $_SESSION['letters_error']="";
   $_SESSION['dalykas_error']="";
   $_SESSION['tekstas_error']="";
+  $_SESSION['miestas_error']="";
   $_SESSION['internetu_error']="";
   $_SESSION['antraste_input']="$antraste";
   $_SESSION['dalykas_input']="$dalykas";
   $_SESSION['tekstas_input']="$tekstas";
-  
+  $_SESSION['miestas_input']="$miestas";
   $_SESSION['internetu_input']="$internetu";
   $priceStatus = false;
   if($userlevel == 1){
@@ -50,8 +52,9 @@ session_start();
   checkForInput($antraste, "letters_error");  
   checkForInput($tekstas, "tekstas_error");
   checkForDropSelection($dalykas, "dalykas_error");
+  checkForDropSelection($miestas, "miestas_error");
   checkForDropSelection($internetu, "internetu_error");
-if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") &&  $priceStatus
+if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") && checkForDropSelection($miestas, "miestas_error") &&  $priceStatus
         && checkForDropSelection($internetu, "internetu_error")){
     if($_SESSION['cv_busena'] == "sukurimas"){
             // Create connection
@@ -64,7 +67,8 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 
             $sql = "INSERT INTO " . TBL_CVS . " (
                     antraste, 
-                    tekstas, 
+                    tekstas,
+                    miestas,
                     kaina,
                     dalykas,
                     data,
@@ -74,11 +78,12 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
                 VALUES (
                     '$antraste',
                         '$tekstas',
-                            '$kaina',
-                                '$dalykas',
-                                    '$time',
-                                        '$internetu',
-                                            '$fk_user_id'
+                            '$miestas',
+                                '$kaina',
+                                    '$dalykas',
+                                        '$time',
+                                            '$internetu',
+                                                '$fk_user_id'
 
                     )";
 
@@ -103,7 +108,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 		}
 		else
 		{
-			echo "<br><h3>Pasirinkta nuotrauka negali būti įkelta!</h3>";
+			echo "<h3></h3>";
 		}
 	}
                 echo "<br><br><br><h3>Jūsų CV sėkmingai sukurtas!</h3>";
@@ -123,7 +128,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
                 die("Connection failed: " . mysqli_connect_error());
             }
             
-            $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu' WHERE fk_vartotojo_id='$fk_user_id'";
+            $sql = "UPDATE " . TBL_CVS . " SET antraste='$antraste', tekstas='$tekstas', miestas='$miestas', kaina='$kaina', dalykas='$dalykas', data='$time', internetu='$internetu' WHERE fk_vartotojo_id='$fk_user_id'";
 
             if (mysqli_query($conn, $sql)) {
                 // check for uploaded file
@@ -147,7 +152,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 		}
 		else
 		{
-			echo "<br><h3>Pasirinkta nuotrauka negali būti įkelta!</h3>";
+			echo "<h3></h3>";
 		}
 	}
                 echo "<br><br><br><h3>Jūsų CV sėkmingai atnaujintas!</h3>";
@@ -161,7 +166,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 }
 else{
         // griztam taisyti
-        //header("Location:newcv.php");exit;
+        header("Location:newcv.php");exit;
 }
 
 //header("Location:articles.php");exit;

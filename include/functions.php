@@ -27,12 +27,14 @@ function inisession($arg) {   //valom sesijos kintamuosius
                 $_SESSION['dalykas_input']="";
                 $_SESSION['tekstas_input']="";
                 $_SESSION['kaina_input']="";
+                $_SESSION['miestas_input']="";
                 $_SESSION['internetu_input']="";
                 $_SESSION['letters_error']="";
                 $_SESSION['dalykas_error']="";
                 $_SESSION['tekstas_error']="";
                 $_SESSION['kaina_error']="";
                 $_SESSION['internetu_error']="";
+                $_SESSION['miestas_error']="";
                 $_SESSION['art']="";
         }
 
@@ -210,7 +212,7 @@ function checkForInput ($text, $error_name){
 }
 
 function checkForDropSelection($selected, $error_name){
-    if($selected > 0){
+    if($selected > 0 || $selected != "Pasirinkite..."){
         return true;
     }
     else{

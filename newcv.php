@@ -28,6 +28,7 @@ include("include/functions.php");
                     $_SESSION['dalykas_input']=$row['dalykas'];
                     $_SESSION['tekstas_input']=$row['tekstas'];
                     $_SESSION['kaina_input']=$row['kaina'];
+                    $_SESSION['miestas_input']=$row['miestas'];
                     $_SESSION['internetu_input']=$row['internetu'];
                     $_SESSION['cv_busena'] = "redagavimas";
     }
@@ -36,6 +37,7 @@ include("include/functions.php");
                     $_SESSION['antraste_input']=$row['antraste'];
                     $_SESSION['dalykas_input']=$row['dalykas'];
                     $_SESSION['tekstas_input']=$row['tekstas'];
+                    $_SESSION['miestas_input']=$row['miestas'];
                     $_SESSION['internetu_input']=$row['internetu'];
                     $_SESSION['cv_busena'] = "redagavimas";
     }
@@ -106,6 +108,32 @@ include("include/functions.php");
                                                         </div>
                                                     </div>
                                                         <?php echo $_SESSION['kaina_error']; ?>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group mb-3">
+                                                        <select class="custom-select" name="miestas">
+                                                            <option>Pasirinkite...</option>
+                                                            <?php
+                                                                $conn->set_charset("utf8");
+                                                                if (!$conn) {
+                                                                    die("Connection failed: " . mysqli_connect_error());
+
+                                                                }
+
+                                                                $sql_u = "SELECT id, miestas FROM miestai";
+                                                                    $res_u = mysqli_query($conn, $sql_u);
+                                                                                                foreach($res_u as $key => $val) {
+                                                                                                        ?>
+                                                                                   <option value="<?php echo $val['miestas']; ?>" <?php if($_SESSION['miestas_input'] == $val['miestas']){echo "selected";}?>><?php echo "$val[miestas]"; ?></option>
+                                                                                                        <?php
+                                                                                                }
+                                                                                                echo "</select>";
+                                                        ?>
+                                                         <div class="input-group-append">
+                                                            <label class="input-group-text" for="inputGroupSelect03">Jūsų gyvenamasis miestas</label>
+                                                        </div>
+                                                        </div>
+                                                        <?php echo $_SESSION['miestas_error']; ?>
                                                     </div>
                                                      <div class="form-group">
                                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">

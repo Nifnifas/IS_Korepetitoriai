@@ -22,7 +22,7 @@
                     $_SESSION['art'] = $_POST['cv_id'];
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT cv_id, antraste, tekstas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -31,7 +31,7 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT cv_id, antraste, tekstas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -127,7 +127,7 @@
           <img src="include/star.png" alt=""/>Įvertinimas: <b>4.6</b> / 5<br>
           <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
-          <img src="include/location.png" alt=""><?php echo "[miestas]"; ?><br>
+          <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
           <?php if($row['statusas'] == "Mokytojas"){ ?>
           <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
           <?php } ?>
