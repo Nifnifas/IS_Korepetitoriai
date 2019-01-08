@@ -26,7 +26,7 @@
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "Klaida skaitant lentelę"; exit;}
+                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Šis vartotojas neturi savo CV!</td></tr></table><br>";exit;}
                 }
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -35,7 +35,7 @@
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "Klaida skaitant lentelę"; exit;}
+                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Jūs dar neturite savo cv!</td></tr></table><br>";exit;}
                 }
                 
             ?>
@@ -128,7 +128,9 @@
           <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
           <img src="include/location.png" alt=""><?php echo "[miestas]"; ?><br>
-          <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>         
+          <?php if($row['statusas'] == "Mokytojas"){ ?>
+          <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
+          <?php } ?>
       </p>
     </div>
   </div>

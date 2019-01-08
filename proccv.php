@@ -21,29 +21,37 @@ session_start();
   $antraste = $_POST['antraste'];
   $dalykas = $_POST['dalykas'];
   $tekstas = $_POST['tekstas'];
-  $kaina = $_POST['kaina'];
   $internetu = $_POST['internetu'];
   date_default_timezone_set('Europe/Vilnius');
   $time = date("Y-m-d H:i:s");
   $fk_user_id = $_SESSION['userid'];
-  
+  $userlevel = $_SESSION['ulevel'];
   $_SESSION['letters_error']="";
   $_SESSION['dalykas_error']="";
   $_SESSION['tekstas_error']="";
-  $_SESSION['kaina_error']="";
   $_SESSION['internetu_error']="";
   $_SESSION['antraste_input']="$antraste";
   $_SESSION['dalykas_input']="$dalykas";
   $_SESSION['tekstas_input']="$tekstas";
-  $_SESSION['kaina_input']="$kaina";
+  
   $_SESSION['internetu_input']="$internetu";
+  $priceStatus = false;
+  if($userlevel == 1){
+      $kaina = "0";
+      $priceStatus = true;
+  }
+  if($userlevel == 5){
+      $kaina = $_POST['kaina'];
+      $_SESSION['kaina_error']="";
+      $_SESSION['kaina_input']="$kaina";
+      $priceStatus = checkForPrice($kaina, "kaina_error");
+  }
 
   checkForInput($antraste, "letters_error");  
   checkForInput($tekstas, "tekstas_error");
   checkForDropSelection($dalykas, "dalykas_error");
-  checkForPrice($kaina, "kaina_error");
   checkForDropSelection($internetu, "internetu_error");
-if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") &&  checkForPrice($kaina, "kaina_error")
+if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") &&  $priceStatus
         && checkForDropSelection($internetu, "internetu_error")){
     if($_SESSION['cv_busena'] == "sukurimas"){
             // Create connection
@@ -106,7 +114,7 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 }
 else{
         // griztam taisyti
-        header("Location:newcv.php");exit;
+        //header("Location:newcv.php");exit;
 }
 
 //header("Location:articles.php");exit;
