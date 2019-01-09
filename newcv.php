@@ -9,7 +9,7 @@
     </head>
     <body>
         
-        <table class="center"><tr><td><img src="include/topB.png"></td></tr><tr><td><br>
+        <table class="center"><tr><td><img src="include/banners/banner2.png"></td></tr><tr><td><br>
                                 
 <?php
 session_start();

@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/topB.png"></center>
+            <center><img src="include/banners/banner2.png"></center>
         <br>
     <?php
     session_start();

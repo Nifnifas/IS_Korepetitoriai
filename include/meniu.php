@@ -106,7 +106,7 @@ $userlevel = $_SESSION['ulevel'];
         <?php } ?>
       </div>
     </nav>
-
+        <?php if($userlevel > 0 && $_SESSION['user'] != 'guest'){ ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <form action="sort.php" class="form-inline" method="POST">
@@ -171,6 +171,7 @@ $userlevel = $_SESSION['ulevel'];
                 </form>
       </div>
     </nav>
+        <?php } ?>
         
         <div class="collapse" id="collapseExample">
             <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">

@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/topB.png"></center>
+            <center><img src="include/banners/banner2.png"></center>
         <br>
     <?php
     session_start();
@@ -29,12 +29,13 @@ and open the template in the editor.
     include("include/functions.php");
     $_SESSION['place_input'] = "";
     $_SESSION['subject_input'] = "";
-    
+    $tipas = getUserLookupType($userlevel);
     
     if($subject == "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM " . TBL_CVS;
+        $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
@@ -42,7 +43,8 @@ and open the template in the editor.
     if($subject == "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM " . TBL_CVS . " WHERE miestas = '$place'";
+        $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.miestas = '$place'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
@@ -50,7 +52,8 @@ and open the template in the editor.
     if($subject != "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM " . TBL_CVS . " WHERE dalykas = '$subject'";
+        $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
@@ -58,7 +61,8 @@ and open the template in the editor.
     if($subject != "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM " . TBL_CVS . " WHERE dalykas = '$subject' AND miestas = '$place'";
+        $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject' AND cv.miestas = '$place'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
