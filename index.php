@@ -67,6 +67,18 @@ and open the template in the editor.
                                 <div class="col-8 text-left"><?php echo "<b>$row[antraste]</b> (<i>$row[statusas]</i>)<br>"; ?>
                                         <?php echo "$row[tekstas]"; ?>
                                     </div>
+                                <script>
+                                    $('#something<?php echo "$i";?>')
+                                      .css('cursor', 'pointer')
+                                      .hover(
+                                        function(){
+                                          $(this).css('background', '#3a98bf');
+                                        },
+                                        function(){
+                                          $(this).css('background', '');
+                                        }
+                                      );
+                                  </script>
                                 <div class="col text-right"><?php echo "<b>$row[vardas] $row[pavarde]</b><br>$row[data]<br>$row[dalykas]"; $i++;?></div>
                               </div>
                             
@@ -79,38 +91,7 @@ and open the template in the editor.
 
                <?php } ?>
                 </div>
-                <script>
-                $('#something1')
-  .css('cursor', 'pointer')
-  .hover(
-    function(){
-      $(this).css('background', '#3a98bf');
-    },
-    function(){
-      $(this).css('background', '');
-    }
-  );
-  $('#something2')
-  .css('cursor', 'pointer')
-  .hover(
-    function(){
-      $(this).css('background', '#3a98bf');
-    },
-    function(){
-      $(this).css('background', '');
-    }
-  );
-  $('#something3')
-  .css('cursor', 'pointer')
-  .hover(
-    function(){
-      $(this).css('background', '#3a98bf');
-    },
-    function(){
-      $(this).css('background', '');
-    }
-  );
-  </script>
+                
         <?php
             }                
                   else {   			 

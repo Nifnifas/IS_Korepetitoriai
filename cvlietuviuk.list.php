@@ -48,7 +48,7 @@
             }
             $offset = ($pageid - 1) * $rowsperpage;
 
-            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.miestas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+            $sql2 = "SELECT * FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' AND vartotojas.statusas='$tipas' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
             
@@ -83,7 +83,7 @@
             }
             $offset = ($pageid - 1) * $rowsperpage;
             
-            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.miestas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+            $sql2 = "SELECT * FROM (" . TBL_CVS
                                     . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
             if (!$result2 || (mysqli_num_rows($result2) < 1))  
@@ -93,59 +93,66 @@
     <table class="center" style="border-color: white;"><tr><td>
     <?php
         $cc = 1;
-        if($userlevel == $user_roles[ADMIN_LEVEL]){ ?>
-            <table class="table">
+        
+                ?>
+            <style>
+                    .jumbotron {
+                          padding: 15px;
+                    }
+                    .img-thumbnail{
+                        background-color:gray;
+                        position: absolute;
+                        margin: auto;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                    }
+                </style>
+                <div class="container p-4">
+                    <table class="table">
                 <thead class="thead-light">
                 <tr>
                   <th style="text-align: center" colspan="6"><?php echo $header ?></th>
                 </tr>
               </thead>
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col" style="text-align: center">Antraštė</th>
-                  <th scope="col" style="text-align: center">Miestas</th>
-                  <th scope="col" style="text-align: center">Paskelbimo data</th>
-                </tr>
-              </thead>
-              <tbody> <?php
-                        while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
-                            echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
-                            /*echo "<form action='editArticle.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class=\"btn btn-outline-warning\" type='submit' name='submit'>Redaguoti</button></form>"
-                                         ."</td><td>" . "<form action=\"procArticleDelete.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite ištrinti šį straipsnį?');\"><button class=\"btn btn-outline-danger\" type=\"submit\">Šalinti</button><input type=\"hidden\" name=\"cv_id\" value=\"$row[cv_id]\">";
-                            echo "</form></td></tr>";*/
-                        }
-            echo "</tbody></table>"; // start a table tag in the HTML
-        }
-        else{ ?>
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                  <th style="text-align: center" colspan="6"><?php echo $header ?></th>
-                </tr>
-              </thead>
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col" style="text-align: center">Antraštė</th>
-                  <th scope="col" style="text-align: center">Miestas</th>
-                  <th scope="col" style="text-align: center">Kaina</th>
-                  <th scope="col" style="text-align: center">Paskelbimo data</th>
-                </tr>
-              </thead>
-              <tbody> <?php
-                        while($row = mysqli_fetch_assoc($result2)){   //Creates a loop to loop through results
-                            echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
-                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
-                            echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
-                        }
-            echo "</tbody></table>"; // start a table tag in the HTML
-        }
+                    </table>
+                <?php
+                $i = 1;
+                while($row = mysqli_fetch_array($result2)){ ?>
+                    <form method="POST" action="read.php">
+                    <div class="jumbotron" onclick="this.parentNode.submit();" id="something<?php echo "$i";?>">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-1" text-center><img src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle img-thumbnail"/></div>
+                                <div class="col-8 text-left"><?php echo "<b>$row[antraste]</b> (<i>$row[statusas]</i>)<br>"; ?>
+                                        <?php echo "$row[tekstas]"; ?>
+                                    </div>
+                                <script>
+                                    $('#something<?php echo "$i";?>')
+                                      .css('cursor', 'pointer')
+                                      .hover(
+                                        function(){
+                                          $(this).css('background', '#3a98bf');
+                                        },
+                                        function(){
+                                          $(this).css('background', '');
+                                        }
+                                      );
+                                  </script>
+                                <div class="col text-right"><?php echo "<b>$row[vardas] $row[pavarde]</b><br>$row[data]<br>$row[dalykas]"; $i++;?></div>
+                              </div>
+                            
+                                   <input type="text" id="cv_id" name="cv_id" value="<?php echo "$row[cv_id]"; ?>" hidden/>
+                            
+                        
+                      </div>
+                    </div>
+                        </form>
+
+               <?php } ?>
+                </div>
+                <?php
          
         echo "<center>";
             //kiek rodyti puslapiu
