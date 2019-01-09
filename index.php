@@ -109,5 +109,6 @@ and open the template in the editor.
                           }
         ?>
         </table>
+        <?php include("include/footer.php"); ?>
     </body>
 </html>
