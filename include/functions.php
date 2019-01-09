@@ -35,6 +35,8 @@ function inisession($arg) {   //valom sesijos kintamuosius
                 $_SESSION['kaina_error']="";
                 $_SESSION['internetu_error']="";
                 $_SESSION['miestas_error']="";
+                $_SESSION['place_input']="";
+                $_SESSION['subject_input']="";
                 $_SESSION['art']="";
         }
 

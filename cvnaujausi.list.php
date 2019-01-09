@@ -139,6 +139,7 @@
                   <th scope="col" style="text-align: center">Kaina</th>
                   <th scope="col" style="text-align: center">Paskelbimo data</th>
                 </tr>
+                
               </thead>
               <tbody> <?php
                         while($row = mysqli_fetch_assoc($result2)){   //Creates a loop to loop through results
