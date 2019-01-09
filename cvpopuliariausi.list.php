@@ -20,6 +20,7 @@
         $_SESSION['prev'] = "cvpopuliariausi.list.php";
             $header = "Populiariausi CV";
             $tipas = getUserLookupType($userlevel);
+            if($userlevel > 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
@@ -27,6 +28,16 @@
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
                                 {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+            }
+            else{
+                $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                $db->set_charset("utf8");
+                $query = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY views DESC LIMIT 10";
+                $result = mysqli_query($db, $query);
+                if (!$result || (mysqli_num_rows($result) < 1))  
+                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+            }
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php

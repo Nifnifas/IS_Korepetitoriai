@@ -20,6 +20,7 @@
         $_SESSION['prev'] = "cvchemija.list.php";
             $header = "chemija";
             $tipas = getUserLookupType($userlevel);
+            if($userlevel > 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
@@ -53,6 +54,41 @@
             
                 if (!$result2 || (mysqli_num_rows($result2) < 1))  
                                 {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+            }
+            else{
+            $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            $db->set_charset("utf8");
+            $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header'";
+            $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
+            $r = mysqli_fetch_row($result);
+            $numrows = $r[0];
+
+            //eiluciu kiekis per puslapi
+            $rowsperpage = 5;
+            //puslapiu kiekis
+            $totalpages = ceil($numrows / $rowsperpage);
+            //randam dabartini arba default
+            if (isset($_GET['pageid']) && is_numeric($_GET['pageid'])) {
+               $pageid = (int) $_GET['pageid'];
+            } else {
+               //default puslapio numeris
+               $pageid = 1;
+            }
+            if ($pageid > $totalpages) {
+               $pageid = $totalpages;
+            } 
+            if ($pageid < 1) {
+               $pageid = 1;
+            }
+            $offset = ($pageid - 1) * $rowsperpage;
+            
+            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.miestas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC LIMIT $offset, $rowsperpage";
+            $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
+            if (!$result2 || (mysqli_num_rows($result2) < 1))  
+                            {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+        }
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php

@@ -17,12 +17,12 @@
                 include("include/meniu.php");
                 include("include/functions.php");
                 if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
-                $_SESSION['prev'] = "read.php"; 
+                $_SESSION['prev'] = "read.php";
                 if(isset($_POST['cv_id'])){
                     $_SESSION['art'] = $_POST['cv_id'];
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -138,7 +138,7 @@ skiriama: skiriama
 },
 function(response,status){ // Required Callback Function
 alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
-$("#form")[0].reset();
+window.location.reload();
 });
 });
 $("#ivertinti2").click(function(){
@@ -147,6 +147,15 @@ var skiriama = $("#skiriama").val();
 $.post("ivertinti.php", //Required URL of the page on server
 { // Data Sending With Request To Server
 reiksme:reiksme,
+skiriama: skiriama
+},
+function(response,status){ // Required Callback Function
+alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
+window.location.reload();
+});
+});
+$("#ivertinti3").click(function(){
+var reiksme = $("#ivertinti3").val();
 var skiriama = $("#skiriama").val();
 $.post("ivertinti.php", //Required URL of the page on server
 { // Data Sending With Request To Server
@@ -154,8 +163,8 @@ reiksme:reiksme,
 skiriama: skiriama
 },
 function(response,status){ // Required Callback Function
-alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
-$("#form")[0].reset();
+alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
+window.location.reload();
 });
 });
 $("#ivertinti4").click(function(){
@@ -167,8 +176,8 @@ reiksme:reiksme,
 skiriama: skiriama
 },
 function(response,status){ // Required Callback Function
-alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
-$("#form")[0].reset();
+alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
+window.location.reload();
 });
 });
 $("#ivertinti5").click(function(){
@@ -180,15 +189,15 @@ reiksme:reiksme,
 skiriama: skiriama
 },
 function(response,status){ // Required Callback Function
-alert("*----Received Data----*nnResponse : " + response+"nnStatus : " + status);//"response" receives - whatever written in echo of above PHP script.
-$("#form")[0].reset();
+alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo of above PHP script.
+window.location.reload();
 });
 });
 });
 </script>
       
           
-          <img src="include/star.png" alt=""/>Įvertinimas: <b><?php echo "$row[ivertinimas]"; ?></b> / 5<br>
+<img src="include/star.png" alt=""/>Įvertinimas: <b><?php $reitingas = getCurrentRating($row['fk_vartotojo_id']); echo "$reitingas"; ?></b> / 5<br>
           <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
           <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
@@ -228,7 +237,10 @@ $("#form")[0].reset();
             <div class="col">
                 <h5><?php echo "Mokiniai"; ?></h5>
                 <p>
-                   beta
+                <?php $classid = getClassID($row['fk_vartotojo_id'], "Dabartiniai"); $mm = getClassCount($classid, "Priimtas"); 
+                           if($mm == 0){echo "Šiuo metu mokytojas mokinių neturi!";} else if($mm > 0 && $mm == 1){echo "Šiuo metu pas mokytoją mokosi <b>$mm</b> mokinys.";}
+                           else if($mm > 0 && ($mm == 10 || $mm == 20 || $mm == 30 || $mm == 40 || $mm == 50)){echo "Šiuo metu pas mokytoją mokosi <b>$mm</b> mokinių.";}
+                           else {echo "Šiuo metu pas mokytoją mokosi <b>$mm</b> mokiniai.";}?>
                 </p>
             </div>
         </div>
@@ -259,6 +271,7 @@ $("#form")[0].reset();
     <div class="col"></div>
   </div>
 </div>
+    <?php if($userlevel != 0){ ?>
     <br>
 <div class="container">
    <form method="POST" id="comment_form">
@@ -338,5 +351,6 @@ $(document).ready(function(){
  });
 });
 </script>
+    <?php } ?>
 </body>
 </html>

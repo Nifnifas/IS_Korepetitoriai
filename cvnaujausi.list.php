@@ -21,6 +21,7 @@
         $tipas = getUserLookupType($userlevel);
         
         //naujausi cv
+        if($userlevel > 0){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
@@ -47,12 +48,47 @@
                $currentpage = 1;
             }
             $offset = ($currentpage - 1) * $rowsperpage;
-
+            
             $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.miestas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
                                     . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
             if (!$result2 || (mysqli_num_rows($result2) < 1))  
                             {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+        }
+        else{
+            $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+            $db->set_charset("utf8");
+            $sql = "SELECT COUNT(*) FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id)";
+            $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);
+            $r = mysqli_fetch_row($result);
+            $numrows = $r[0];
+
+            //eiluciu kiekis per puslapi
+            $rowsperpage = 5;
+            //puslapiu kiekis
+            $totalpages = ceil($numrows / $rowsperpage);
+            //randam dabartini arba default
+            if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
+               $currentpage = (int) $_GET['currentpage'];
+            } else {
+               //default puslapio numeris
+               $currentpage = 1;
+            }
+            if ($currentpage > $totalpages) {
+               $currentpage = $totalpages;
+            } 
+            if ($currentpage < 1) {
+               $currentpage = 1;
+            }
+            $offset = ($currentpage - 1) * $rowsperpage;
+            
+            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.miestas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT $offset, $rowsperpage";
+            $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
+            if (!$result2 || (mysqli_num_rows($result2) < 1))  
+                            {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+        }
 ?>
     <table class="center" style="border-color: white;"><br><br><tr><td>
     <?php
@@ -78,7 +114,7 @@
                         while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td>";
+                            echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td style='text-align: center'>";
                             echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                             /*echo "<form action='editArticle.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class=\"btn btn-outline-warning\" type='submit' name='submit'>Redaguoti</button></form>"
@@ -98,8 +134,8 @@
                 <tr>
                   <th scope="col"></th>
                   <th scope="col" style="text-align: center">Antraštė</th>
-                  <th scope="col" style="text-align: center">Vartotojas</th>
                   <th scope="col" style="text-align: center">Dalykas</th>
+                  <th scope="col" style="text-align: center">Miestas</th>
                   <th scope="col" style="text-align: center">Kaina</th>
                   <th scope="col" style="text-align: center">Paskelbimo data</th>
                 </tr>
@@ -108,8 +144,8 @@
                         while($row = mysqli_fetch_assoc($result2)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['vardas'] . " " . $row['pavarde'] . "</b></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td>";
+                            echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td style='text-align: center'>";
+                            echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td style='text-align: center'>";
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
