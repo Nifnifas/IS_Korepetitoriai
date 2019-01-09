@@ -47,7 +47,7 @@
             }
             $offset = ($pageid - 1) * $rowsperpage;
 
-            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
+            $sql2 = "SELECT vartotojas.vardas, vartotojas.pavarde, cv.antraste, cv.cv_id, cv.dalykas, cv.tekstas, cv.miestas, cv.kaina, cv.data, cv.internetu FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' AND vartotojas.statusas='$tipas' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
             
@@ -59,11 +59,16 @@
         $cc = 1;
         if($userlevel == $user_roles[ADMIN_LEVEL]){ ?>
             <table class="table">
+                 <thead class="thead-light">
+                <tr>
+                  <th style="text-align: center" colspan="6"><?php echo $header ?></th>
+                </tr>
+              </thead>
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center"><?php echo "$header";?></th>
-                  <th scope="col">Kaina</th>
+                  <th scope="col" style="text-align: center">Antraštė</th>
+                  <th scope="col" style="text-align: center">Miestas</th>
                   <th scope="col">Paskelbimo data</th>
                 </tr>
               </thead>
@@ -71,48 +76,13 @@
                         while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
+                            echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                             /*echo "<form action='editArticle.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class=\"btn btn-outline-warning\" type='submit' name='submit'>Redaguoti</button></form>"
                                          ."</td><td>" . "<form action=\"procArticleDelete.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite ištrinti šį straipsnį?');\"><button class=\"btn btn-outline-danger\" type=\"submit\">Šalinti</button><input type=\"hidden\" name=\"cv_id\" value=\"$row[cv_id]\">";
                             echo "</form></td></tr>";*/
                         }
             echo "</tbody></table>"; // start a table tag in the HTML
-            
-            //kiek rodyti puslapiu
-            $range = 3;
-            if ($pageid > 1) {
-               //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
-               //gaunam pries tai buvusio puslapi
-               $prevpage = $pageid - 1;
-               //grizti i pirma psl
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
-            }
-
-            //tam kad rodytu puslapius aplink dabartini page
-            for ($x = ($pageid - $range); $x < (($pageid + $range) + 1); $x++) {
-               //jei teisingas nr
-               if (($x > 0) && ($x <= $totalpages)) {
-                  //jei esam dabartiniame puslapy
-                  if ($x == $pageid) {
-                     //pazymi, bet nedaro link
-                     echo " [<b>$x</b>] ";
-                  //jei ne dabartinis psl
-                  } else {
-                     //darom linka
-                     echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
-                  }
-               }
-            }
-
-            //jei nepaskutinis psl, rodom linkus i prieki ir atgal        
-            if ($pageid != $totalpages) {
-               //gaunam sekanti psl
-               $nextpage = $pageid + 1;
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a> ";
-            }
         }
         else{ ?>
             <table class="table">
@@ -125,8 +95,7 @@
                 <tr>
                   <th scope="col"></th>
                   <th scope="col" style="text-align: center">Antraštė</th>
-                  <th scope="col" style="text-align: center">Vartotojas</th>
-                  <th scope="col" style="text-align: center">Dalykas</th>
+                  <th scope="col" style="text-align: center">Miestas</th>
                   <th scope="col" style="text-align: center">Kaina</th>
                   <th scope="col" style="text-align: center">Paskelbimo data</th>
                 </tr>
@@ -135,13 +104,13 @@
                         while($row = mysqli_fetch_assoc($result2)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $cc++ . "</button></th><td>";
                             echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[antraste]</button></form></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['vardas'] . " " . $row['pavarde'] . "</b></td><td style=\"text-align: center\">";
-                            echo "<button class='btn btn-link' disabled><b>" . $row['dalykas'] . "</b></td><td>";
+                            echo "<button class='btn btn-link' disabled><b>" . $row['miestas'] . "</b></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['kaina'] . " €</b></td><td>";
                             echo "<button class='btn btn-link' disabled>" . $row['data'] . "</form></td></tr>";
                         }
-            echo "</tbody></table><center>"; // start a table tag in the HTML
-            
+            echo "</tbody></table>"; // start a table tag in the HTML
+        }
+        echo "<center>";
             //kiek rodyti puslapiu
             $range = 3;
             if ($pageid > 1) {
@@ -176,7 +145,7 @@
                echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
                echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center>";
             }
-        }
+        
         mysqli_close($db);
 ?>
     </td></tr>

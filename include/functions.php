@@ -273,7 +273,32 @@ function getClassID($userid, $rusis){
     $result = mysqli_query($db, $sql) or die(mysqli_error());
     $row = mysqli_fetch_assoc($result);
     return $row['klases_id'];
+}
+    
+function getClassCount($classid, $rusis){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_KLASES_NARIAI . " WHERE `fk_klases_id` = '$classid' AND `busena` = '$rusis'";
+    $result = mysqli_query($db, $sql) or die(mysqli_error());
+    return mysqli_num_rows($result);
+}
+    
+function getCurrentRating($userid){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT verte FROM " . TBL_IVERTINIMAS . " WHERE `skirtas_id` = '$userid'";
+    $result = mysqli_query($db, $sql) or die(mysqli_error());
+    $bendraSuma = 0;
+    $count = 0;
+    while($row = mysqli_fetch_array($result)){
+        $bendraSuma += $row['verte'];
+        $count++;
     }
+    if($bendraSuma == 0){
+        return 0;
+    }
+    else{
+        return $bendraSuma / $count;
+    }
+}
 
  ?>
  

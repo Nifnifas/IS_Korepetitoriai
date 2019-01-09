@@ -66,8 +66,11 @@ and open the template in the editor.
               <tbody> <?php
                         $count = 1;
                         while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
+                            $mml = "SELECT cv_id FROM " . TBL_CVS . " WHERE fk_vartotojo_id = '$row[vartotojo_id]'";
+                            $result2 = mysqli_query($db, $mml);
+                            $cvrow = mysqli_fetch_array($result2);
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $count++ . "</button></th><td>";
-                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[vartotojo_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[vardas] $row[pavarde]</button></form></td><td style=\"text-align: center\">";
+                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$cvrow[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[vardas] $row[pavarde]</button></form></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['statusas'] . "</b></td></tr>";
                         }
             echo "</tbody></table>"; // start a table tag in the HTML

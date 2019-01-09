@@ -19,12 +19,12 @@
         // cia sesijos kontrole
         if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
         $_SESSION['prev'] = "myclass.php";
-        
+        $fk_klases_id = getClassID($userid, "Dabartiniai");
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
                 $query = "SELECT vartotojas.vardas, vartotojas.pavarde, vartotojas.vartotojo_id, klases_nariai.busena, klase.klases_id, klases_nariai.fk_klases_id FROM ((" . TBL_KLASES_NARIAI
                         . " INNER JOIN " . TBL_CLASS . " ON klases_nariai.fk_klases_id = klase.klases_id)"
-                        . " INNER JOIN " . TBL_USERS . " ON klases_nariai.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Priimtas'";
+                        . " INNER JOIN " . TBL_USERS . " ON klases_nariai.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Priimtas' AND klases_nariai.fk_klases_id = '$fk_klases_id'";
                         
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
