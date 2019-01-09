@@ -207,6 +207,32 @@ include("include/functions.php");
                                                         <textarea class="form-control" type="text" name="tekstas" id="exampleFormControlTextarea1" rows="4" placeholder="Trumpai aprašykite save"><?php echo $_SESSION['tekstas_input']?></textarea>
                                                         <?php echo $_SESSION['tekstas_error']; ?>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group mb-3">
+                                                        <select class="custom-select" name="miestas">
+                                                            <option>Pasirinkite...</option>
+                                                            <?php
+                                                                $conn->set_charset("utf8");
+                                                                if (!$conn) {
+                                                                    die("Connection failed: " . mysqli_connect_error());
+
+                                                                }
+
+                                                                $sql_u = "SELECT id, miestas FROM miestai";
+                                                                    $res_u = mysqli_query($conn, $sql_u);
+                                                                                                foreach($res_u as $key => $val) {
+                                                                                                        ?>
+                                                                                   <option value="<?php echo $val['miestas']; ?>" <?php if($_SESSION['miestas_input'] == $val['miestas']){echo "selected";}?>><?php echo "$val[miestas]"; ?></option>
+                                                                                                        <?php
+                                                                                                }
+                                                                                                echo "</select>";
+                                                        ?>
+                                                         <div class="input-group-append">
+                                                            <label class="input-group-text" for="inputGroupSelect03">Jūsų gyvenamasis miestas</label>
+                                                        </div>
+                                                        </div>
+                                                        <?php echo $_SESSION['miestas_error']; ?>
+                                                    </div>
                                                      <div class="form-group">
                                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                         <label class="btn btn-secondary h-25 d-inline-block <?php if($_SESSION['internetu_input']==1 || $_SESSION['internetu_input'] == "taip"){echo "active";}?>" style="width: 120px;">
