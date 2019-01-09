@@ -163,11 +163,7 @@ $userlevel = $_SESSION['ulevel'];
                                                         </div>
                                                         </div>
                                     </div>
-                    
-                             
                 <button class="btn btn-outline-success btn-lg btn-block my-2 my-sm-0" type="submit">Ieškoti</button>
-                    
-                       
                 </form>
       </div>
     </nav>

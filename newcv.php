@@ -48,7 +48,7 @@ include("include/functions.php");
                 
     if($userlevel == 5){
 ?>
-  <br><br><table class="center" style="border-width: 2px;"><tr><td>                              
+  <table class="center" style="border-width: 2px;"><tr><td>                              
                                 <div class="container">
                                     <h1 class="form-heading">CV sukūrimas</h1>
                                         <div class="login-form">

@@ -47,7 +47,7 @@ and open the template in the editor.
         echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;
     }
    ?>
-        <table class="center" style="border-color: white;"><br><br><tr><td>
+        <table class="center" style="border-color: white;"><tr><td>
         
         <table class="table">
             <thead class="thead-light">

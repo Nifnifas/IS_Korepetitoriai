@@ -16,7 +16,6 @@ and open the template in the editor.
     <body>
         <table class="center" ><tr><td>
             <center><img src="include/banners/banner2.png"></center>
-        <br>
     <?php
     session_start();
     if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
@@ -68,7 +67,7 @@ and open the template in the editor.
                                         {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
     }
    ?>
-        <table class="center" style="border-color: white;"><br><br><tr><td>
+        <table class="center" style="border-color: white;"><tr><td>
         
         <table class="table">
             <thead class="thead-light">

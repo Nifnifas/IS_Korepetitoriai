@@ -30,7 +30,7 @@
  
                         
                         
-                        <br><br><table class="center" style="border-width: 2px;"><tr><td>
+                        <table class="center" style="border-width: 2px;"><tr><td>
                                 
                                 <div class="container">
                                     <h1 class="form-heading">Paskyros redagavimas</h1>

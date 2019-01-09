@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center"><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
+            <center><img src="include/banners/main-banner.png"></center>
         </td></tr><tr><td> 
         <?php
             session_start();
@@ -32,11 +32,85 @@ and open the template in the editor.
                 include("include/meniu.php"); //įterpiamas meniu pagal vartotojo rolę
         ?>
 
-                        <div style="text-align: center;color:green">
-                            <br><br>
-                            <h1>Pradinis sistemos puslapis.</h1>
-                            <h1>Projektą finansuoja noras gaut pytaki</h1>
-                        </div><br>
+                <?php
+                            $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                            $db->set_charset("utf8");
+                            $sql = "SELECT * FROM (" . TBL_CVS
+                                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 3";
+                            $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);                
+                            if (!$result || (mysqli_num_rows($result) < 1))  
+                                            {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+                ?>
+                <style>
+                    .jumbotron {
+                          padding: 15px;
+                    }
+                    .img-thumbnail{
+                        background-color:gray;
+                        position: absolute;
+                        margin: auto;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                    }
+                </style>
+                <div class="container p-4">
+                <?php
+                $i = 1;
+                while($row = mysqli_fetch_array($result)){ ?>
+                    <form method="POST" action="read.php">
+                    <div class="jumbotron" onclick="this.parentNode.submit();" id="something<?php echo "$i";?>">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-1" text-center><img src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle img-thumbnail"/></div>
+                                <div class="col-8 text-left"><?php echo "<b>$row[antraste]</b> (<i>$row[statusas]</i>)<br>"; ?>
+                                        <?php echo "$row[tekstas]"; ?>
+                                    </div>
+                                <div class="col text-right"><?php echo "<b>$row[vardas] $row[pavarde]</b><br>$row[data]<br>$row[dalykas]"; $i++;?></div>
+                              </div>
+                            
+                                   <input type="text" id="cv_id" name="cv_id" value="<?php echo "$row[cv_id]"; ?>" hidden/>
+                            
+                        
+                      </div>
+                    </div>
+                        </form>
+
+               <?php } ?>
+                </div>
+                <script>
+                $('#something1')
+  .css('cursor', 'pointer')
+  .hover(
+    function(){
+      $(this).css('background', '#3a98bf');
+    },
+    function(){
+      $(this).css('background', '');
+    }
+  );
+  $('#something2')
+  .css('cursor', 'pointer')
+  .hover(
+    function(){
+      $(this).css('background', '#3a98bf');
+    },
+    function(){
+      $(this).css('background', '');
+    }
+  );
+  $('#something3')
+  .css('cursor', 'pointer')
+  .hover(
+    function(){
+      $(this).css('background', '#3a98bf');
+    },
+    function(){
+      $(this).css('background', '');
+    }
+  );
+  </script>
         <?php
             }                
                   else {   			 

@@ -40,7 +40,7 @@
                 
             ?>
 
-    <br><br><table class="center" style="border-width: 2px; border-color: white;"><tr><td>
+    <table class="center" style="border-width: 10px; border-color: white;"><tr><td>
     <?php
 
         $row = mysqli_fetch_array($result);   //Creates a loop to loop through results
@@ -79,7 +79,7 @@
                 </table>
     
    
-<div class="container">
+        <div class="container bg-light p-4 rounded">
 
       <div class="row">
     <div class="col"></div>

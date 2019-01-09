@@ -32,7 +32,7 @@
         ?>
 
 
-                <table class="center" style="border-color: white;"><br><br><tr><td>
+                <table class="center" style="border-color: white;"><tr><td>
 
  
             <table class="table">
