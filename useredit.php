@@ -8,7 +8,7 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
         </head>
         <body>   
-            <table class="center"><tr><td> <img src="include/banners/banner2.png"> </td></tr><tr><td> 
+            <table class="center"><tr><td><a href="index.php"><img src="include/banners/banner2.png"/></a></td></tr><tr><td> 
                 <?php 
                 // useredit.php 
                 // vartotojas gali pasikeisti slaptažodį ar email
@@ -60,6 +60,7 @@
                 </table><br><br>          
   </td></tr>
   </table>           
+              <?php include("include/footer.php"); ?>
  </body>
 </html>
 	

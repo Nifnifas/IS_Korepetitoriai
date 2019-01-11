@@ -24,7 +24,7 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
         </head>
         <body>   
-            <table class="center"><tr><td><img src="include/banners/banner2.png"></td></tr><tr><td>
+            <table class="center"><tr><td><a href="index.php"><img src="include/banners/main-banner.png"/></a></td></tr><tr><td>
                                 <table class="center" style="border-width: 2px;"><tr><td>
                                 <div class="container">
                                     <h1 class="form-heading">Registracijos langas</h1>
@@ -78,6 +78,8 @@
                                         </div>          
                                 </div>
                         </td></tr>
-                </table><br><br>          
+                </table></td></tr>
+                </table> 
+                  <?php include("include/footer.php"); ?>
         </body>
     </html>

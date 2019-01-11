@@ -15,12 +15,12 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
-        <br>
+            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
+        </td></tr><tr><td> 
     <?php
     session_start();
-    include("include/meniu.php");
     include("include/functions.php");
+    include("include/meniu.php");
     if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
     $_SESSION['prev'] = "search.php"; 
     
@@ -33,7 +33,7 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.vardas LIKE '%$paieska%' OR vartotojas.pavarde LIKE '%$paieska%'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if($kiekis == 2){
         list($part1, $part2) = explode(' ', $paieska);
@@ -43,10 +43,10 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.vardas LIKE '%$part1%' AND vartotojas.pavarde LIKE '%$part2%' OR vartotojas.vardas LIKE '%$part2%' AND vartotojas.pavarde LIKE '%$part1%'";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if ($kiekis > 2 || $paieska == ""){
-        echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;
+        echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;
     }
    ?>
         
@@ -112,7 +112,8 @@ and open the template in the editor.
     mysqli_close($db);
 ?>
                 </td></tr>
-	</table><br>
+	</table>
         </td></tr></table>
+  <?php include("include/footer.php"); ?>
     </body>
 </html>

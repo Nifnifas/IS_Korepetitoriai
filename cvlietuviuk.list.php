@@ -9,7 +9,7 @@
     </head>
     <body>
         <table class="center"><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
+            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
         </td></tr><tr><td>
                 
     <?php
@@ -53,7 +53,7 @@
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);
             
                 if (!$result2 || (mysqli_num_rows($result2) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
             }
             else{
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -87,7 +87,7 @@
                                     . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$header' ORDER BY data DESC LIMIT $offset, $rowsperpage";
             $result2 = mysqli_query($db, $sql2) or trigger_error("SQL", E_USER_ERROR);                
             if (!$result2 || (mysqli_num_rows($result2) < 1))  
-                            {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}
+                            {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
         }
 ?>
     <table class="center" style="border-color: white;"><tr><td>
@@ -194,5 +194,6 @@
     </td></tr>
     </table><br>		
     </div><br></table>
+          <?php include("include/footer.php"); ?>
 </body>
 </html>

@@ -9,7 +9,7 @@
     </head>
     <body>
         
-        <table class="center"><tr><td><img src="include/banners/banner2.png"></td></tr><tr><td><br>
+        <table class="center"><tr><td><a href="index.php"><img src="include/banners/banner2.png"/></a></td></tr><tr><td><br>
                                 
 <?php
 session_start();
@@ -255,5 +255,8 @@ include("include/functions.php");
                         </td></tr>
                 </table><br><br>
     <?php } ?>
+                </td></tr>
+                </table>
+                  <?php include("include/footer.php"); ?>
         </body>
 </html>

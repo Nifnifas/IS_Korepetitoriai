@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
+            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
     <?php
     session_start();
     if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
@@ -24,8 +24,8 @@ and open the template in the editor.
     $place = $_POST['place'];
     $_SESSION['place_input'] = $place;
     $_SESSION['subject_input'] = $subject;
-    include("include/meniu.php");
     include("include/functions.php");
+    include("include/meniu.php");
     $_SESSION['place_input'] = "";
     $_SESSION['subject_input'] = "";
     $tipas = getUserLookupType($userlevel);
@@ -37,7 +37,7 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY data DESC";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if($subject == "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -46,7 +46,7 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.miestas = '$place' ORDER BY data DESC";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if($subject != "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -55,7 +55,7 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject' ORDER BY data DESC";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if($subject != "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -64,7 +64,7 @@ and open the template in the editor.
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject' AND cv.miestas = '$place' ORDER BY data DESC";
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Deja nieko neradome!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
    ?>
             <style>
@@ -130,5 +130,6 @@ and open the template in the editor.
                 </td></tr>
 	</table><br>
         </td></tr></table>
+  <?php include("include/footer.php"); ?>
     </body>
 </html>

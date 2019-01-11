@@ -9,7 +9,7 @@
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
+            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
         </td></tr><tr><td> 
                 
         <?php
@@ -28,7 +28,7 @@
                         
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
-                                {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Jūsų klasė tuščia!</td></tr></table><br>";exit;}
+                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Jūsų klasė tuščia!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
         ?>
 
 
@@ -62,5 +62,6 @@
 			
 			
     </div><br></table>
+                  <?php include("include/footer.php"); ?>
 </body>
 </html>

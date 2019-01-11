@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <table class="center"><tr><td>
-            <center><img src="include/banners/main-banner.png"></center>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
         </td></tr><tr><td> 
         <?php
             session_start();
@@ -36,7 +36,7 @@ and open the template in the editor.
                             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                             $db->set_charset("utf8");
                             $sql = "SELECT * FROM (" . TBL_CVS
-                                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 3";
+                                                    . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT 5";
                             $result = mysqli_query($db, $sql) or trigger_error("SQL", E_USER_ERROR);                
                             if (!$result || (mysqli_num_rows($result) < 1))  
                                             {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>CV nėra!</td></tr></table><br>";exit;}

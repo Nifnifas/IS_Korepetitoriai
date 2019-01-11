@@ -10,7 +10,7 @@
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><img src="include/banners/banner2.png"></center>
+            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
         <br>
             <?php
                 session_start();
@@ -26,7 +26,7 @@
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Šis vartotojas neturi savo CV!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šis vartotojas neturi CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
                 }
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -35,7 +35,7 @@
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<table class=\"center\" style=\"border-color: white;\"><br><br><tr><td>Jūs dar neturite savo cv!</td></tr></table><br>";exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Jūs dar neturite savo CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
                 }
                 
             ?>
@@ -352,5 +352,6 @@ $(document).ready(function(){
 });
 </script>
     <?php } ?>
+  <?php include("include/footer.php"); ?>
 </body>
 </html>
