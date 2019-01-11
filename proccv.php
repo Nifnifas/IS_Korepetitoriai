@@ -18,6 +18,22 @@ session_start();
   include("include/functions.php");
          if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}
         $_SESSION['prev'] = "proccv.php";
+
+  $file_name = $_FILES['upload']['name'];
+  $imageFileType = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));
+  $file_type = $_FILES['upload']['type'];
+  $file_tmp_name = $_FILES['upload']['tmp_name'];
+ $imgDimensions = true;
+ if($file_name != ""){
+    $image_info = getimagesize($file_tmp_name);
+    $image_width = $image_info[0];
+    $image_height = $image_info[1];
+     if($image_height != 250 && $image_width != 250){
+         $_SESSION['image_error']="<font size=\"2\" color=\"#ff0000\">* Dydis privalo būti 250x250!</font>";
+         $imgDimensions = false;
+     }
+ }
+  $file_size = $_FILES['upload']['size'];
   $antraste = $_POST['antraste'];
   $dalykas = $_POST['dalykas'];
   $tekstas = $_POST['tekstas'];
@@ -48,13 +64,17 @@ session_start();
       $_SESSION['kaina_input']="$kaina";
       $priceStatus = checkForPrice($kaina, "kaina_error");
   }
+  $imgStatus = true;
+  if($file_name != ""){
+      $imgStatus = checkForImage($imageFileType);
+  }
 
   checkForInput($antraste, "letters_error");  
   checkForInput($tekstas, "tekstas_error");
   checkForDropSelection($dalykas, "dalykas_error");
   checkForDropSelection($miestas, "miestas_error");
   checkForDropSelection($internetu, "internetu_error");
-if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") && checkForDropSelection($miestas, "miestas_error") &&  $priceStatus
+if($imgDimensions && $imgStatus && checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") && checkForDropSelection($miestas, "miestas_error") &&  $priceStatus
         && checkForDropSelection($internetu, "internetu_error")){
     if($_SESSION['cv_busena'] == "sukurimas"){
             // Create connection
@@ -89,28 +109,22 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
 
             if (mysqli_query($conn, $sql)) {
                 if(isset($_FILES['upload']))
-	{
-		// file name, type, size, temporary name
-		$file_name = $_FILES['upload']['name'];
-		$file_type = $_FILES['upload']['type'];
-		$file_tmp_name = $_FILES['upload']['tmp_name'];
-		$file_size = $_FILES['upload']['size'];
- 
-		// target directory
-		$target_dir = "uploads/";
-	
-		// uploding file
-		if(move_uploaded_file($file_tmp_name,$target_dir.$file_name))
-		{
-			$ql = "UPDATE " . TBL_USERS . " SET profilio_nuotrauka='$target_dir$file_name' WHERE vartotojo_id='$fk_user_id'";
-			mysqli_query($conn, $ql);
-                        echo "<h3></h3>";
-		}
-		else
-		{
-			echo "<h3></h3>";
-		}
-	}
+                {
+                    // target directory
+                    $target_dir = "uploads/";
+
+                    // uploding file
+                    if(move_uploaded_file($file_tmp_name,$target_dir.$file_name))
+                    {
+                            $ql = "UPDATE " . TBL_USERS . " SET profilio_nuotrauka='$target_dir$file_name' WHERE vartotojo_id='$fk_user_id'";
+                            mysqli_query($conn, $ql);
+                            echo "<h3></h3>";
+                    }
+                    else
+                    {
+                            echo "<h3></h3>";
+                    }
+                }
                 echo "<br><br><br><h3>Jūsų CV sėkmingai sukurtas!</h3>";
                 header( "refresh:2;url=index.php");
             } else {
@@ -134,12 +148,6 @@ if(checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas
                 // check for uploaded file
 	if(isset($_FILES['upload']))
 	{
-		// file name, type, size, temporary name
-		$file_name = $_FILES['upload']['name'];
-		$file_type = $_FILES['upload']['type'];
-		$file_tmp_name = $_FILES['upload']['tmp_name'];
-		$file_size = $_FILES['upload']['size'];
- 
 		// target directory
 		$target_dir = "uploads/";
 	

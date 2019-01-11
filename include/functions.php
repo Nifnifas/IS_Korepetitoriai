@@ -37,6 +37,7 @@ function inisession($arg) {   //valom sesijos kintamuosius
                 $_SESSION['miestas_error']="";
                 $_SESSION['place_input']="";
                 $_SESSION['subject_input']="";
+                $_SESSION['image_error']="";
                 $_SESSION['art']="";
         }
 
@@ -300,6 +301,14 @@ function getCurrentRating($userid){
     else{
         return $bendraSuma / $count;
     }
+}
+
+function checkForImage ($imageFileType){
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+            $_SESSION['image_error'] = "<font size=\"2\" color=\"#ff0000\">* Failo formatas privalo būti jpg, jpeg arba png!</font>";
+            return false;
+        }
+        return true;
 }
 
  ?>

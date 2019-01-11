@@ -60,6 +60,7 @@ include("include/functions.php");
                                                     <div class="form-group">
                                                     <label for="exampleFormControlFile1">Pasirinkite savo profilio nuotrauką</label>
                                                     <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
+                                                    <?php echo $_SESSION['image_error']; ?>
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="text" name="antraste" class="form-control" value="<?php echo $_SESSION['antraste_input']?>" placeholder="Antraštė"/>
