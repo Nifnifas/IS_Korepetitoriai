@@ -8,9 +8,9 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        
-    </body>
-</html>
+         <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td> 
 
 <?php
 session_start(); 
@@ -33,8 +33,8 @@ if (!$conn) {
 $sql = "UPDATE " . TBL_KLASES_NARIAI . " SET `busena`= '$status' WHERE `fk_klases_id` = '$fk_klases_id' AND `fk_vartotojo_id` = '$id'";
 
 if (mysqli_query($conn, $sql)) {
-    echo "<br><br><br><h3>Sėkmingai pakeista!</h3>";
-    header( "refresh:1;url=mynewclassmembers.php");
+    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Būsena sėkmingai pakeista!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+    header( "refresh:2;url=mynewclassmembers.php");
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
@@ -42,5 +42,6 @@ if (mysqli_query($conn, $sql)) {
 mysqli_close($conn);
 //header("Location:articles.php");exit;
 ?>
-  
-  
+        </td></tr></table>
+</body>
+</html>

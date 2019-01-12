@@ -41,7 +41,8 @@ session_start();
 
             if (mysqli_query($conn, $sql)) {
                 echo "<br><br><br><h3>Sėkmingai pažymėta!</h3>";
-                header( "refresh:2;url=index.php");
+                $_SESSION['art'] = $fk_cv_id;
+                header("Location:read.php");
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
@@ -58,7 +59,8 @@ session_start();
             $sql = "DELETE FROM " . TBL_PAZYMETI . " WHERE fk_cv_id = '$fk_cv_id' AND fk_vartotojo_id = '$fk_user_id'";
             if(mysqli_query($conn, $sql)){
                 echo "<br><br><br><h3>Ištrinta sėkmingai!</h3>";
-                header( "refresh:1;url=index.php");
+                $_SESSION['art'] = $fk_cv_id;
+                header("Location:read.php");
             }
             else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);

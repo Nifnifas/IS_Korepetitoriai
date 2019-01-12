@@ -28,6 +28,15 @@
                         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šis vartotojas neturi CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
                 }
+                else if($_SESSION['art'] != ""){
+                    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                    $db->set_charset("utf8");
+                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                            . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
+                        $result = mysqli_query($db, $query);
+                        if (!$result || (mysqli_num_rows($result) < 1))  
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šis vartotojas neturi CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                }
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
@@ -257,7 +266,8 @@ window.location.reload();
                           <form method="POST" action="procnewclassmember.php">
                               <input type="hidden" name="mokytojo_id" id="mokytojo_id" value="<?php echo"$row[fk_vartotojo_id]"; ?>"/>
                               <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['bsn_input']==1){echo "1";}else{echo "2";}?>"/>
-                              <button type="submit" name="submit" id="submit" class="btn btn-primary" <?php if($_SESSION['bsn_input']==1){echo "value=\"Užsirašyti pas mokytoją\"";}else{echo "value=\"Jūs jau užsirašęs!\" disabled";}?> /></center>
+                              <input type="hidden" name="cv_id" id="cv_id" value="<?php echo "$row[cv_id]"; ?>"/>
+                              <input type="submit" name="submit" id="submit" class="btn btn-primary" <?php if($_SESSION['bsn_input']==1){echo "value=\"Užsirašyti pas mokytoją\"";}else{echo "value=\"Jūs jau užsirašęs!\" disabled";}?> /></center>
                           </form>
                           <?php } ?>
                       </center>

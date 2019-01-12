@@ -8,9 +8,10 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        
-    </body>
-</html>
+        <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td> 
+
 <?php
 session_start(); 
 
@@ -20,8 +21,10 @@ session_start();
         $_SESSION['prev'] = "procnewclassmember.php";
   $fk_mokytojo_id = $_POST['mokytojo_id'];
   $fk_klases_id = getClassID($fk_mokytojo_id, "Dabartiniai");
+  $fk_klases_id2 = $fk_klases_id + 1;
   $fk_user_id = $_SESSION['userid'];
   $busena = $_POST['busena'];
+  $fk_cv_id = $_POST['cv_id'];
   $_SESSION['bsn_input']="$busena";
             // Create connection
             $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -29,23 +32,43 @@ session_start();
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
+                $zl = "SELECT * FROM " . TBL_KLASES_NARIAI . " WHERE `fk_vartotojo_id` = '$fk_user_id' AND `fk_klases_id` = '$fk_klases_id2'";
+                $z_result = mysqli_query($conn, $zl);
+                if (mysqli_num_rows($z_result) == 1)
+                {
+                    $sql = "UPDATE " . TBL_KLASES_NARIAI . " SET `busena`= DEFAULT(busena), `fk_klases_id` = '$fk_klases_id' WHERE `fk_klases_id` = '$fk_klases_id2' AND `fk_vartotojo_id` = '$fk_user_id'";
+                    
+                    if (mysqli_query($conn, $sql)) {
+                        echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Užsirašėte sėkmingai. Laukite mokytojo patvirtinimo!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                        $_SESSION['art'] = $fk_cv_id;
+                        header( "refresh:2;url=read.php");
+                    } else {
+                       echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    }
+                    
+                }
+                else{
+                            $sql = "INSERT INTO " . TBL_KLASES_NARIAI . " (
+                            fk_klases_id, 
+                            fk_vartotojo_id 
+                        )
+                        VALUES (
+                            '$fk_klases_id',
+                                '$fk_user_id'
+                            )";
 
-            $sql = "INSERT INTO " . TBL_KLASES_NARIAI . " (
-                    fk_klases_id, 
-                    fk_vartotojo_id 
-                )
-                VALUES (
-                    '$fk_klases_id',
-                        '$fk_user_id'
-                    )";
-
-            if (mysqli_query($conn, $sql)) {
-                echo "<br><br><br><h3>Užsirašėte sėkmingai! Laukite mokytojo patvirtinimo</h3>";
-                header( "refresh:2;url=index.php");
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
-            mysqli_close($conn);
+                    if (mysqli_query($conn, $sql)) {
+                            echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Užsirašėte sėkmingai. Laukite mokytojo patvirtinimo!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                            $_SESSION['art'] = $fk_cv_id;
+                            header( "refresh:2;url=read.php");
+                    } else {
+                        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    }
+                }
+                mysqli_close($conn);
+                
+            
 ?>
-  
-  
+        </td></tr></table>
+      </body>
+</html>

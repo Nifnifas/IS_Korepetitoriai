@@ -22,9 +22,10 @@
         
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-                $query = "SELECT vartotojas.vardas, vartotojas.pavarde, vartotojas.vartotojo_id, klases_nariai.busena, klase.klases_id, klases_nariai.fk_klases_id FROM ((" . TBL_KLASES_NARIAI
+                $query = "SELECT * FROM (((" . TBL_KLASES_NARIAI
                         . " INNER JOIN " . TBL_CLASS . " ON klases_nariai.fk_klases_id = klase.klases_id)"
-                        . " INNER JOIN " . TBL_USERS . " ON klases_nariai.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Laukiama patvirtinimo'";
+                        . " INNER JOIN " . TBL_USERS . " ON klases_nariai.fk_vartotojo_id = vartotojas.vartotojo_id)"
+                        . " INNER JOIN " . TBL_CVS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Laukiama patvirtinimo'";
                         
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
@@ -32,8 +33,8 @@
         ?>
 
 
-                <table class="center" style="border-color: white;"><tr><td>
-
+             <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
+     <div class="container bg-light p-4 rounded">
  
             <table class="table">
               <thead class="thead-light">
@@ -48,7 +49,7 @@
                         $count = 1;
                         while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
                             echo "<tr><th scope=\"row\"><button class='btn btn-link' disabled>" . $count++ . "</button></th><td>";
-                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[klases_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[vardas] $row[pavarde]</button></form></td><td style=\"text-align: center\">";
+                            echo "<form action='read.php' method='POST'><input name='cv_id' value='$row[cv_id]' hidden><button class='btn btn-link' type='submit' name='submit'>$row[vardas] $row[pavarde]</button></form></td><td style=\"text-align: center\">";
                             echo "<button class='btn btn-link' disabled><b>" . $row['busena'] . "</b></td><td>";
                             echo "<form action=\"changeStudentStatus.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite priimti šį mokinį?');\"><button class=\"btn btn-outline-success\" type=\"submit\">Priimti</button>"
                             . "<input type=\"hidden\" name=\"klases_id\" value=\"$row[klases_id]\"><input type=\"hidden\" name=\"vartotojo_id\" value=\"$row[vartotojo_id]\"><input type=\"hidden\" name=\"status_id\" value=\"1\"></form></td><td>";
@@ -56,7 +57,7 @@
                             . "<input type=\"hidden\" name=\"klases_id\" value=\"$row[klases_id]\"><input type=\"hidden\" name=\"vartotojo_id\" value=\"$row[vartotojo_id]\"><input type=\"hidden\" name=\"status_id\" value=\"3\">";
                             echo "</form></td></tr>";
                         }
-            echo "</tbody></table>"; // start a table tag in the HTML
+            echo "</tbody></table></div>"; // start a table tag in the HTML
     mysqli_close($db);
     
     if($count-- == 0){
