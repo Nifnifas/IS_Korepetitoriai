@@ -61,6 +61,7 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "register"))
         $userid=md5(uniqid($userEmail));                          //naudojam toki userid
         $pass=substr(hash('sha256',$pass),5,32);     // DB password skirti 32 baitai, paimam is maisos vidurio 
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+        $db->set_charset("utf8");
         $sql = "INSERT INTO " . TBL_USERS. " (vartotojo_id, vardas, pavarde, el_pastas, slaptazodis, telefono_nr, statusas, prisijungimo_laikas)
                VALUES ('$userid', '$name', '$surname','$userEmail', '$pass', '$phone', '$userType', '$time')";
         if (mysqli_query($db, $sql)){

@@ -47,7 +47,7 @@ $userlevel = $_SESSION['ulevel'];
             </div>
           </li>
 
-          <?php if ($userlevel == $user_roles[ADMIN_LEVEL] ) { ?>
+          <?php if ($userlevel == $user_roles[MOKYTOJAS_LEVEL] ) { ?>
             <li class="nav-item">
                 
             </li>
@@ -72,9 +72,11 @@ $userlevel = $_SESSION['ulevel'];
             </div>
         </form>
           <?php } ?>
-        
-
-        <?php if (($userlevel != $user_roles[ADMIN_LEVEL]) && ($_SESSION['user'] != "guest")) { ?> 
+          
+          <?php if ($userlevel == $user_roles[ADMIN_LEVEL]) { ?> 
+          <li class="nav-item">
+            <a class="nav-link" href="admin.php">Vartotojų valdymas</a>
+          </li>
       </ul>
         <form class="form-inline my-2 my-lg-0">
             <div class="btn-group">
@@ -84,9 +86,27 @@ $userlevel = $_SESSION['ulevel'];
                 <div class="dropdown-divider"></div>
                 <?php if($userlevel > 0) { ?>   
                 <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
+                <?php } ?>
+                <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="logout.php">Atsijungti</a>
+              </div>
+            </div>
+        </form>
+        <?php } ?>
+        
+
+        <?php if ($userlevel == $user_roles[DEFAULT_LEVEL]) { ?> 
+      </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
+              <div class="dropdown-menu">
+                <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
+                <div class="dropdown-divider"></div> 
+                <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
                 <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
                 <a class="dropdown-item" href="read.php">CV peržiūra</a>
-                <?php } ?>
                 <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php">Atsijungti</a>

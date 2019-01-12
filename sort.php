@@ -40,7 +40,7 @@ and open the template in the editor.
         }
         else{
             $sql = "SELECT * FROM (" . TBL_CVS
-                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE ORDER BY data DESC";
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC";
         }
        
         $result = mysqli_query($db, $sql);

@@ -20,7 +20,7 @@
         $_SESSION['prev'] = "cvit.list.php";
             $header = "it";
             $tipas = getUserLookupType($userlevel);
-            if($userlevel > 0){
+            if($userlevel > 0 && $userlevel != 10){
             $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
             $db->set_charset("utf8");
             $sql = "SELECT COUNT(*) FROM (" . TBL_CVS

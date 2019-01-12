@@ -53,7 +53,7 @@ function checkName ($name){   // Vartotojo vardo sintakse
 				 "<font size=\"2\" color=\"#ff0000\">* Neįvestas vardas</font>";
 			 "";
 			 return false;}
-            else if (!preg_match("/^([a-zA-Z])*$/", $name))  /* Check if username is not alphabetic */ 
+            else if (!preg_match("/^([a-žA-Ž])*$/", $name))  /* Check if username is not alphabetic */ 
 			{$_SESSION['name_error']=
 				"<font size=\"2\" color=\"#ff0000\">* Galimos tik raidės</font>";
 		     return false;}
@@ -66,7 +66,7 @@ function checkSurname ($surname){   // Vartotojo vardo sintakse
 				 "<font size=\"2\" color=\"#ff0000\">* Neįvesta pavardė</font>";
 			 "";
 			 return false;}
-            else if (!preg_match("/^([a-zA-Z])*$/", $surname))  /* Check if username is not alphabetic */ 
+            else if (!preg_match("/^([a-žA-Ž])*$/", $surname))  /* Check if username is not alphabetic */ 
 			{$_SESSION['surname_error']=
 				"<font size=\"2\" color=\"#ff0000\">* Galimos tik raidės</font>";
 		     return false;}
@@ -188,6 +188,9 @@ function setUserLevel($userType){
     if($userType == "Mokytojas"){
         $level = "5";
     }
+    if($userType == "Administratorius"){
+        $level = "10";
+    }
     return $level;
 }
 
@@ -255,6 +258,9 @@ function getUserLookupType($userlevel){
         $tipas = "Mokinys";
     }
     if($userlevel == 0){ 
+        $tipas = "Svecias";
+    }
+    if($userlevel == 10){ 
         $tipas = "Svecias";
     }
     return $tipas;

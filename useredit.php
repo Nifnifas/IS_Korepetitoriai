@@ -19,7 +19,7 @@
                 session_start();
                 // sesijos kontrole
                 include("include/meniu.php");
-                if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}								  
+                if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { echo "<meta http-equiv=\"refresh\" content=\"0;url=logout.php\">"; exit;}								  
                         $_SESSION['mail_login'] = $_SESSION['user'];
                         $_SESSION['passn_login'] = "";
                 if($_SESSION['prev'] != "procuseredit"){

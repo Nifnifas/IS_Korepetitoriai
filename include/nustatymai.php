@@ -15,9 +15,11 @@ define("TBL_IVERTINIMAS", "ivertinimas");
 
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
 	"Mokytojas"=>"5",
-	"Mokinys"=>"1");   // galioja ir vartotojas "guest", kuris neturi userlevel
-define("DEFAULT_LEVEL","Mokinys");  // kokia rolė priskiriama kai registruojasi
-define("ADMIN_LEVEL","Mokytojas");  // kas turi vartotojų valdymo teisę
+	"Mokinys"=>"1",
+        "Administratorius"=>"10");   // 
+define("DEFAULT_LEVEL","Mokinys");  // paprasciausia role
+define("MOKYTOJAS_LEVEL","Mokytojas");  // mokytojo role
+define("ADMIN_LEVEL","Administratorius"); // admin role
 define("UZBLOKUOTAS","255");      // vartotojas negali prisijungti kol administratorius nepakeis rolės
 
 $uregister="both";  // kaip registruojami vartotojai
