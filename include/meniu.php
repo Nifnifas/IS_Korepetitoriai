@@ -82,7 +82,7 @@ $userlevel = $_SESSION['ulevel'];
                 <?php if($userlevel > 0) { ?>   
                 <a class="dropdown-item" href="pazymeticv.php">Pažymėtų CV sąrašas</a>
                 <a class="dropdown-item" href="newcv.php">Susikurti/Atnaujinti CV</a>
-                <a class="dropdown-item" href="read.php">Mano CV</a>
+                <a class="dropdown-item" href="read.php">CV peržiūra</a>
                 <?php } ?>
                 <a class="dropdown-item" href="useredit.php">Keisti paskyros duomenis</a>
                 <div class="dropdown-divider"></div>

@@ -108,7 +108,6 @@ and open the template in the editor.
                <?php } ?>
                 </div>
                 <?php
-        
     mysqli_close($db);
 ?>
                 </td></tr>

@@ -273,7 +273,7 @@ window.location.reload();
 </div>
     <?php if($userlevel != 0){ ?>
     <br>
-<div class="container">
+   <div class="container bg-light p-4 rounded">
    <form method="POST" id="comment_form">
     <div class="form-group">
         <textarea name="comment_content" id="comment_content" class="form-control" placeholder="Įveskite komentarą" rows="5"></textarea>
@@ -283,11 +283,13 @@ window.location.reload();
      <center><input type="submit" name="submit" onclick="refreshPage();" id="submit" class="btn btn-info" value="Komentuoti" /></center>
    </form>
     <div id="output" align="center" style="color: red;"></div>
-     <div class="form-group">    
-   <span id="comment_message"></span>
+    
+    <div class="form-group">    
+        <span id="comment_message"></span>
    <br />
    <div id="display_comment"></div>
   </div>
+    </div>
 </td></tr><tr><td> 
 </table>
 <script>

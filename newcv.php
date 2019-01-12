@@ -48,20 +48,14 @@ include("include/functions.php");
                 
     if($userlevel == 5){
 ?>
-  <table class="center" style="border-width: 2px;"><tr><td>                              
+  <table class="center" style="border-width: 20px;"><tr><td>
+              <div class="container bg-light p-4 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">CV sukūrimas</h1>
                                         <div class="login-form">
                                             <div class="main-div">
-                                                <div class="panel">
-                                                    <p>Užpildykite visus laukus</p>
-                                                </div>
+                                                <div class="container p-2"></div>
                                                 <form action="proccv.php" method="POST" enctype="multipart/form-data">
-                                                    <div class="form-group">
-                                                    <label for="exampleFormControlFile1">Pasirinkite savo profilio nuotrauką</label>
-                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
-                                                    <?php echo $_SESSION['image_error']; ?>
-                                                    </div>
                                                     <div class="form-group">
                                                         <input type="text" name="antraste" class="form-control" value="<?php echo $_SESSION['antraste_input']?>" placeholder="Antraštė"/>
                                                         <?php echo $_SESSION['letters_error']; ?>
@@ -150,16 +144,23 @@ include("include/functions.php");
                                                     </div>
                                                      </div>
                                                     <?php echo $_SESSION['internetu_error']; ?>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlFile1"><b>Pasirinkite savo profilio nuotrauką</b></label>
+                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
+                                                    <?php echo $_SESSION['image_error']; ?>
+                                                    </div>
                                                     <center><button type="submit" name="submit" class="btn btn-primary">Sukurti</button></center>
                                                 </form>                       
                                             </div>
                                         </div>          
                                 </div>
                         </td></tr>
-                </table><br><br>
-    <?php } if($userlevel == 1) {
+  </div>
+                </table> 
+   <?php } if($userlevel == 1) {
 ?>
-                 <br><br><table class="center" style="border-width: 2px;"><tr><td>                              
+                 <br><br><table class="center" style="border-width: 2px;"><tr><td>    
+                             <div class="container bg-light p-4 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">CV sukūrimas</h1>
                                         <div class="login-form">
@@ -168,10 +169,6 @@ include("include/functions.php");
                                                     <p>Užpildykite visus laukus</p>
                                                 </div>
                                                 <form action="proccv.php" method="POST" enctype="multipart/form-data">
-                                                    <div class="form-group">
-                                                    <label for="exampleFormControlFile1">Pasirinkite savo profilio nuotrauką</label>
-                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
-                                                    </div>
                                                     <div class="form-group">
                                                         <input type="text" name="antraste" class="form-control" value="<?php echo $_SESSION['antraste_input']?>" placeholder="Antraštė"/>
                                                         <?php echo $_SESSION['letters_error']; ?>
@@ -248,11 +245,17 @@ include("include/functions.php");
                                                     </div>
                                                      </div>
                                                     <?php echo $_SESSION['internetu_error']; ?>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlFile1"><b>Pasirinkite savo profilio nuotrauką</b></label>
+                                                    <input type="file" name="upload" class="form-control-file" id="exampleFormControlFile1">
+                                                    <?php echo $_SESSION['image_error']; ?>
+                                                    </div>
                                                     <center><button type="submit" name="submit" class="btn btn-primary">Sukurti</button></center>
                                                 </form>                       
                                             </div>
                                         </div>          
                                 </div>
+                             </div>
                         </td></tr>
                 </table><br><br>
     <?php } ?>
