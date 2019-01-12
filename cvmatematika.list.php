@@ -156,15 +156,15 @@
                 <?php
      
             echo "<center>";
-            //kiek rodyti puslapiu
-            $range = 3;
+        //kiek rodyti puslapiu
+            $range = 1;
             if ($pageid > 1) {
                //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
                //gaunam pries tai buvusio puslapi
                $prevpage = $pageid - 1;
                //grizti i pirma psl
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
             }
 
             //tam kad rodytu puslapius aplink dabartini page
@@ -174,11 +174,11 @@
                   //jei esam dabartiniame puslapy
                   if ($x == $pageid) {
                      //pazymi, bet nedaro link
-                     echo " [<b>$x</b>] ";
+                     echo " <button class='btn btn-primary' disabled>$x</button> ";
                   //jei ne dabartinis psl
                   } else {
                      //darom linka
-                     echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
+                     echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
                   }
                }
             }
@@ -187,9 +187,10 @@
             if ($pageid != $totalpages) {
                //gaunam sekanti psl
                $nextpage = $pageid + 1;
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center>";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center> ";
             }
+        
         
         mysqli_close($db);
 ?>

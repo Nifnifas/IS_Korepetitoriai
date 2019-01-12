@@ -35,19 +35,19 @@
             //puslapiu kiekis
             $totalpages = ceil($numrows / $rowsperpage);
             //randam dabartini arba default
-            if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
-               $currentpage = (int) $_GET['currentpage'];
+            if (isset($_GET['pageid']) && is_numeric($_GET['pageid'])) {
+               $pageid = (int) $_GET['pageid'];
             } else {
                //default puslapio numeris
-               $currentpage = 1;
+               $pageid = 1;
             }
-            if ($currentpage > $totalpages) {
-               $currentpage = $totalpages;
+            if ($pageid > $totalpages) {
+               $pageid = $totalpages;
             } 
-            if ($currentpage < 1) {
-               $currentpage = 1;
+            if ($pageid < 1) {
+               $pageid = 1;
             }
-            $offset = ($currentpage - 1) * $rowsperpage;
+            $offset = ($pageid - 1) * $rowsperpage;
             
             $sql2 = "SELECT * FROM (" . TBL_CVS
                                     . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY data DESC LIMIT $offset, $rowsperpage";
@@ -69,19 +69,19 @@
             //puslapiu kiekis
             $totalpages = ceil($numrows / $rowsperpage);
             //randam dabartini arba default
-            if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
-               $currentpage = (int) $_GET['currentpage'];
+            if (isset($_GET['pageid']) && is_numeric($_GET['pageid'])) {
+               $pageid = (int) $_GET['pageid'];
             } else {
                //default puslapio numeris
-               $currentpage = 1;
+               $pageid = 1;
             }
-            if ($currentpage > $totalpages) {
-               $currentpage = $totalpages;
+            if ($pageid > $totalpages) {
+               $pageid = $totalpages;
             } 
-            if ($currentpage < 1) {
-               $currentpage = 1;
+            if ($pageid < 1) {
+               $pageid = 1;
             }
-            $offset = ($currentpage - 1) * $rowsperpage;
+            $offset = ($pageid - 1) * $rowsperpage;
             
             $sql2 = "SELECT * FROM (" . TBL_CVS
                                     . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY data DESC LIMIT $offset, $rowsperpage";
@@ -155,38 +155,38 @@
         <?php
         echo "<center>";
         //kiek rodyti puslapiu
-            $range = 3;
-            if ($currentpage > 1) {
+            $range = 1;
+            if ($pageid > 1) {
                //rodom linka atgal
-               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=1'><<</a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=1'><<</a> ";
                //gaunam pries tai buvusio puslapi
-               $prevpage = $currentpage - 1;
+               $prevpage = $pageid - 1;
                //grizti i pirma psl
-               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'><</a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$prevpage'><</a> ";
             }
 
             //tam kad rodytu puslapius aplink dabartini page
-            for ($x = ($currentpage - $range); $x < (($currentpage + $range) + 1); $x++) {
+            for ($x = ($pageid - $range); $x < (($pageid + $range) + 1); $x++) {
                //jei teisingas nr
                if (($x > 0) && ($x <= $totalpages)) {
                   //jei esam dabartiniame puslapy
-                  if ($x == $currentpage) {
+                  if ($x == $pageid) {
                      //pazymi, bet nedaro link
-                     echo " [<b>$x</b>] ";
+                     echo " <button class='btn btn-primary' disabled>$x</button> ";
                   //jei ne dabartinis psl
                   } else {
                      //darom linka
-                     echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a> ";
+                     echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$x'>$x</a> ";
                   }
                }
             }
 
             //jei nepaskutinis psl, rodom linkus i prieki ir atgal        
-            if ($currentpage != $totalpages) {
+            if ($pageid != $totalpages) {
                //gaunam sekanti psl
-               $nextpage = $currentpage + 1;
-               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>></a> ";
-               echo " <a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>>></a></center> ";
+               $nextpage = $pageid + 1;
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$nextpage'>></a> ";
+               echo " <a class='btn btn-primary' href='{$_SERVER['PHP_SELF']}?pageid=$totalpages'>>></a></center> ";
             }
         
         mysqli_close($db);
