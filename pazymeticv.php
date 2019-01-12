@@ -8,9 +8,9 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        <table class="center" ><tr><td>
-        <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
-        </td></tr><tr><td> 
+        <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td>
                 
         <?php
         session_start();
@@ -32,14 +32,19 @@
         ?>
 
 
-                <table class="center" style="border-color: white;"><tr><td>
-
+                <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
+     <div class="container bg-light p-4 rounded">
  
             <table class="table">
+                <thead class="thead-light">
+                <tr>
+                  <th style="text-align: center" colspan="6">Pažymėti CV</th>
+                </tr>
+              </thead>
               <thead class="thead-light">
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col" style="text-align: center">Pažymėti CV</th>
+                  <th scope="col" style="text-align: center">Antraštė</th>
                   <th scope="col" style="text-align: center">Vartotojas</th>
                   <th scope="col" style="text-align: center">Dalykas</th>
                   <th colspan="2" style="text-align: center"></th>
@@ -55,7 +60,8 @@
                             echo "<form action=\"procpazymeticv.php\" method=\"post\" onsubmit=\"return confirm('Ar tikrai norite atžymėti šį cv?');\"><button class=\"btn btn-outline-danger\" type=\"submit\">Šalinti</button><input type=\"hidden\" name=\"cv_id\" value=\"$row[cv_id]\"><input type=\"hidden\" name=\"busena\" value=\"2\">";
                             echo "</form></td></tr>";
                         }
-            echo "</tbody></table>"; // start a table tag in the HTML
+            echo "</tbody></table></div>"; // start a table tag in the HTML
+            
     mysqli_close($db);
     
     if($count-- == 0){

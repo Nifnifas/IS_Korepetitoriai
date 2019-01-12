@@ -14,8 +14,9 @@ and open the template in the editor.
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        <table class="center" ><tr><td>
-            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
+        <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td>
     <?php
     session_start();
     if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
@@ -33,8 +34,15 @@ and open the template in the editor.
     if($subject == "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM (" . TBL_CVS
+        if($tipas != "Svecias"){
+             $sql = "SELECT * FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY data DESC";
+        }
+        else{
+            $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE ORDER BY data DESC";
+        }
+       
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
@@ -42,8 +50,14 @@ and open the template in the editor.
     if($subject == "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM (" . TBL_CVS
+        if($tipas != "Svecias"){
+            $sql = "SELECT * FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.miestas = '$place' ORDER BY data DESC";
+        }
+        else{
+            $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.miestas = '$place' ORDER BY data DESC";
+        }
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
@@ -51,17 +65,29 @@ and open the template in the editor.
     if($subject != "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM (" . TBL_CVS
+        if($tipas != "Svecias"){
+            $sql = "SELECT * FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject' ORDER BY data DESC";
-        $result = mysqli_query($db, $sql);
+        }
+        else{
+            $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$subject' ORDER BY data DESC";
+        }
+            $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
     }
     if($subject != "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
-        $sql = "SELECT * FROM (" . TBL_CVS
+        if($tipas != "Svecias"){
+            $sql = "SELECT * FROM (" . TBL_CVS
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' AND cv.dalykas = '$subject' AND cv.miestas = '$place' ORDER BY data DESC";
+        }
+        else{
+            $sql = "SELECT * FROM (" . TBL_CVS
+                        . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE cv.dalykas = '$subject' AND cv.miestas = '$place' ORDER BY data DESC";
+        }
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
                                         {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}

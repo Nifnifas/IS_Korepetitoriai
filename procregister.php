@@ -76,8 +76,8 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "register"))
         }
         else {
             $_SESSION['message']="DB registracijos klaida:" . $sql . "<br>" . mysqli_error($db);
-        }         
-        header("Location:index.php");exit;
+        }
+        header("Location:login.php");exit;
     }
     else{
         // griztam taisyti

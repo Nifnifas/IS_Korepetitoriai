@@ -9,7 +9,7 @@
     </head>
     <body>
         <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
         </td></tr><tr><td>
                 
     <?php
@@ -90,7 +90,6 @@
                             {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
         }
 ?>
-    <table class="center" style="border-color: white;"><tr><td>
     <?php
         $cc = 1;
         
@@ -192,9 +191,7 @@
             }
         
         mysqli_close($db);
-?>
-    </td></tr>
-    </table><br>		
+?>		
     </div><br></table>
           <?php include("include/footer.php"); ?>
 </body>

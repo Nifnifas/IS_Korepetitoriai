@@ -91,18 +91,18 @@
     <div class="col-md-6 details">
           <div class="row">
         <h3><?php echo "$row[vardas] $row[pavarde]"; ?></h3>
-        <?php if($userid != $row['fk_vartotojo_id']){ ?>
+        <?php if($userid != $row['fk_vartotojo_id'] && $userid != ""){ ?>
         <form method="POST" action="procpazymeticv.php">
                     <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
                     <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
-                    <input type="submit" name="submit" id="submit" class="btn btn-primary" value="<?php if($_SESSION['busena_input']==1){echo "Pažymėti";}else{echo "Ištrinti žymėjimą";}?>" /></center>
+                    <button type="submit" name="submit" id="submit" style="padding: 0; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/full_star.png'/>"; } else { echo "<img src='include/star.png'/>";} ?></button></center>
         </form>
         <?php } ?>
           </div>
       <p>
             
           <?php
-          if($row['fk_vartotojo_id'] != $userid){
+          if($row['fk_vartotojo_id'] != $userid && $userid != ""){
                 $ivertinimai = "SELECT * FROM " . TBL_IVERTINIMAS . " WHERE `fk_vartotojo_id` = '$userid' AND `skirtas_id` = '$row[fk_vartotojo_id]'";
                 $rez_ivert = mysqli_query($db, $ivertinimai);
                 if (mysqli_num_rows($rez_ivert) == 0){ ?>
@@ -257,7 +257,7 @@ window.location.reload();
                           <form method="POST" action="procnewclassmember.php">
                               <input type="hidden" name="mokytojo_id" id="mokytojo_id" value="<?php echo"$row[fk_vartotojo_id]"; ?>"/>
                               <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['bsn_input']==1){echo "1";}else{echo "2";}?>"/>
-                              <input type="submit" name="submit" id="submit" class="btn btn-primary" <?php if($_SESSION['bsn_input']==1){echo "value=\"Užsirašyti pas mokytoją\"";}else{echo "value=\"Jūs jau užsirašęs!\" disabled";}?> /></center>
+                              <button type="submit" name="submit" id="submit" class="btn btn-primary" <?php if($_SESSION['bsn_input']==1){echo "value=\"Užsirašyti pas mokytoją\"";}else{echo "value=\"Jūs jau užsirašęs!\" disabled";}?> /></center>
                           </form>
                           <?php } ?>
                       </center>
@@ -273,7 +273,7 @@ window.location.reload();
 </div>
     <?php if($userlevel != 0){ ?>
     <br>
-   <div class="container bg-light p-4 rounded">
+   <div class="container bg-secondary p-4 rounded">
    <form method="POST" id="comment_form">
     <div class="form-group">
         <textarea name="comment_content" id="comment_content" class="form-control" placeholder="Įveskite komentarą" rows="5"></textarea>
@@ -290,7 +290,7 @@ window.location.reload();
    <div id="display_comment"></div>
   </div>
     </div>
-</td></tr><tr><td> 
+</td></tr>
 </table>
 <script>
 function refreshPage(){
@@ -354,6 +354,8 @@ $(document).ready(function(){
 });
 </script>
     <?php } ?>
+</td></tr>
+</table>
   <?php include("include/footer.php"); ?>
 </body>
 </html>

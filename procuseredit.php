@@ -59,9 +59,11 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "useredit"))
                                 echo " DB klaida keiciant slaptazodi ir epasto adresa: " . $sql . "<br>" . mysqli_error($db);
                                 exit;
                             }
-		            $_SESSION['message']="Paskyra sėkmingai atnaujinta!<br>Prisijunkite iš naujo.";
-                            $_SESSION['user']="";
-                            header("Location:index.php");exit; 
+		            $_SESSION['message']="Paskyra sėkmingai atnaujinta! Prisijunkite iš naujo.";
+                                $_SESSION['user'] = "guest";
+                                $_SESSION['ulevel'] ="0";
+                                $_SESSION['urole'] ="Svečias";
+                            header("Location:login.php");exit; 
                         } 
                         if($passn == "") {
                             
@@ -80,9 +82,11 @@ if (!isset($_SESSION['prev']) || ($_SESSION['prev'] != "useredit"))
                                 echo " DB klaida keičiant el. pašto adresą: " . $sql . "<br>" . mysqli_error($db);
                                 exit;
                             }
-		            $_SESSION['message']="Paskyra sėkmingai atnaujinta!<br>Prisijunkite iš naujo.";
-                            $_SESSION['user']="";
-                            header("Location:index.php");exit;
+		            $_SESSION['message']="Paskyra sėkmingai atnaujinta! Prisijunkite iš naujo.";
+                                $_SESSION['user'] = "guest";
+                                $_SESSION['ulevel'] ="0";
+                                $_SESSION['urole'] ="Svečias";
+                            header("Location:login.php");exit;
                     }
 	  }
   }

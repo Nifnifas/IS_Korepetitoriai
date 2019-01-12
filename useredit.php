@@ -8,7 +8,9 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
         </head>
         <body>   
-            <table class="center"><tr><td><a href="index.php"><img src="include/banners/banner2.png"/></a></td></tr><tr><td> 
+            <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td>
                 <?php 
                 // useredit.php 
                 // vartotojas gali pasikeisti slaptažodį ar email
@@ -18,7 +20,7 @@
                 // sesijos kontrole
                 include("include/meniu.php");
                 if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}								  
-                        $_SESSION['mail_login'] = $_SESSION['umail'];
+                        $_SESSION['mail_login'] = $_SESSION['user'];
                         $_SESSION['passn_login'] = "";
                 if($_SESSION['prev'] != "procuseredit"){
                     $_SESSION['message']="";
@@ -29,8 +31,8 @@
 
  
                         
-                        
-                        <table class="center" style="border-width: 2px;"><tr><td>
+                        <table class="center" style="border-width: 30px; border-color: white;"><tr><td>
+                                     <div class="container bg-light p-4 rounded">
                                 
                                 <div class="container">
                                     <h1 class="form-heading">Paskyros redagavimas</h1>
@@ -55,7 +57,8 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                        </div>          
+                                        </div>  
+                                     </div>
                                 </td></tr>
                 </table><br><br>          
   </td></tr>

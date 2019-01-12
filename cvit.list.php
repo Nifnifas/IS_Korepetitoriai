@@ -9,7 +9,7 @@
     </head>
     <body>
         <table class="center"><tr><td>
-           <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
         </td></tr><tr><td>
                 
     <?php

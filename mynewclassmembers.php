@@ -8,9 +8,9 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        <table class="center" ><tr><td>
-            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
-        </td></tr><tr><td> 
+        <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td>
                 
         <?php
         session_start();

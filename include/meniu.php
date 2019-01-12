@@ -4,7 +4,10 @@
 if (!isset($_SESSION)) { header("Location: logout.php");exit;}
 include("include/nustatymai.php");
 $user=$_SESSION['user'];
-$userid = $_SESSION['userid'];
+$userid = "";
+if($user != "guest"){
+    $userid = $_SESSION['userid'];
+}
 $role = $_SESSION['urole'];
 $userlevel = $_SESSION['ulevel'];
 ?>
@@ -12,7 +15,7 @@ $userlevel = $_SESSION['ulevel'];
     <head>
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 1200px !important;">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -46,7 +49,7 @@ $userlevel = $_SESSION['ulevel'];
 
           <?php if ($userlevel == $user_roles[ADMIN_LEVEL] ) { ?>
             <li class="nav-item">
-                <a class="nav-link" href="admin.php">Vartotojų valdymas</a>
+                
             </li>
         </ul>
           <form class="form-inline my-2 my-lg-0">
@@ -93,20 +96,18 @@ $userlevel = $_SESSION['ulevel'];
         <?php } if ($_SESSION['user'] == "guest"){
             ?>
       </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <div class="btn-group">
-              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo "$user";?></button>
-              <div class="dropdown-menu">
-                <p class="dropdown-item" align="center">Jūs esate: <b><?php echo "$role";?></b></p>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout.php">Atsijungti</a>
-              </div>
+       	<ul class="nav navbar-nav navbar-right">
+            <div class="col-5">
+              <a href="login.php" class="btn btn-danger">Prisijungti</a>
             </div>
-        </form>
+             <div class="col-5">
+              <a href="register.php" class="btn btn-danger">Registruotis</a>
+            </div>
+        </ul>
         <?php } ?>
       </div>
     </nav>
-        <?php if($userlevel > 0 && $_SESSION['user'] != 'guest'){ ?>
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <form action="sort.php" class="form-inline" method="POST">
@@ -167,7 +168,6 @@ $userlevel = $_SESSION['ulevel'];
                 </form>
       </div>
     </nav>
-        <?php } ?>
         
         <div class="collapse" id="collapseExample">
             <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
@@ -179,6 +179,8 @@ $userlevel = $_SESSION['ulevel'];
                 </form>
             </nav>
         </div>
+        
+   
     </body>
 </html>
 

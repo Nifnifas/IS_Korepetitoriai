@@ -8,8 +8,12 @@ function inisession($arg) {   //valom sesijos kintamuosius
 	       		$_SESSION['ulevel']=0;
 				$_SESSION['userid']=0;
 				$_SESSION['umail']=0;
-            }			    	 
-		$_SESSION['name_login']="";
+            }
+            else if($arg == "msg"){
+                $_SESSION['message']="";
+            }
+            else{
+                $_SESSION['name_login']="";
 		$_SESSION['pass_login']="";
 		$_SESSION['mail_login']="";
 		$_SESSION['name_error']="";
@@ -39,6 +43,7 @@ function inisession($arg) {   //valom sesijos kintamuosius
                 $_SESSION['subject_input']="";
                 $_SESSION['image_error']="";
                 $_SESSION['art']="";
+            }	
         }
 
 
