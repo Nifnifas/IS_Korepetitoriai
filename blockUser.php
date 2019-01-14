@@ -17,11 +17,10 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
- if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL]))   { header("Location: logout.php");exit;}
-  $_SESSION['prev'] = "changeStudentStatus.php";
+ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
+  $_SESSION['prev'] = "blockUser.php";
   $id = $_POST['vartotojo_id'];
-  $fk_klases_id = $_POST['klases_id'];
-  $status = $_POST['status_id'];
+  $status = $_POST['status'];
 
 // Create connection
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -30,17 +29,16 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "UPDATE " . TBL_KLASES_NARIAI . " SET `busena`= '$status' WHERE `fk_klases_id` = '$fk_klases_id' AND `fk_vartotojo_id` = '$id'";
+$sql = "UPDATE " . TBL_USERS . " SET `blokuotas`= '$status' WHERE `vartotojo_id` = '$id'";
 
 if (mysqli_query($conn, $sql)) {
-    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Būsena sėkmingai pakeista!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
-    header( "refresh:2;url=mynewclassmembers.php");
+    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojo būsena sėkmingai pakeista!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+    header( "refresh:2;url=admin.php");
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
 
 mysqli_close($conn);
-//header("Location:articles.php");exit;
 ?>
         </td></tr></table>
 </body>

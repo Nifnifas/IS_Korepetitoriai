@@ -209,6 +209,19 @@ function getUserID($userEmail){
                 }
 }
 
+function checkIfUserIsBlocked($userEmail){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userEmail' AND `blokuotas` = '0'";
+    $result = mysqli_query($db, $sql);
+    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+                {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+}
+
 function checkForInput ($text, $error_name){
 	   if (!$text || strlen($text = trim($text)) == 0) 
 			{$_SESSION[$error_name]=

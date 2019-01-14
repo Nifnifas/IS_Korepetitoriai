@@ -18,7 +18,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
- if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
+ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL]))   { header("Location: logout.php");exit;}
   $_SESSION['prev'] = "deleteStudentFromClass.php";
   $id = $_POST['vartotojo_id'];
   $fk_klases_id = $_POST['klases_id'];

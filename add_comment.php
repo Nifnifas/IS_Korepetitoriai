@@ -10,7 +10,7 @@ include("include/functions.php");
 if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   { header("Location: logout.php");exit;}
 $_SESSION['prev'] = "add_comment.php"; 
 $connect = new PDO('mysql:host=localhost;dbname=korepetitoriai', 'root', '');
-
+$connect->exec("set names utf8");
 $error = '';
 $comment_name = '';
 $comment_content = '';

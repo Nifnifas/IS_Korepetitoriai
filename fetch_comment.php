@@ -12,7 +12,7 @@ $userlevel=$_SESSION['ulevel'];
 if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   { header("Location: logout.php");exit;}
 $_SESSION['prev'] = "fetch_comment.php"; 
 $connect = new PDO('mysql:host=localhost;dbname=korepetitoriai', 'root', '');
-
+$connect->exec("set names utf8");
 $query = "SELECT vardas, pavarde, data, tekstas, komentaro_id FROM " . TBL_COMMENTS . ", " . TBL_USERS . 
         " WHERE fk_vartotojo_id = vartotojo_id AND atsakymo_id = '0' AND fk_cv_id = '$_SESSION[art]' ORDER BY komentaro_id DESC";
 

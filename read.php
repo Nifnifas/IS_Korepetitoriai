@@ -22,16 +22,16 @@
                     $_SESSION['art'] = $_POST['cv_id'];
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT * "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šis vartotojas neturi CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šis $_SESSION[art] vartotojas neturi CV!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
                 }
                 else if($_SESSION['art'] != ""){
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT * "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE cv_id = $_SESSION[art] AND fk_vartotojo_id = vartotojo_id ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -40,7 +40,7 @@
                 else{
                     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
                     $db->set_charset("utf8");
-                        $query = "SELECT cv_id, antraste, tekstas, ivertinimas, miestas, kaina, data, dalykas, internetu, vardas, pavarde, el_pastas, telefono_nr, statusas, fk_vartotojo_id, views, profilio_nuotrauka "
+                        $query = "SELECT * "
                             . "FROM " . TBL_CVS . ", " . TBL_USERS . " WHERE vartotojo_id = '$userid' AND fk_vartotojo_id = '$userid' ORDER BY cv_id ASC";
                         $result = mysqli_query($db, $query);
                         if (!$result || (mysqli_num_rows($result) < 1))  
@@ -206,7 +206,7 @@ window.location.reload();
 </script>
       
           
-<img src="include/star.png" alt=""/>Įvertinimas: <b><?php $reitingas = getCurrentRating($row['fk_vartotojo_id']); echo "$reitingas"; ?></b> / 5<br>
+<img src="include/star.png" alt=""/>Įvertinimas: <b><?php $reitingas = getCurrentRating($row['fk_vartotojo_id']); $reitingas = round($reitingas, 1); echo "$reitingas"; ?></b> / 5<br>
           <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
           <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>

@@ -42,26 +42,32 @@ session_start();
   checkPass($pass,substr(hash('sha256',$pass),5,32));
   
   if(checkMail($userEmail) && checkPass($pass,substr(hash('sha256',$pass),5,32))){
-      $pass=substr(hash('sha256',$pass),5,32); 
-      if(verifyLogin($userEmail, $pass))
-      {
-          //prijungiam
-			  $time=time();  // irasom kada sekmingai prisijunge paskutini karta
-			  $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-			  $sql = "UPDATE ". TBL_USERS." SET prisijungimo_laikas=NOW() WHERE  el_pastas='$userEmail'";
-				         if (!mysqli_query($db, $sql)) {
-                   echo " DB klaida įrašant timestamp: " . $sql . "<br>" . mysqli_error($db);
-		               exit;}
-              getUserID($userEmail);
-              $_SESSION['user']=$userEmail;
-			  $_SESSION['prev']="proclogin";
-              $_SESSION['message']="";
-              header("Location:index.php");exit;
+      if(checkIfUserIsBlocked($userEmail)){
+          $pass=substr(hash('sha256',$pass),5,32); 
+            if(verifyLogin($userEmail, $pass))
+            {
+                //prijungiam
+                                $time=time();  // irasom kada sekmingai prisijunge paskutini karta
+                                $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+                                $sql = "UPDATE ". TBL_USERS." SET prisijungimo_laikas=NOW() WHERE  el_pastas='$userEmail'";
+                                               if (!mysqli_query($db, $sql)) {
+                         echo " DB klaida įrašant timestamp: " . $sql . "<br>" . mysqli_error($db);
+                                     exit;}
+                    getUserID($userEmail);
+                    $_SESSION['user']=$userEmail;
+                                $_SESSION['prev']="proclogin";
+                    $_SESSION['message']="";
+                    header("Location:index.php");exit;
+            }
+            else{
+            $_SESSION['message']="Blogi prisijungimo duomenys!";
+            header("Location:login.php");exit;
+            }
       }
       else{
-      $_SESSION['message']="Blogi prisijungimo duomenys!";
-      header("Location:login.php");exit;
-  }
+          $_SESSION['message']="Jūs esate užblokuotas!";
+            header("Location:login.php");exit;
+      }
   }
   else{
       $_SESSION['message']="Blogi prisijungimo duomenys!";
