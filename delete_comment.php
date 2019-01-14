@@ -8,9 +8,10 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        
-    </body>
-</html>
+        <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td> 
+
 <?php
 // procregister.php tikrina registracijos reikšmes
 // įvedimo laukų reikšmes issaugo $_SESSION['xxxx_login'], xxxx-name, pass, mail
@@ -27,6 +28,7 @@ session_start();
   include("include/functions.php");
 if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
   $_SESSION['prev'] = "delete_comment.php";
+  $fk_cv_id = $_POST['fk_cv_id'];
 // Create connection
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 // Check connection
@@ -36,17 +38,21 @@ if (!$conn) {
 $uql = "SELECT * FROM " . TBL_COMMENTS . " WHERE atsakymo_id = $_POST[comment_id]";
 $result = mysqli_query($conn, $uql);
 if (mysqli_num_rows($result) > 0){
-    echo "<br><br><br><h3>Klaida! Trinti šį komentarą galėsite tik tada, kai ištrinsite visus atsakymus į šį komentarą!</h3>";
+    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Klaida! Trinti šį komentarą galėsite tik tada, kai ištrinsite visus atsakymus į šį komentarą!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+    $_SESSION['art'] = $fk_cv_id;
     header( "refresh:2;url=read.php");
 }
 else{
     $sql = "DELETE FROM " . TBL_COMMENTS . " WHERE komentaro_id = $_POST[comment_id]";
     if(mysqli_query($conn, $sql)){
-        echo "<br><br><br><h3>Komentaras ištrintas sėkmingai!</h3>";
+        echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Komentaras ištrintas sėkmingai!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+        $_SESSION['art'] = $fk_cv_id;
         header( "refresh:1;url=read.php");
     }
 }
 mysqli_close($conn);
 ?>
   
-  
+        </td></tr></table>                       
+      </body>
+</html>
