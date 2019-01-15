@@ -28,7 +28,7 @@ if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}
                                     if (!isset($_SESSION['prev']) || $_SESSION['user'] != "guest")   {redirect("logout.php");exit;}
                                     $_SESSION['prev'] = "login";
                                 ?>
-                            <div class="container bg-light p-4 rounded">
+                            <div class="container bg-light p-5 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">Prisijungimo langas</h1>
                                         <div class="login-form">

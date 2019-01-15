@@ -29,7 +29,7 @@
                         <?php include("include/meniu.php"); ?>
                         
                                 <table class="center" style="border-width: 30px; border-color: white;"><tr><td>
-                                            <div class="container bg-light p-4 rounded">
+                                            <div class="container bg-light p-5 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">Registracijos langas</h1>
                                         <div class="login-form">

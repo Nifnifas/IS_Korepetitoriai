@@ -33,7 +33,7 @@
 
 
                 <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
-     <div class="container bg-light p-4 rounded">
+     <div class="container bg-light p-5 rounded">
  
             <table class="table">
                 <thead class="thead-light">

@@ -33,7 +33,7 @@
  
                         
                         <table class="center" style="border-width: 30px; border-color: white;"><tr><td>
-                                     <div class="container bg-light p-4 rounded">
+                                     <div class="container bg-light p-5 rounded">
                                 
                                 <div class="container">
                                     <h1 class="form-heading">Paskyros redagavimas</h1>
@@ -61,7 +61,7 @@
                                         </div>  
                                      </div>
                                 </td></tr>
-                </table><br><br>          
+                </table>         
   </td></tr>
   </table>           
               <?php include("include/footer.php"); ?>

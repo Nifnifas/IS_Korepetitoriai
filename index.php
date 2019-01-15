@@ -11,7 +11,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <link href="include/styles.css" rel="stylesheet" type="text/css" />
-        <title></title>
+        <link rel="icon" type="image/png" sizes="32x32" href="include/icons/favicon-32x32.png">
+        <title>Korepetitai.lt</title>
     </head>
     <body>
         <table class="center"><tr><td>
@@ -55,7 +56,7 @@ and open the template in the editor.
                         bottom: 0;
                     }
                 </style>
-                <div class="container p-4">
+                <div class="container p-5">
                 <?php
                 $i = 1;
                 while($row = mysqli_fetch_array($result)){ ?>

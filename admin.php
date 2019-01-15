@@ -60,7 +60,7 @@ $_SESSION['prev']="admin";
                                 {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojų nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
 ?>
     <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
-    <div class="container p-4">
+    <div class="container p-5">
                     <table class="table">
                 <thead class="thead-light">
                 <tr>

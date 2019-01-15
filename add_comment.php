@@ -9,7 +9,7 @@ include("include/nustatymai.php");
 include("include/functions.php");
 if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}
 $_SESSION['prev'] = "add_comment.php"; 
-$connect = new PDO('mysql:host=localhost;dbname=korepetitoriai', 'root', '');
+$connect = new PDO('mysql:host=localhost;dbname=aus14274_korepetitoriai', 'aus14274_lukkru2', 'Siokoledas77');
 $connect->exec("set names utf8");
 $error = '';
 $comment_name = '';

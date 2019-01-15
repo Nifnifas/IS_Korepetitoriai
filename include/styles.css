@@ -40,3 +40,6 @@ input.s1 {
     font-size:13pt;
     text-align:left;
 }
+html {
+  overflow-y: scroll; 
+}

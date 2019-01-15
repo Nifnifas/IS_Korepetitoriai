@@ -13,6 +13,8 @@
         </td></tr><tr><td> 
         <?php
         session_start();
+        if (!isset($_SESSION['prev']))  {redirect("logout.php");exit;}
+                $_SESSION['prev'] = "contactUs.php";
         include("include/meniu.php");
         include("include/functions.php");
         ?>
@@ -24,7 +26,7 @@
         //if "email" variable is filled out, send email
           if (isset($_REQUEST['email']))  {
             //Email information
-            $admin_email = "someone@example.com";
+            $admin_email = "info@korepetitai.lt";
             $email = $_REQUEST['email'];
             $subject = $_REQUEST['subject'];
             $comment = $_REQUEST['comment'];
@@ -34,7 +36,9 @@
             $isinputgood = checkForInput($comment, "tekstas_error");
             if($isinputgood && $ismailgood){
                   //send email
-                  mail($admin_email, "$subject", $comment, "From:" . $email);
+                
+                  mail_utf8($admin_email, $subject, $comment, "From:" . $email);
+                  //mail($admin_email, '=?utf-8?B?'.base64_encode($subject).'?=', utf8_encode($comment), "From:" . $email);
                   //Email response
                   echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Išsiųsta. Ačiū už pranešimą!</b></center></div><div class=\"container p-5\"></div>";
             }

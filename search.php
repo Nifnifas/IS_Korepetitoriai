@@ -64,7 +64,8 @@ and open the template in the editor.
                         bottom: 0;
                     }
                 </style>
-                <div class="container p-4">
+                <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
+                <div class="container p-5">
                     <table class="table">
                 <thead class="thead-light">
                 <tr>
@@ -106,12 +107,11 @@ and open the template in the editor.
                         </form>
 
                <?php } ?>
-                </div>
+                </div></td></tr></table>
                 <?php
     mysqli_close($db);
 ?>
-                </td></tr>
-	</table>
+
         </td></tr></table>
   <?php include("include/footer.php"); ?>
     </body>

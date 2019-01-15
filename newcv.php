@@ -51,8 +51,8 @@ include("include/meniu.php");
                 
     if($userlevel == 5){
 ?>
-  <table class="center" style="border-width: 20px;"><tr><td>
-              <div class="container bg-light p-4 rounded">
+  <table class="center" style="border-width: 30px;"><tr><td>
+              <div class="container bg-light p-5 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">CV sukūrimas</h1>
                                         <div class="login-form">
