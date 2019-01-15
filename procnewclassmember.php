@@ -17,7 +17,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
-         if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}
+          if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[DEFAULT_LEVEL]))   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "procnewclassmember.php";
   $fk_mokytojo_id = $_POST['mokytojo_id'];
   $fk_klases_id = getClassID($fk_mokytojo_id, "Dabartiniai");

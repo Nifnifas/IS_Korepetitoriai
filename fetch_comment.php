@@ -9,7 +9,7 @@ include("include/functions.php");
 $user=$_SESSION['user'];
 $userid = $_SESSION['userid'];
 $userlevel=$_SESSION['ulevel'];
-if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   { header("Location: logout.php");exit;}
+if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}
 $_SESSION['prev'] = "fetch_comment.php"; 
 $connect = new PDO('mysql:host=localhost;dbname=korepetitoriai', 'root', '');
 $connect->exec("set names utf8");

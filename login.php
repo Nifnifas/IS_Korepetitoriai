@@ -25,6 +25,7 @@ if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}
                                     if($_SESSION['prev'] == "procregister" || $_SESSION['prev'] == "proclogin" || $_SESSION['prev'] == "procuseredit"){
                                         echo "<table class=\"center\" style=\"border-width: 10px; border-color: white;\"><tr><td><font size=\"4\" color=\"#ff0000\">$_SESSION[message]</font></td></tr></table>";
                                     }
+                                    if (!isset($_SESSION['prev']) || $_SESSION['user'] != "guest")   {redirect("logout.php");exit;}
                                     $_SESSION['prev'] = "login";
                                 ?>
                             <div class="container bg-light p-4 rounded">

@@ -17,7 +17,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
- if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] <= 0))   {redirect("logout.php");exit;}
   $atejoIs = $_SESSION['prev'];
   $_SESSION['prev'] = "deleteCV.php";
   $id = $_POST['cv_id'];

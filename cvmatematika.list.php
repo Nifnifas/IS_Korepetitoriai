@@ -16,7 +16,7 @@
         session_start();
         include("include/functions.php");
         include("include/meniu.php");
-        if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+        if (!isset($_SESSION['prev']))   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "cvmatematika.list.php";
             $header = "Matematika";
             $tipas = getUserLookupType($userlevel);

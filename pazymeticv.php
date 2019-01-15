@@ -17,7 +17,7 @@
         include("include/meniu.php");
         include("include/functions.php");
         // cia sesijos kontrole
-        if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+        if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "pazymeticv.php";
         
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);

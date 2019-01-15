@@ -21,7 +21,7 @@ and open the template in the editor.
     session_start();
     include("include/functions.php");
     include("include/meniu.php");
-    if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+    if (!isset($_SESSION['prev']))  {redirect("logout.php");exit;}
     $_SESSION['prev'] = "search.php"; 
     
     $paieska = $_POST['paieska'];

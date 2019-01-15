@@ -17,7 +17,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
- if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
+ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   {redirect("logout.php");exit;}
   $_SESSION['prev'] = "blockUser.php";
   $id = $_POST['vartotojo_id'];
   $status = $_POST['status'];

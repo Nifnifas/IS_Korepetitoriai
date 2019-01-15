@@ -16,7 +16,7 @@
                 session_start();
                 include("include/meniu.php");
                 include("include/functions.php");
-                if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+                if (!isset($_SESSION['prev']))  {redirect("logout.php");exit;}
                 $_SESSION['prev'] = "read.php";
                 if(isset($_POST['cv_id'])){
                     $_SESSION['art'] = $_POST['cv_id'];
@@ -94,8 +94,8 @@
     <div class="col"></div>
     <div class="col-10">
           <div class="row">
-    <div class="col-md-4 p-4 img">
-        <img src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle">
+              <div class="col-md-4 p-4 img" >
+        <img style="margin-top: 40px;" src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle">
     </div>
     <div class="col-md-6 details">
         <div class="row">
@@ -104,7 +104,7 @@
         <form method="POST" action="procpazymeticv.php">
                     <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
                     <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
-                    <button type="submit" name="submit" id="submit" style="padding: 0; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/full_star.png'/>"; } else { echo "<img src='include/star.png'/>";} ?></button></center>
+                    <button type="submit" name="submit" id="submit" style="padding: 0; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/icons/full_star.png'/>"; } else { echo "<img src='include/icons/star.png'/>";} ?></button></center>
         </form>
         <?php } ?>
         <?php if($userid == $row['fk_vartotojo_id']){ ?>
@@ -234,17 +234,17 @@ window.location.reload();
 </script>
       
           
-<img src="include/star.png" alt=""/>Įvertinimas: <b><?php $reitingas = getCurrentRating($row['fk_vartotojo_id']); $reitingas = round($reitingas, 1); echo "$reitingas"; ?></b> / 5<br>
-          <img src="include/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
-          <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
-          <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
+<img src="include/icons/star.png" alt=""/>Įvertinimas: <b><?php $reitingas = getCurrentRating($row['fk_vartotojo_id']); $reitingas = round($reitingas, 1); echo "$reitingas"; ?></b> / 5<br>
+          <img src="include/icons/user.png" alt=""><?php echo "$row[statusas]"; ?><br>
+          <img src="include/icons/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
+          <img src="include/icons/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
           <?php if($row['statusas'] == "Mokytojas"){ ?>
-            <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
+            <img src="include/icons/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
           <?php if($row['internetu'] == "taip"){ ?>
-            <img src="include/location.png" alt=""><?php echo "Mokau internetu"; ?><br>
+            <img src="include/icons/glasses.png" alt=""><?php echo "Mokau internetu"; ?><br>
           <?php } }if($row['statusas'] == "Mokinys") {?>
           <?php if($row['internetu'] == "taip"){ ?>
-            <img src="include/location.png" alt=""><?php echo "Noriu mokytis internetu"; ?><br>
+            <img src="include/icons/glasses.png" alt=""><?php echo "Noriu mokytis internetu"; ?><br>
           <?php } } ?>
 
       </p>
@@ -268,10 +268,10 @@ window.location.reload();
     </div>
         <div class="col">
       <p>
-          <img src="include/phone.png" alt=""> <?php echo "+$row[telefono_nr]"; ?>
+          <img src="include/icons/phone.png" alt=""> <?php echo "+$row[telefono_nr]"; ?>
         </div>
           <div class="col">
-              <img src="include/mail.png" alt=""> <?php $link = autolink($row['el_pastas']); echo "$link"; ?> <br>
+              <img src="include/icons/mail.png" alt=""> <?php $link = autolink($row['el_pastas']); echo "$link"; ?> <br>
       </p>
           </div>
     </div>

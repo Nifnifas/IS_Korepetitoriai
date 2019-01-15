@@ -17,7 +17,7 @@
         include("include/meniu.php");
         include("include/functions.php");
         // cia sesijos kontrole
-        if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+        if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL]))   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "myclass.php";
         $fk_klases_id = getClassID($userid, "Dabartiniai");
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);

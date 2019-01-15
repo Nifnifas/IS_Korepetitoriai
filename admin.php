@@ -21,7 +21,7 @@ session_start();
 include("include/meniu.php");
 include("include/functions.php");
 // cia sesijos kontrole
-if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
+if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   {redirect("logout.php");exit;}
 $_SESSION['prev']="admin";
 ?>
 

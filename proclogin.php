@@ -22,8 +22,7 @@
 
 session_start(); 
 // cia sesijos kontrole: proclogin tik is login  :palikti taip
-  if (!isset($_SESSION['prev']))
-	{ header("Location: logout.php");exit;}
+  if (!isset($_SESSION['prev']) || $_SESSION['user'] != "guest")   {redirect("logout.php");exit;}
 
   include("include/nustatymai.php");
   include("include/functions.php");

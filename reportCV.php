@@ -16,7 +16,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
-         if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}
+         if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "reportCV.php";
   $fk_cv_id = $_POST['cv_id'];
   $fk_user_id = $_SESSION['userid'];

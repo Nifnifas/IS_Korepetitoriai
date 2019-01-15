@@ -1,5 +1,7 @@
 <?php
 session_start();
+if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}
+    $_SESSION['prev'] = "ivertinti.php";
     $reiksme = $_POST['reiksme'];
     $fk_user_id = $_SESSION['userid'];
     $kam_skirtas = $_POST['skiriama'];

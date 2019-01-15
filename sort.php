@@ -19,7 +19,7 @@ and open the template in the editor.
         </td></tr><tr><td>
     <?php
     session_start();
-    if (!isset($_SESSION['prev']))   { header("Location: logout.php");exit;}
+    if (!isset($_SESSION['prev'])) {redirect("logout.php");exit;}
     $_SESSION['prev'] = "sort.php";
     $subject = $_POST['subject'];
     $place = $_POST['place'];

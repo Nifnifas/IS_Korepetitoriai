@@ -18,8 +18,9 @@
 
                 session_start();
                 // sesijos kontrole
+                include("include/functions.php");
                 include("include/meniu.php");
-                if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { echo "<meta http-equiv=\"refresh\" content=\"0;url=logout.php\">"; exit;}								  
+                if (!isset($_SESSION['prev']) || $_SESSION['user'] == "guest")   {redirect("logout.php");exit;}							  
                         $_SESSION['mail_login'] = $_SESSION['user'];
                         $_SESSION['passn_login'] = "";
                 if($_SESSION['prev'] != "procuseredit"){

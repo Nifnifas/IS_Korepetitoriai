@@ -15,10 +15,11 @@
                                 
 <?php
 session_start();
-if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   {header("Location: logout.php");exit;}
-        $_SESSION['prev'] = "newcv.php";
-include("include/meniu.php");
 include("include/functions.php");
+include("include/meniu.php");
+ if (!isset($_SESSION['prev']) || (($_SESSION['ulevel'] != $user_roles[DEFAULT_LEVEL]) && ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL])))   {redirect("logout.php");exit;}
+        $_SESSION['prev'] = "newcv.php";
+
 
     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
     $db->set_charset("utf8");

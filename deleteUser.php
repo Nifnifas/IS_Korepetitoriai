@@ -17,7 +17,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
- if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   { header("Location: logout.php");exit;}
+ if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[ADMIN_LEVEL]))   {redirect("logout.php");exit;}
   $_SESSION['prev'] = "deleteUser.php";
   $id = $_POST['vartotojo_id'];
   $statusas = $_POST['status'];
@@ -45,26 +45,32 @@ if($statusas == "Mokinys"){
                     echo "Klaida pazymetu cv skiltyje.";
                 }
                 else{
-                    $knql = "DELETE FROM " . TBL_KLASES_NARIAI . " WHERE fk_vartotojo_id= '$id'";
-                    if(!mysqli_query($conn, $knql)){
-                        echo "Klaida klases nariu skiltyje.";
+                    $rpql = "DELETE FROM " . TBL_REPORTUOTI . " WHERE fk_vartotojo_id= '$id'";
+                    if(!mysqli_query($conn, $rpql)){
+                        echo "Klaida raportu skiltyje.";
                     }
-                    else{
-                            $cvql = "DELETE FROM " . TBL_CVS . " WHERE fk_vartotojo_id= '$id'";
-                            if(!mysqli_query($conn, $cvql)){
-                                echo "Klaida cv skiltyje.";
+                        else{
+                            $knql = "DELETE FROM " . TBL_KLASES_NARIAI . " WHERE fk_vartotojo_id= '$id'";
+                            if(!mysqli_query($conn, $knql)){
+                                echo "Klaida klases nariu skiltyje.";
                             }
                             else{
-                                $vql = "DELETE FROM " . TBL_USERS . " WHERE vartotojo_id= '$id'";
-                                if(!mysqli_query($conn, $vql)){
-                                    echo "Klaida vartotoju skiltyje.";
-                                }
-                                else{
-                                    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojas ir visa su juo susijusi informacija<br>sėkmingai pašalinta!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
-                                    header( "refresh:2;url=admin.php");
-                                }
+                                    $cvql = "DELETE FROM " . TBL_CVS . " WHERE fk_vartotojo_id= '$id'";
+                                    if(!mysqli_query($conn, $cvql)){
+                                        echo "Klaida cv skiltyje.";
+                                    }
+                                    else{
+                                        $vql = "DELETE FROM " . TBL_USERS . " WHERE vartotojo_id= '$id'";
+                                        if(!mysqli_query($conn, $vql)){
+                                            echo "Klaida vartotoju skiltyje.";
+                                        }
+                                        else{
+                                            echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojas ir visa su juo susijusi informacija<br>sėkmingai pašalinta!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                                            header( "refresh:2;url=admin.php");
+                                        }
+                                    }
                             }
-                    }
+                        }
                 }
             }
         }
@@ -87,28 +93,34 @@ else if($statusas == "Mokytojas"){
                     echo "Klaida pazymetu cv skiltyje.";
                 }
                 else{
-                    $knql = "DELETE FROM " . TBL_KLASES_NARIAI . " WHERE fk_klases_id= '$klasesid1' OR fk_klases_id= '$klasesid2'";
-                    if(!mysqli_query($conn, $knql)){
-                        echo "Klaida klases nariu skiltyje.";
+                    $rpql = "DELETE FROM " . TBL_REPORTUOTI . " WHERE fk_vartotojo_id= '$id'";
+                    if(!mysqli_query($conn, $rpql)){
+                        echo "Klaida raportu skiltyje.";
                     }
                     else{
-                        $kql = "DELETE FROM " . TBL_CLASS . " WHERE fk_vartotojo_id= '$id'";
-                        if(!mysqli_query($conn, $kql)){
-                            echo "Klaida klasiu skiltyje.";
+                        $knql = "DELETE FROM " . TBL_KLASES_NARIAI . " WHERE fk_klases_id= '$klasesid1' OR fk_klases_id= '$klasesid2'";
+                        if(!mysqli_query($conn, $knql)){
+                            echo "Klaida klases nariu skiltyje.";
                         }
                         else{
-                            $cvql = "DELETE FROM " . TBL_CVS . " WHERE fk_vartotojo_id= '$id'";
-                            if(!mysqli_query($conn, $cvql)){
-                                echo "Klaida cv skiltyje.";
+                            $kql = "DELETE FROM " . TBL_CLASS . " WHERE fk_vartotojo_id= '$id'";
+                            if(!mysqli_query($conn, $kql)){
+                                echo "Klaida klasiu skiltyje.";
                             }
                             else{
-                                $vql = "DELETE FROM " . TBL_USERS . " WHERE vartotojo_id= '$id'";
-                                if(!mysqli_query($conn, $vql)){
-                                    echo "Klaida vartotoju skiltyje.";
+                                $cvql = "DELETE FROM " . TBL_CVS . " WHERE fk_vartotojo_id= '$id'";
+                                if(!mysqli_query($conn, $cvql)){
+                                    echo "Klaida cv skiltyje.";
                                 }
                                 else{
-                                    echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojas ir visa su juo susijusi informacija<br>sėkmingai pašalinta!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
-                                    header( "refresh:2;url=admin.php");
+                                    $vql = "DELETE FROM " . TBL_USERS . " WHERE vartotojo_id= '$id'";
+                                    if(!mysqli_query($conn, $vql)){
+                                        echo "Klaida vartotoju skiltyje.";
+                                    }
+                                    else{
+                                        echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Vartotojas ir visa su juo susijusi informacija<br>sėkmingai pašalinta!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                                        header( "refresh:2;url=admin.php");
+                                    }
                                 }
                             }
                         }

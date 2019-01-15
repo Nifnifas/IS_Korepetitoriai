@@ -17,7 +17,7 @@ session_start();
 
   include("include/nustatymai.php");
   include("include/functions.php");
-         if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] == 0))   { header("Location: logout.php");exit;}
+    if (!isset($_SESSION['prev']) || (($_SESSION['ulevel'] != $user_roles[DEFAULT_LEVEL]) && ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL])))   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "proccv.php";
 
   $file_name = $_FILES['upload']['name'];
