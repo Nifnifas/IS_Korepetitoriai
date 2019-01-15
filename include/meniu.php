@@ -77,6 +77,9 @@ $userlevel = $_SESSION['ulevel'];
           <li class="nav-item">
             <a class="nav-link" href="admin.php">Vartotojų valdymas</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reportedCVs.php">Raportuoti CV</a>
+          </li>
       </ul>
         <form class="form-inline my-2 my-lg-0">
             <div class="btn-group">

@@ -10,7 +10,7 @@
     </head>
     <body>
         <table class="center" ><tr><td>
-            <center><a href="index.php"><img src="include/banners/banner2.png"/></a></center>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
         <br>
             <?php
                 session_start();
@@ -94,11 +94,11 @@
     <div class="col"></div>
     <div class="col-10">
           <div class="row">
-    <div class="col-md-4 img">
+    <div class="col-md-4 p-4 img">
         <img src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle">
     </div>
     <div class="col-md-6 details">
-          <div class="row">
+        <div class="row">
         <h3><?php echo "$row[vardas] $row[pavarde]"; ?></h3>
         <?php if($userid != $row['fk_vartotojo_id'] && $userid != ""){ ?>
         <form method="POST" action="procpazymeticv.php">
@@ -107,9 +107,26 @@
                     <button type="submit" name="submit" id="submit" style="padding: 0; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/full_star.png'/>"; } else { echo "<img src='include/star.png'/>";} ?></button></center>
         </form>
         <?php } ?>
-          </div>
-      <p>
-            
+        <?php if($userid == $row['fk_vartotojo_id']){ ?>
+            <form style="padding-left: 10px;" action="deleteCV.php" method="post" onsubmit="return confirm('Ar tikrai norite pašalinti šį cv?');"><button class="btn btn-outline-danger" type="submit">Šalinti CV</button>
+                                    <input type="hidden" name="cv_id" value="<?php echo "$row[cv_id]"; ?>"></form>
+        <?php } ?>
+        <?php
+          if($row['fk_vartotojo_id'] != $userid && $userid != ""){
+                $reportuoti = "SELECT * FROM " . TBL_REPORTUOTI . " WHERE `fk_vartotojo_id` = '$userid' AND `fk_cv_id` = '$row[cv_id]'";
+                $rez_report = mysqli_query($db, $reportuoti);
+                if (mysqli_num_rows($rez_report) == 0){ ?>
+
+                                    <form id="form" method="POST" style="padding-left: 4px;">
+                                        <input type="text" id="cv_id" name="cv_id" value="<?php echo "$row[cv_id]"; ?>" hidden/>
+                                        <button id="reportuoti" class="btn btn-sm btn-link">Netinkamas cv? Spausk ir pranešk!</button>
+                                    </form>      
+          <?php } }
+          ?>
+          
+         <p>  
+        </div>
+     
           <?php
           if($row['fk_vartotojo_id'] != $userid && $userid != ""){
                 $ivertinimai = "SELECT * FROM " . TBL_IVERTINIMAS . " WHERE `fk_vartotojo_id` = '$userid' AND `skirtas_id` = '$row[fk_vartotojo_id]'";
@@ -131,8 +148,8 @@
 		</div>	
             </div>
       
-          <?php } } 
-          mysqli_close($db);
+          <?php } }
+            mysqli_close($db);
           ?>
 
 <script>
@@ -202,6 +219,17 @@ alert("Sėkmingai įvertinta");//"response" receives - whatever written in echo 
 window.location.reload();
 });
 });
+$("#reportuoti").click(function(){
+var cv_id = $("#cv_id").val();
+$.post("reportCV.php", //Required URL of the page on server
+{ // Data Sending With Request To Server
+cv_id: cv_id
+},
+function(response,status){ // Required Callback Function
+alert("Sėkmingai pranešta");//"response" receives - whatever written in echo of above PHP script.
+window.location.reload();
+});
+});
 });
 </script>
       
@@ -211,8 +239,14 @@ window.location.reload();
           <img src="include/subject.png" alt=""><?php echo "$row[dalykas]"; ?><br>
           <img src="include/location.png" alt=""><?php echo "$row[miestas]"; ?><br>
           <?php if($row['statusas'] == "Mokytojas"){ ?>
-          <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
-          <?php } ?>
+            <img src="include/price.png" alt=""><?php echo "$row[kaina].00 €/val"; ?><br>
+          <?php if($row['internetu'] == "taip"){ ?>
+            <img src="include/location.png" alt=""><?php echo "Mokau internetu"; ?><br>
+          <?php } }if($row['statusas'] == "Mokinys") {?>
+          <?php if($row['internetu'] == "taip"){ ?>
+            <img src="include/location.png" alt=""><?php echo "Noriu mokytis internetu"; ?><br>
+          <?php } } ?>
+
       </p>
     </div>
   </div>

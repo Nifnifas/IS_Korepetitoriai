@@ -12,6 +12,7 @@ define("TBL_COMMENTS", "komentaras");
 define("TBL_CLASS", "klase");
 define("TBL_KLASES_NARIAI", "klases_nariai");
 define("TBL_IVERTINIMAS", "ivertinimas");
+define("TBL_REPORTUOTI", "reportuoti_cv");
 
 $user_roles=array(      // vartotojų rolių vardai lentelėse ir  atitinkamos userlevel reikšmės
 	"Mokytojas"=>"5",

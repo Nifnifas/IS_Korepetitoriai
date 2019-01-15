@@ -8,9 +8,10 @@
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
     </head>
     <body>
-        
-    </body>
-</html>
+         <table class="center"><tr><td>
+            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        </td></tr><tr><td> 
+
 <?php
 session_start(); 
 
@@ -73,9 +74,9 @@ session_start();
   checkForInput($tekstas, "tekstas_error");
   checkForDropSelection($dalykas, "dalykas_error");
   checkForDropSelection($miestas, "miestas_error");
-  checkForDropSelection($internetu, "internetu_error");
+  checkForRadioButton($internetu, "internetu_error");
 if($imgDimensions && $imgStatus && checkForInput($antraste, "letters_error") && checkForInput($tekstas, "tekstas_error") && checkForDropSelection($dalykas, "dalykas_error") && checkForDropSelection($miestas, "miestas_error") &&  $priceStatus
-        && checkForDropSelection($internetu, "internetu_error")){
+        && checkForRadioButton($internetu, "internetu_error")){
     if($_SESSION['cv_busena'] == "sukurimas"){
             // Create connection
             $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -125,8 +126,8 @@ if($imgDimensions && $imgStatus && checkForInput($antraste, "letters_error") && 
                             echo "<h3></h3>";
                     }
                 }
-                echo "<br><br><br><h3>Jūsų CV sėkmingai sukurtas!</h3>";
-                header( "refresh:2;url=index.php");
+                echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Jūsų CV sėkmingai sukurtas!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                header( "refresh:2;url=read.php");
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
@@ -163,8 +164,8 @@ if($imgDimensions && $imgStatus && checkForInput($antraste, "letters_error") && 
 			echo "<h3></h3>";
 		}
 	}
-                echo "<br><br><br><h3>Jūsų CV sėkmingai atnaujintas!</h3>";
-                header( "refresh:2;url=index.php");
+                echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Jūsų CV sėkmingai atnaujintas!</b></center></div><div class=\"container p-5\"></div></td</tr></table>";
+                header( "refresh:2;url=read.php");
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
@@ -176,8 +177,7 @@ else{
         // griztam taisyti
         header("Location:newcv.php");exit;
 }
-
-//header("Location:articles.php");exit;
 ?>
-  
-  
+        </td></tr></table>
+      </body>
+</html>

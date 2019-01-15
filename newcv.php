@@ -161,7 +161,7 @@ include("include/functions.php");
                 </table> 
    <?php } if($userlevel == 1) {
 ?>
-                 <br><br><table class="center" style="border-width: 2px;"><tr><td>    
+                 <br><br><table class="center" style="border-width: 20px;"><tr><td>    
                              <div class="container bg-light p-4 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">CV sukūrimas</h1>

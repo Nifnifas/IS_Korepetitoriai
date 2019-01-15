@@ -246,6 +246,17 @@ function checkForDropSelection($selected, $error_name){
     }
 }
 
+function checkForRadioButton($selected, $error_name){
+    if($selected > 0){
+        return true;
+    }
+    else{
+        $_SESSION[$error_name]="<font size=\"2\" color=\"#ff0000\">* Nepasirinktas laukelis</font>";
+			 "";
+        return false;
+    }
+}
+
 function checkForPrice ($text, $error_name){
 	   if (!$text || strlen($text = trim($text)) == 0) 
 			{$_SESSION[$error_name]=
@@ -305,6 +316,13 @@ function getClassID($userid, $rusis){
 function getClassCount($classid, $rusis){
     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
     $sql = "SELECT * FROM " . TBL_KLASES_NARIAI . " WHERE `fk_klases_id` = '$classid' AND `busena` = '$rusis'";
+    $result = mysqli_query($db, $sql) or die(mysqli_error());
+    return mysqli_num_rows($result);
+}
+
+function getReportsCount($fk_cv_id){
+    $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    $sql = "SELECT * FROM " . TBL_REPORTUOTI . " WHERE `fk_cv_id` = '$fk_cv_id'";
     $result = mysqli_query($db, $sql) or die(mysqli_error());
     return mysqli_num_rows($result);
 }
