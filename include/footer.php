@@ -16,7 +16,6 @@
         <div class="content">
             <div class="social-networks">
                 <a href="kontaktai.php" class="twitter"><i class="fa fa-twitter">Kontaktai</i></a>
-                <a href="#" class="twitter"><i class="fa fa-twitter">Sąlygos</i></a>
                 <a href="contactUs.php" class="twitter"><i class="fa fa-twitter">Pranešk apie klaidą</i></a>
             </div>
         </div>

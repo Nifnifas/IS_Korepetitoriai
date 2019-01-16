@@ -29,17 +29,7 @@ table.backlink {
 body {
     text-align:center;
 }   
-form.login {
-    margin-bottom:0;
-    padding:6px; 
-    background-color:#FFF7B7; 
-    border:3px dashed grey;               
-}
-input.s1 {   
-    width:100%;
-    font-size:13pt;
-    text-align:left;
-}
+
 html {
   overflow-y: scroll; 
 }

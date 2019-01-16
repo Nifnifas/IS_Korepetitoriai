@@ -11,6 +11,9 @@ if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <link href="include/styles.css" rel="stylesheet" type="text/css" >
+                <link rel="icon" type="image/png" sizes="32x32" href="include/icons/favicon-32x32.png">
+        <meta name=”viewport” content=”width=device-width, initial-scale=1″>
+        <title>Korepetitai.lt - korepetitorių paieškos sistema</title>
     </head>
     <body>
         <table class="center"><tr><td>

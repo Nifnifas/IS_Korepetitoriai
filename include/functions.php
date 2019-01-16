@@ -73,17 +73,23 @@ function checkSurname ($surname){   // Vartotojo vardo sintakse
 	        else return true;
 }
              
- function checkPass($pwd,$dbpwd) {     //  slaptazodzio tikrinimas (tik demo: min 4 raides ir/ar skaiciai) ir ar sutampa su DB esanciu
+ function checkPass($pwd,$dbpwd) {  
 	   if (!$pwd || strlen($pwd = trim($pwd)) == 0) 
 			{$_SESSION['pass_error']=
 			  "<font size=\"2\" color=\"#ff0000\">* Neįvestas slaptažodis</font>";
 			 return false;}
-            elseif (!preg_match("/^([0-9a-zA-Z])*$/", $pwd))  /* Check if $pass is not alphanumeric */ 
-			{$_SESSION['pass_error']="<font size=\"2\" color=\"#ff0000\">* Slaptažodis sudaromas tik iš skaičių arba raidžių</font>";
+                         /*
+                          * (?=.*\d) Atleast a digit
+                            (?=.*[a-z]) Atleast a lower case letter
+                            (?=.*[A-Z]) Atleast an upper case letter
+                            .{8,16} between 8 to 16 characters
+                          */
+            elseif (!preg_match_all('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/m', $pwd))
+			{$_SESSION['pass_error']="<font size=\"2\" color=\"#ff0000\">* Slaptažodyje privalo būti nors viena didžioji raidė bei skaičius.<br>Minimalus slaptažodžio ilgis - 6simb.</font>";
 		     return false;}
-            elseif (strlen($pwd)<4)  // per trumpas
+            elseif (strlen($pwd)<=5)  // per trumpas
 			         {$_SESSION['pass_error']=
-						  "<font size=\"2\" color=\"#ff0000\">* Slaptažodžio ilgis <4 simbolius</font>";
+						  "<font size=\"2\" color=\"#ff0000\">* Slaptažodžio ilgis <6 simbolius</font>";
 		              return false;}
 	          elseif ($dbpwd != substr(hash( 'sha256', $pwd ),5,32))
                {$_SESSION['pass_error']=
@@ -211,9 +217,9 @@ function getUserID($userEmail){
 
 function checkIfUserIsBlocked($userEmail){
     $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userEmail' AND `blokuotas` = '0'";
+    $sql = "SELECT * FROM " . TBL_USERS . " WHERE `el_pastas` = '$userEmail' AND `blokuotas` = '1'";
     $result = mysqli_query($db, $sql);
-    if (!$result || (mysqli_num_rows($result) != 1)) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
+    if (mysqli_num_rows($result) == 1) // jei >1 tai DB vardas kartojasi, netikrinu, imu pirma
                 {
                     return false;
                 }
