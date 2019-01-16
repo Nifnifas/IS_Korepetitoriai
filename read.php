@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
@@ -98,21 +97,21 @@
               <div class="col-md-4 p-4 img" >
         <img style="margin-top: 5px;" src="<?php echo "$row[profilio_nuotrauka]"; ?>"  alt="" class="rounded-circle">
     </div>
-    <div class="col-md-6 details" style="margin-left: 20px;">
+    <div class="col-md-6 details">
         <div class="row">
-        <h3 style="margin-top: 15px;"><?php echo "$row[vardas] $row[pavarde]"; ?></h3>
+        <h3 style="margin-top: 25px; margin-left: 10px;"><?php echo "$row[vardas] $row[pavarde]"; ?></h3>
         <?php if($userid != $row['fk_vartotojo_id'] && $userid != ""){ ?>
         <form method="POST" action="procpazymeticv.php">
                     <input type="hidden" name="cv_id" id="cv_id" value="<?php echo $_SESSION['art']?>"/>
                     <input type="hidden" name="busena" id="busena" value="<?php if($_SESSION['busena_input']==1){echo "1";}else{echo "2";}?>"/>
-                    <button type="submit" name="submit" id="submit" style="margin-top: 15px; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/icons/full_star.png'/>"; } else { echo "<img src='include/icons/star.png'/>";} ?></button></center>
+                    <button type="submit" name="submit" id="submit" style="margin-top: 25px; border:0px solid transparent; background: none; cursor: pointer;"><?php if($_SESSION['busena_input'] == 2){ echo "<img src='include/icons/full_star.png'/>"; } else { echo "<img src='include/icons/star.png'/>";} ?></button></center>
         </form>
         <?php } ?>
         <?php if($userid == $row['fk_vartotojo_id']){ ?>
-            <form style="padding-left: 10px;" action="deleteCV.php" method="post" onsubmit="return confirm('Ar tikrai norite pašalinti šį cv?');"><button style="margin-top: 15px;" class="btn btn-outline-danger" type="submit">Šalinti CV</button>
+            <form style="padding-left: 10px;" action="deleteCV.php" method="post" onsubmit="return confirm('Ar tikrai norite pašalinti šį cv?');"><button style="margin-top: 25px;" class="btn btn-outline-danger" type="submit">Šalinti CV</button>
                                     <input type="hidden" name="cv_id" value="<?php echo "$row[cv_id]"; ?>"></form>
         <?php } ?>
-          
+        <p>  
         </div>
      
           <?php
@@ -248,7 +247,7 @@ window.location.reload();
           <?php } }
           ?>
 
-      
+      </p>
     </div>
   </div>
   <div class="row">
