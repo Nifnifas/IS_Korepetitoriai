@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php 
 session_start();
 if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}

@@ -1,20 +1,21 @@
-<?php
-// meniu.php  rodomas meniu pagal vartotojo rolę
-
-if (!isset($_SESSION)) { header("Location: logout.php");exit;}
-include("include/nustatymai.php");
-$user=$_SESSION['user'];
-$userid = "";
-if($user != "guest"){
-    $userid = $_SESSION['userid'];
-}
-$role = $_SESSION['urole'];
-$userlevel = $_SESSION['ulevel'];
-?>
+<!DOCTYPE html>
 <html>
     <head>
     </head>
     <body>
+        <?php
+        // meniu.php  rodomas meniu pagal vartotojo rolę
+
+        if (!isset($_SESSION)) { header("Location: logout.php");exit;}
+        include("include/nustatymai.php");
+        $user=$_SESSION['user'];
+        $userid = "";
+        if($user != "guest"){
+            $userid = $_SESSION['userid'];
+        }
+        $role = $_SESSION['urole'];
+        $userlevel = $_SESSION['ulevel'];
+        ?>
       <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 1200px !important;">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

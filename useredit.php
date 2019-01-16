@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
         <head> 
             <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
