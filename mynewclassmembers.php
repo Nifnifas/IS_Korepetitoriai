@@ -1,6 +1,5 @@
 <html>
     <head>
-        <title></title>
         <meta http-equiv="X-UA-Compatible" content="IE=9; text/html; charset=utf-8">
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
@@ -22,13 +21,13 @@
         // cia sesijos kontrole
          if (!isset($_SESSION['prev']) || ($_SESSION['ulevel'] != $user_roles[MOKYTOJAS_LEVEL]))   {redirect("logout.php");exit;}
         $_SESSION['prev'] = "mynewclassmembers.php";
-        
+        $fk_klases_id = getClassID($userid, "Dabartiniai");
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         $db->set_charset("utf8");
                 $query = "SELECT * FROM (((" . TBL_KLASES_NARIAI
                         . " INNER JOIN " . TBL_CLASS . " ON klases_nariai.fk_klases_id = klase.klases_id)"
                         . " INNER JOIN " . TBL_USERS . " ON klases_nariai.fk_vartotojo_id = vartotojas.vartotojo_id)"
-                        . " INNER JOIN " . TBL_CVS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Laukiama patvirtinimo'";
+                        . " INNER JOIN " . TBL_CVS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE klases_nariai.busena = 'Laukiama patvirtinimo' AND klases_nariai.fk_klases_id = '$fk_klases_id'";
                         
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
