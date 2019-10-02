@@ -11,22 +11,28 @@
         <title>Korepetitai.lt - Kontaktai</title>
     </head>
     <body>
-<table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td>
+<div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+          
                 <?php 
                     session_start();
                     if (!isset($_SESSION['prev']))  {redirect("logout.php");exit;}
                     $_SESSION['prev'] = "kontaktai.php";
                     include ("include/functions.php");
                     include ("include/meniu.php");?>
-       <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
-     <div class="container bg-light p-5 rounded">
+       <table class="center" style="border-color: white; border-width: 0px;"><tr><td>
 
                 <?php {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Susisiekti galite el. paštu: " . $link = autolink("info@korepetitai.lt") . "</b></center></div><div class=\"container p-5\"></div></td</tr></table>";} ?>	
-			
-     </div>
-    </td></tr></table></td></tr></table>
+		
+    </td></tr></table>
+              </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
                   <?php include("include/footer.php"); ?>
 </body>
 </html>

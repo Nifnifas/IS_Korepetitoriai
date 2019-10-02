@@ -21,12 +21,15 @@
         <title>Korepetitai.lt - korepetitorių paieškos sistema</title>
         </head>
         <body>
-            <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td> 
+           <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+          
                         <?php include("include/meniu.php"); ?>
                         
-                                <table class="center" style="border-width: 30px; border-color: white;"><tr><td>
+                                <table class="center" style="border-width: 45px; border-color: white;"><tr><td>
                                             <div class="container bg-light p-5 rounded">
                                 <div class="container">
                                     <h1 class="form-heading">Registracijos langas</h1>
@@ -77,7 +80,11 @@
                                         </div>          
                                 </div></div>
                         </td></tr></table>
-                    </td></tr></table> 
+                    </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
                   <?php include("include/footer.php"); ?>
         </body>
     </html>

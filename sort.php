@@ -16,9 +16,12 @@ and open the template in the editor.
         <title>Korepetitai.lt - korepetitorių paieškos sistema</title>
     </head>
     <body>
-        <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+          
     <?php
     session_start();
     if (!isset($_SESSION['prev'])) {redirect("logout.php");exit;}
@@ -47,7 +50,12 @@ and open the template in the editor.
        
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></div>
+        </div></div>
+        <div class=\"col\">
+        </div>
+    </div>
+</div>"; include("include/footer.php"); echo "</body></html>"; exit;}
     }
     if($subject == "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -62,7 +70,12 @@ and open the template in the editor.
         }
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></div>
+        </div></div>
+        <div class=\"col\">
+        </div>
+    </div>
+</div>"; include("include/footer.php"); echo "</body></html>"; exit;}
     }
     if($subject != "Visi dalykai" && $place == "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -77,7 +90,12 @@ and open the template in the editor.
         }
             $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></div>
+        </div></div>
+        <div class=\"col\">
+        </div>
+    </div>
+</div>"; include("include/footer.php"); echo "</body></html>"; exit;}
     }
     if($subject != "Visi dalykai" && $place != "Visi miestai"){
         $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -92,7 +110,20 @@ and open the template in the editor.
         }
         $result = mysqli_query($db, $sql);
         if (!$result || (mysqli_num_rows($result) < 1))  
-                                        {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                        {echo "
+        <div class=\"container p-5\">
+            <div>
+                <div class=\"jumbotron\"><center><b>Deja nieko neradome!</b></center>
+                </div>
+                <div class=\"container p-5\">
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class=\"col\">
+        </div>
+    </div>
+</div>"; include("include/footer.php"); echo "</body></html>"; exit;}
     }
    ?>
             <style>
@@ -109,7 +140,6 @@ and open the template in the editor.
                         bottom: 0;
                     }
                 </style>
-                <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
                 <div class="container p-5">
                     <table class="table">
                 <thead class="thead-light">
@@ -151,12 +181,17 @@ and open the template in the editor.
                     </div>
                         </form>
 
-               <?php } ?>
-                </div></td></tr></table>
-                <?php
+               <?php 
+               
+                }
     mysqli_close($db);
 ?>
-        </td></tr></table>
+        </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
+    </div>
   <?php include("include/footer.php"); ?>
     </body>
 </html>

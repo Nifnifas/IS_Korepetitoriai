@@ -23,7 +23,7 @@
     </footer>
     <div class="content2">
         <div class="social-networks">
-            <p>©  2019, Korepetitas.lt</p>
+            <p>©  2019, Korepetitai.lt</p>
         </div>
     </div>
         

@@ -10,8 +10,12 @@
         <title>Korepetitai.lt - korepetitorių paieškos sistema</title>     
     </head>
     <body>
-        <table class="center" ><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
+        <div class="container">
+            <div class="row">
+              <div class="col">
+              </div>
+              <div class="col-12">
+  
             <?php
                 session_start();
                 include("include/meniu.php");
@@ -88,7 +92,7 @@
                 </table>
     
    
-        <div class="container bg-light p-5 rounded">
+                    <div class="container bg-light p-5 rounded">
 
       <div class="row">
     <div class="col"></div>
@@ -334,7 +338,6 @@ window.location.reload();
    <div id="display_comment"></div>
   </div>
     </div>
-</td></tr>
 </table>
 <script>
 function refreshPage(){
@@ -398,8 +401,11 @@ $(document).ready(function(){
 });
 </script>
     <?php } ?>
-</td></tr>
-</table>
+            </div>
+              <div class="col">
+              </div>
+            </div>
+        </div>
   <?php include("include/footer.php"); ?>
 </body>
 </html>

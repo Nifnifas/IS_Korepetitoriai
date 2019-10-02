@@ -16,14 +16,17 @@ if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}
         <title>Korepetitai.lt - korepetitorių paieškos sistema</title>
     </head>
     <body>
-        <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td> 
+        <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+         
                     <?php 
                     include("include/functions.php");
                     include("include/meniu.php");
                     ?>
-                    <table class="center" style="border-width: 30px; border-color: white;"><tr><td>
+                    <table class="center" style="border-width: 45px; border-color: white;"><tr><td>
                                 <?php
                                     if($_SESSION['prev'] == "procregister" || $_SESSION['prev'] == "proclogin" || $_SESSION['prev'] == "procuseredit"){
                                         echo "<table class=\"center\" style=\"border-width: 10px; border-color: white;\"><tr><td><font size=\"4\" color=\"#ff0000\">$_SESSION[message]</font></td></tr></table>";
@@ -59,7 +62,11 @@ if (empty($_SESSION['prev'])) { header("Location: logout.php");exit;}
                                 </div>
                             </div>
                 </td></tr></table>
-            </td></tr></table>
+             </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
         <?php include("include/footer.php"); ?>
     </body>
 </html>

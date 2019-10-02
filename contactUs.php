@@ -11,9 +11,12 @@
         <title>Korepetitai.lt - Susisiekti</title>
     </head>
     <body>
-         <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td> 
+         <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+          
         <?php
         session_start();
         if (!isset($_SESSION['prev']))  {redirect("logout.php");exit;}
@@ -22,8 +25,8 @@
         include("include/functions.php");
         ?>
                  
-        <table class="center" style="border-color: white; border-width: 30px;"><tr><td>
-            <div class="container bg-light p-4 rounded">
+        <table class="center" style="border-color: white; border-width: 45px;"><tr><td>
+            
                  
         <?php
         //if "email" variable is filled out, send email
@@ -46,6 +49,7 @@
                   echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Išsiųsta. Ačiū už pranešimą!</b></center></div><div class=\"container p-5\"></div>";
             }
             else { ?>
+                <div class="container bg-light p-4 rounded">
                 <div class="container">
                                     <h1 class="form-heading">Pranešimas apie klaidą</h1>
                                         <div class="login-form">
@@ -70,6 +74,7 @@
                                             </div>
                                         </div>          
                                 </div>
+                </div>
             <?php }
           }
 
@@ -79,7 +84,7 @@
 
 
 
-                
+                <div class="container bg-light p-4 rounded">
                 <div class="container">
                                     <h1 class="form-heading">Pranešimas apie klaidą</h1>
                                         <div class="login-form">
@@ -104,13 +109,18 @@
                                             </div>
                                         </div>          
                                 </div>
+                </div>
        <?php
          }
        ?>
                 
                 </td></tr></table>
-                </div>
-                    </td></tr></table>
+                    </div>
+          <div class="col">
+          </div>
+        </div>
+         </div>
+      
         <?php include("include/footer.php"); ?>
     </body>
 </html>

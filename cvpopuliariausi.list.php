@@ -11,9 +11,12 @@
         <title>Korepetitai.lt - Populiariausi CV</title>
     </head>
     <body>
-        <table class="center"><tr><td>
-            <center><a href="index.php"><img src="include/banners/main-banner.png"/></a></center>
-        </td></tr><tr><td>
+        <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-12">
+          
                 
     <?php
         session_start();
@@ -30,7 +33,11 @@
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) WHERE vartotojas.statusas='$tipas' ORDER BY views DESC LIMIT 10";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
-                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></div>
+          <div class=\"col\">
+          </div>
+        </div>
+      </div>"; include("include/footer.php");exit;}
             }
             else{
                 $db=mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -39,10 +46,13 @@
                         . " INNER JOIN " . TBL_USERS . " ON cv.fk_vartotojo_id = vartotojas.vartotojo_id) ORDER BY views DESC LIMIT 10";
                 $result = mysqli_query($db, $query);
                 if (!$result || (mysqli_num_rows($result) < 1))  
-                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></td</tr></table>"; include("include/footer.php");exit;}
+                                {echo "<div class=\"container p-5\"><div><div class=\"jumbotron\"><center><b>Šioje kategorijoje CV dar nėra!</b></center></div><div class=\"container p-5\"></div></div>
+          <div class=\"col\">
+          </div>
+        </div>
+      </div>"; include("include/footer.php");exit;}
             }
 ?>
-    <table class="center" style="border-color: white;"><tr><td>
     <?php
         $cc = 1;
                 ?>
@@ -106,9 +116,12 @@
                 <?php 
         mysqli_close($db);
 ?>
-    </td></tr>
-    </table><br>		
-    </div><br></table>
+    </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
+    </div>
           <?php include("include/footer.php"); ?>
 </body>
 </html>

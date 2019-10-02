@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-        <?php
+
+<center><a href="index.php"><img class="img-responsive center-block" style="width: 75%; padding-top: 15px" src="include/banners/main-banner.png"/></a></center> 
+  <?php
         // meniu.php  rodomas meniu pagal vartotojo rolę
 
         if (!isset($_SESSION)) { header("Location: logout.php");exit;}
@@ -16,18 +13,20 @@
         $role = $_SESSION['urole'];
         $userlevel = $_SESSION['ulevel'];
         ?>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 1200px !important;">
+      <nav class="navbar fixed navbar-expand-lg navbar-light bg-light ">
+      <div class="container">
+          
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent" style="text-align: center">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="index.php">Pagrindinis<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Vartotojo paieška</a>
+              <a class="nav-link" data-toggle="collapse" href="#collapseExample2, #collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample2">Paieška</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cvnaujausi.list.php">Naujausi CV</a>
@@ -120,23 +119,31 @@
         <?php } if ($_SESSION['user'] == "guest"){
             ?>
       </ul>
-       	<ul class="nav navbar-nav navbar-right">
-            <div class="col-5">
-              <a href="login.php" class="btn btn-danger">Prisijungti</a>
-            </div>
-             <div class="col-5">
-              <a href="register.php" class="btn btn-danger">Registruotis</a>
-            </div>
+      
+       	<ul class="navbar-nav">
+            <li class="nav-item p-2">
+                <a href="login.php" class="btn btn-danger nav-item px-4">Prisijungti</a>
+            </li>
+            <li class="nav-item p-2">
+                <a href="register.php" class="btn btn-danger nav-item px-4">Registruotis</a>
+            </li>   
         </ul>
+      
         <?php } ?>
+      </div>
       </div>
     </nav>
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+        <div class="collapse show" id="collapseExample">
+             <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <form action="sort.php" class="form-inline" method="POST">
-                                    <div class="col-6">
-                                                        <div class="input-group mb-3">
+                <form action="sort.php" class="form-group" method="POST">
+                    <div class="row">
+                                    <div class="col-md-6 my-2">
+                                                        <div class="input-group">
+                                                            <div class="input-group-append">
+                                                            <label class="input-group-text" for="inputGroupSelect02">Dalykas</label>
+                                                        </div>
                                                         <select class="custom-select" name="subject">
                                                             <option>Visi dalykai</option>
                                                             <?php
@@ -158,13 +165,13 @@
                                                                 }
                                                                 ?>
                                                         </select>
-                                                         <div class="input-group-append">
-                                                            <label class="input-group-text" for="inputGroupSelect02">Dalykas</label>
-                                                        </div>
                                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                                        <div class="input-group mb-3">
+                                    <div class="col-md-6 my-2">
+                                                        <div class="input-group">
+                                                        <div class="input-group-append">
+                                                            <label class="input-group-text" for="inputGroupSelect03">Miestas</label>
+                                                        </div>
                                                         <select class="custom-select" name="place">
                                                             <option>Visi miestai</option>
                                                             <?php
@@ -183,31 +190,27 @@
                                                                                                 }
                                                                                                 echo "</select>";
                                                         ?>
-                                                         <div class="input-group-append">
-                                                            <label class="input-group-text" for="inputGroupSelect03">Miestas</label>
-                                                        </div>
                                                         </div>
                                     </div>
-                <button class="btn btn-outline-success btn-lg btn-block my-2 my-sm-0" type="submit">Ieškoti</button>
+                    </div>
+                    <div class="row justify-content-center my-2">
+                        <button class="btn btn-outline-success btn-lg" type="submit">Ieškoti</button>
                 </form>
       </div>
     </nav>
-        
-        <div class="collapse" id="collapseExample">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
-                <div class="col-6">
-                    <form action="search.php" method="POST">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ieškoti vartotojo (vardas ir/arba pavardė)" name="paieska" aria-label="Search"/>
-                </div>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ieškoti</button>
-                </form>
-            </nav>
         </div>
-        
-   
-    </body>
-</html>
 
-     
-
-
+    <div class="collapse" id="collapseExample2">
+             <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <form action="search.php" class="form-group" method="POST">
+                    <div class="row">
+                        <input class="form-control my-2 mb-2" size="28" type="search" placeholder="Vartotojo vardas ir/arba pavardė" name="paieska" aria-label="Search"/>
+                    </div>
+                    <div class="row justify-content-center my-2">
+                        <button class="btn btn-outline-success btn-lg" type="submit">Ieškoti</button>
+                    </div>
+                </form>
+      </div>
+    </nav>
+        </div>
